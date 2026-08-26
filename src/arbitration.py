@@ -1,0 +1,52 @@
+"""Speaker arbitration (design doc, D7 resolved): the energy-ratio test
+authenticates a completed segment against the *other* channel.
+
+Known limitation, stated in the design doc: this distinguishes the two wearers
+from each other only. A bystander close to someone's chest mic is genuinely
+dominant on that channel and passes like the wearer. Per-person mute is the
+only defense."""
+import math
+
+from src import config
+
+ACCEPT = "ACCEPT"
+DROP_BLEED = "DROP_BLEED"          # the other wearer's voice, heard faintly
+DROP_AMBIGUOUS = "DROP_AMBIGUOUS"  # similar coupling: overlap or mid-table voice
+DROP_MUTED = "DROP_MUTED"
+GATE_DISCARD = "GATE_DISCARD"      # our own TTS leaking bud → chest mic
+GATE_TRIM = "GATE_TRIM"            # partial overlap; remainder would proceed
+
+
+def ratio_db(own_rms, other_rms):
+    if other_rms <= 1e-9:
+        return 99.0
+    if own_rms <= 1e-9:
+        return -99.0
+    return 20.0 * math.log10(own_rms / other_rms)
+
+
+def decide(person, own_rms, other_rms, muted, ledger, t0, t1):
+    """Returns (decision, detail-string). Order matters: mute is absolute,
+    the gate runs before ratio (own-voice leak can be loud AND own-dominant),
+    then the wearer-authenticity ratio test."""
+    if muted:
+        return DROP_MUTED, "person muted"
+
+    frac, matched = ledger.overlap_detail(person, t0, t1)
+    if frac >= config.GATE_DISCARD_FRAC:
+        return GATE_DISCARD, (f"{frac:.0%} overlap with playback into own ear "
+                              f"[ledger {matched}]")
+    r = ratio_db(own_rms, other_rms)
+    if frac > 0.0:
+        kept = (t1 - t0) * (1.0 - frac)
+        if kept < config.GATE_MIN_KEEP:
+            return GATE_DISCARD, (f"{frac:.0%} overlap, only {kept:.2f}s "
+                                  f"would survive trim [ledger {matched}]")
+        return GATE_TRIM, (f"{frac:.0%} overlap; {kept:.2f}s survives "
+                           f"(ratio {r:+.1f} dB) [ledger {matched}]")
+
+    if r >= config.RATIO_ACCEPT_DB:
+        return ACCEPT, f"ratio {r:+.1f} dB"
+    if r <= -config.RATIO_ACCEPT_DB:
+        return DROP_BLEED, f"ratio {r:+.1f} dB — other wearer's voice"
+    return DROP_AMBIGUOUS, f"ratio {r:+.1f} dB — simultaneous or mid-table"
