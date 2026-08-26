@@ -11,6 +11,15 @@ CHUNK = 512           # samples per block = 32 ms; Silero's native chunk
 PERSON_A = "A"        # left channel,  black windscreen
 PERSON_B = "B"        # right channel, grey windscreen
 
+# Fixed digital gain at capture (2026-08-26): DJI app gain maxed at +12 still
+# leaves worn chest speech at -33.4 dBFS vs the -21..-26 verified band — the
+# hardware ran out of range. +8 dB brings worn speech to ≈-25 dBFS. Applied to
+# both channels before VAD/energy/ASR so everything sees the verified level.
+# Ratio math is relative (gain cancels); VAD returns to its verified operating
+# level; the noise floor rises equally — watch for VAD false positives in fan
+# noise.
+CAPTURE_GAIN_DB = 8.0
+
 # VAD endpointing (fragment policy, measured)
 VAD_MIN_SILENCE = 0.7
 VAD_MIN_SPEECH = 0.25

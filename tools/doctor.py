@@ -109,9 +109,12 @@ for ch, name in ((0, "TX1 black"), (1, "TX2 grey")):
     win = 1600
     r = np.sqrt(np.mean(w[:len(w)//win*win].reshape(-1, win) ** 2, axis=1))
     lvl[name] = 20 * np.log10(max(np.percentile(r, 90), 1e-6))
-loudest = max(lvl.values())
+from src import config as _cfg
+gain = _cfg.CAPTURE_GAIN_DB
 for name, v in lvl.items():
-    print(f"     {name}: {v:6.1f} dB", flush=True)
+    print(f"     {name}: {v:6.1f} dB raw  ->  {v+gain:6.1f} dB after the "
+          f"pipeline's +{gain:.0f} dB gain", flush=True)
+loudest = max(lvl.values()) + gain
 if loudest > -30:
     say(True, "microphone level: GOOD — the system can hear you properly")
 elif loudest > -38:

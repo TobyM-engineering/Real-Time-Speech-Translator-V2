@@ -66,6 +66,8 @@ class AudioFrontend:
         self._thread = threading.Thread(target=self._run, name="frontend",
                                         daemon=True)
         self._thread.start()
+        self.on_log(f"CAP  digital gain +{config.CAPTURE_GAIN_DB:.1f} dB "
+                    f"(x{10**(config.CAPTURE_GAIN_DB/20):.2f}) applied at capture")
 
     def capture_alive(self):
         return self._cap is not None and self._cap.is_alive() and not self.error
@@ -135,8 +137,9 @@ class AudioFrontend:
             except queue.Empty:
                 continue
             frames = np.frombuffer(block, dtype=np.int16).reshape(-1, 2)
-            fl = frames[:, 0].astype(np.float32) / 32768.0
-            fr = frames[:, 1].astype(np.float32) / 32768.0
+            g = 10.0 ** (config.CAPTURE_GAIN_DB / 20.0)
+            fl = np.clip(frames[:, 0].astype(np.float32) / 32768.0 * g, -1, 1)
+            fr = np.clip(frames[:, 1].astype(np.float32) / 32768.0 * g, -1, 1)
             energy.append((s0, float(np.sqrt(np.mean(fl ** 2))),
                            float(np.sqrt(np.mean(fr ** 2)))))
             if len(energy) > ENERGY_KEEP:
