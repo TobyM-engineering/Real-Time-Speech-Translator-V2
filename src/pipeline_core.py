@@ -117,6 +117,8 @@ class Bridge(QObject):
         self._poll.setInterval(config.BACKLOG_POLL_MS)
         self._poll.timeout.connect(self._poll_backlog)
         self._poll.start()
+        a, b = self._lang[config.PERSON_A], self._lang[config.PERSON_B]
+        self._log(f"LANG A={a['code']}({a['asr']})  B={b['code']}({b['asr']})")
         self._log(f"stage {'3' if self.downstream else '2'} up — capture live")
         with self._lock:
             self._recompute()

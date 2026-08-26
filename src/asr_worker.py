@@ -7,13 +7,18 @@ MERGE_HOLD_DANGLING if its text ends in a dangling function word. A
 continuation arriving within MERGE_MAX_GAP of the held segment's end is
 concatenated and re-decoded as one utterance; the later turn is marked merged.
 """
+import os
 import queue
 import threading
 import time
+import wave
 
 import numpy as np
 
 from src import config
+
+_DUMP_DIR = os.environ.get("TXV2_DUMP_DIR")
+_DUMP_MAX = 8
 
 _CJK = {"zh", "ja", "ko"}
 
@@ -120,6 +125,22 @@ class AsrWorker(threading.Thread):
                 self._release(h["turn"], h["text"], f"gap {gap:.2f}s too long")
 
         entry = self.get_lang(person)
+        if _DUMP_DIR and getattr(self, "_dumped", 0) < _DUMP_MAX:
+            self._dumped = getattr(self, "_dumped", 0) + 1
+            path = f"{_DUMP_DIR}/asr_turn{turn.turn_id}.wav"
+            w = wave.open(path, "wb")
+            w.setnchannels(1)
+            w.setsampwidth(2)
+            w.setframerate(config.SR)
+            w.writeframes((np.clip(audio, -1, 1) * 32767)
+                          .astype(np.int16).tobytes())
+            w.close()
+            span = turn.t1 - turn.t0
+            self.on_log(f"DUMP turn#{turn.turn_id} -> {path} | "
+                        f"{len(audio)} samples @{config.SR} = "
+                        f"{len(audio)/config.SR:.2f}s | capture span "
+                        f"{span:.2f}s | mono | engine={entry['asr']} "
+                        f"lang={entry['code']}")
         t0 = time.time()
         self.current_load = (person, len(audio) / config.SR)
         text = self._decode(entry, audio)
