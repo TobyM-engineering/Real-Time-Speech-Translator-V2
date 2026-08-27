@@ -22,7 +22,11 @@ PIPER_JSON, OUT = sys.argv[1], sys.argv[2]
 SUPERTONIC = {"ar", "bg", "cs", "da", "de", "el", "en", "es", "et", "fi", "fr",
               "hi", "hr", "hu", "id", "it", "ja", "ko", "lt", "lv", "nl", "pl",
               "pt", "ro", "ru", "sk", "sl", "sv", "tr", "uk", "vi"}
-SENSEVOICE = {"zh", "ja", "ko"}
+# en moved to SenseVoice 2026-08-27: measured 17-30x faster than whisper base
+# (RTF ~0.05 vs 0.21-1.62) with comparable accuracy on 8 real mic clips —
+# drops the en-path compute ratio to ~0.8-1.0x real time. Other Latin-script
+# languages stay on whisper (SenseVoice covers zh/yue/en/ja/ko only).
+SENSEVOICE = {"zh", "ja", "ko", "en"}
 VERIFIED = ["zh", "ja", "en", "es", "pt", "de", "ru", "fr"]  # bench-tested, best-first
 
 # code: (native name, flag, FLORES code, est. WER %)

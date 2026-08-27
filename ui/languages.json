@@ -6,7 +6,7 @@
   "flores": "eng_Latn",
   "wer": 6,
   "verified": true,
-  "asr": "whisper",
+  "asr": "sensevoice",
   "tts": "piper",
   "ttsVoice": "en_US-sam-medium",
   "voiceMB": 63,
