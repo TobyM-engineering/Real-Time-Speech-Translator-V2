@@ -368,10 +368,31 @@ second step. Routing was merged into the enriched file instead; exactly 24
   the pipeline currently isn't paying — pair with halved hold values.
 - Run-on fallback MT split for long unpunctuated transcripts.
 - Real-mic verification of Parakeet on Spanish/French — the adoption gate.
-- Hold-to-talk round 1: the first 10 s hold captured nothing at all —
-  silent try or real fault, still unanswered.
 - The deferred hardware/system tail: kiosk boot (cage), read-only rootfs,
   EEPROM settings, WiFi-off mode, D9 ja voice A/B, Test C when the UPS
   arrives.
 - Phase 2 proper: clause-streamed MT→TTS — the largest remaining latency
   win on the menu.
+
+---
+
+## 2026-08-27 — day close-out
+
+One open question answered: the first hold-to-talk try that captured nothing
+was Toby **holding silently to watch the frame appear** — nothing was
+spoken, so nothing was missed. Closed without a code change; the follow-up
+holds in the same session captured and streamed correctly.
+
+State at shutdown: the pipeline runs three-engine ASR routing (Parakeet for
+24 European languages including English, SenseVoice for zh/ja/ko, whisper
+for the tail), 4-second dip-cut chunking so translation starts mid-speech,
+hold-to-talk, the centre-dot mic check, voice preload with a gated READY,
+capture gain back at 0, and the armed supervisor. Cold boot to READY is
+29.7 s, warm restart 13.5 s. Nothing autostarts yet — next boot, launch
+manually with `venv/bin/python -m src.stage3_main`.
+
+Preserved out of the RAM-backed scratchpad before shutdown (it does not
+survive power-off): the five measurement scripts CLAUDE.md cites, the eight
+ground-truth bench clips with their reference texts, and
+`piper_voices.json` — the catalog generator's required input — now all under
+`tools/`. Everything is committed; the working tree is clean.
