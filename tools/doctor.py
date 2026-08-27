@@ -6,9 +6,15 @@ When it says SPEAK, talk normally with the mic clipped where you'd wear it.
 """
 import os
 import subprocess
+import sys
 import time
 
 import numpy as np
+
+# "venv/bin/python tools/doctor.py" puts tools/ (not the project root) on the
+# import path, so "src" is invisible without this line
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src import config as _cfg
 
 os.environ.setdefault("XDG_RUNTIME_DIR", "/run/user/1000")
 DJI = ("alsa_input.usb-DJI_Technology_Co.__Ltd._Wireless_Mic_Rx_"
@@ -104,16 +110,19 @@ buf = p.stdout.read(16000 * 2 * 2 * 6)
 p.terminate()
 x = np.frombuffer(buf, dtype=np.int16).reshape(-1, 2).astype(np.float32) / 32768
 lvl = {}
+flr = {}
 for ch, name in ((0, "TX1 black"), (1, "TX2 grey")):
     w = x[:, ch]
     win = 1600
     r = np.sqrt(np.mean(w[:len(w)//win*win].reshape(-1, win) ** 2, axis=1))
     lvl[name] = 20 * np.log10(max(np.percentile(r, 90), 1e-6))
-from src import config as _cfg
+    # quietest tenth of the 100 ms windows ≈ the room between your words
+    flr[name] = 20 * np.log10(max(np.percentile(r, 10), 1e-6))
 gain = _cfg.CAPTURE_GAIN_DB
 for name, v in lvl.items():
     print(f"     {name}: {v:6.1f} dB raw  ->  {v+gain:6.1f} dB after the "
-          f"pipeline's +{gain:.0f} dB gain", flush=True)
+          f"pipeline's +{gain:.0f} dB gain   (background {flr[name]:6.1f} dB)",
+          flush=True)
 loudest = max(lvl.values()) + gain
 if loudest > -30:
     say(True, "microphone level: GOOD — the system can hear you properly")
@@ -129,6 +138,16 @@ else:
     say(False, "microphone heard almost nothing — were you talking?",
         "if you were talking: mic level is critically low — DJI Mimo app "
         "Gain, or the transmitter is off/asleep")
+# digital gain raises speech and noise equally, so what decides whether
+# transcription works is how far speech stands ABOVE the room, not its level
+if loudest > -38:
+    best = max(lvl, key=lvl.get)
+    snr = lvl[best] - flr[best]
+    say(snr >= 10, f"speech stands {snr:.0f} dB above the room noise "
+        f"({'enough' if snr >= 10 else 'NOT ENOUGH — this garbles words'})",
+        "speech barely rises above the background noise — no gain setting "
+        "can fix that (it raises both equally). Quieter room, or mic closer "
+        "to the mouth")
 
 # verdict
 print("\n== VERDICT ==", flush=True)
