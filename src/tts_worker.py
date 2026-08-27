@@ -12,12 +12,18 @@ from src import config
 
 
 class TtsWorker(threading.Thread):
-    def __init__(self, on_log, on_synth, preload_codes, by_code):
+    def __init__(self, on_log, on_synth, preload_codes, by_code,
+                 on_ready=None, active_codes=None):
+        """on_ready: called once after the startup preloads finish (ready is
+        gated on it). active_codes: () -> set of currently selected language
+        codes — the LRU never evicts one of these."""
         super().__init__(name="tts", daemon=True)
         self.on_log = on_log
         self.on_synth = on_synth
         self.preload = preload_codes
         self.by_code = by_code
+        self.on_ready = on_ready
+        self.active_codes = active_codes
         self.q = queue.Queue()
         self._voices = {}        # code -> (kind, engine, sr), LRU order
         self._supertonic = None
@@ -26,17 +32,36 @@ class TtsWorker(threading.Thread):
     def submit(self, turn, text, tgt_entry, ear):
         self.q.put((turn, text, tgt_entry, ear))
 
+    def preload_voice(self, entry):
+        """Picker-time load: runs on this worker's thread, so capture, ASR,
+        MT, and the UI never stall. At worst one queued synth for the other
+        ear waits ~2 s behind it, once, at switch time."""
+        self.q.put((None, None, entry, None))
+
     def stop(self):
         self._stopping.set()
 
     def run(self):
-        for code in self.preload:
-            self._get_voice(self.by_code[code])
-        self.on_log(f"TTS  voices ready: {list(self._voices)}")
+        try:
+            for code in self.preload:
+                self._get_voice(self.by_code[code])
+            self.on_log(f"TTS  voices ready: {list(self._voices)}")
+        except Exception as e:
+            self.on_log(f"TTS  startup preload FAILED: {e} — affected turns "
+                        f"will fail loudly; the other direction still works")
+        if self.on_ready:
+            self.on_ready()
         while not self._stopping.is_set():
             try:
                 turn, text, tgt, ear = self.q.get(timeout=0.25)
             except queue.Empty:
+                continue
+            if turn is None:   # picker-time preload sentinel, no synth
+                try:
+                    self._get_voice(tgt)
+                except Exception as e:
+                    self.on_log(f"TTS  preload of {tgt.get('code')} "
+                                f"FAILED: {e}")
                 continue
             if turn.cancelled:
                 self.on_log(f"TTS  turn#{turn.turn_id} cancelled — skipped")
@@ -74,7 +99,13 @@ class TtsWorker(threading.Thread):
             item = ("supertonic", self._get_supertonic(), 44100)
         self._voices[code] = item
         if len(self._voices) > 3:
-            old = next(iter(self._voices))
+            # never evict a currently selected voice — that would put the
+            # cold-load stall right back on the next turn
+            active = self.active_codes() if self.active_codes else set()
+            old = next((k for k in self._voices
+                        if k not in active and k != code), None)
+            if old is None:
+                old = next(iter(self._voices))
             del self._voices[old]
             self.on_log(f"TTS  evicted voice {old}")
         self.on_log(f"TTS  loaded voice {code} in {time.time()-t0:.1f}s")

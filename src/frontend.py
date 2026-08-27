@@ -37,6 +37,8 @@ class AudioFrontend:
         self._ptt_ivs = {config.PERSON_A: [], config.PERSON_B: []}
         self.error = None
         self._blocks = queue.Queue(maxsize=256)
+        self._drops = 0            # capture blocks discarded on overflow
+        self._drop_logged = 0.0
         self._stop = threading.Event()
         self._cap = None
         self._thread = None
@@ -125,7 +127,17 @@ class AudioFrontend:
         try:
             self._blocks.put_nowait((block, sample_index + self._sample_base))
         except queue.Full:
-            pass  # capture never blocks; sustained overload surfaces in D5 UI
+            # capture never blocks — but discarded audio must never be
+            # silent. Counted always; logged at most once per second with
+            # the running total, so every dropped block is accounted for.
+            self._drops += 1
+            now = time.time()
+            if now - self._drop_logged >= 1.0:
+                self._drop_logged = now
+                self.on_log(f"CAP  OVERFLOW: {self._drops} blocks "
+                            f"({self._drops * config.CHUNK / config.SR:.1f}s "
+                            f"of audio) dropped since start — processing is "
+                            f"not keeping up")
 
     # -- processing thread ---------------------------------------------
     def _run(self):

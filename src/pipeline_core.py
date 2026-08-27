@@ -52,6 +52,10 @@ class Bridge(QObject):
         self._groups = {config.PERSON_A: None, config.PERSON_B: None}
         self._close_timers = {}
 
+        # ready = ASR warm AND (downstream only) both selected voices resident
+        self._ready_asr = False
+        self._ready_tts = not downstream
+        self._ready_emitted = False
         self.frontend = AudioFrontend(on_log=self._log,
                                       on_speech=self._on_speech,
                                       on_segment=self._on_segment)
@@ -59,7 +63,7 @@ class Bridge(QObject):
                              get_lang=lambda p: self._lang[p],
                              on_log=self._log,
                              on_transcript=self._on_transcript,
-                             on_ready=lambda: self.ready.emit(),
+                             on_ready=self._on_asr_ready,
                              on_dropped=self._on_dropped)
         self._ear_active = {config.PERSON_A: False, config.PERSON_B: False}
         self._backlog_level = {config.PERSON_A: 0, config.PERSON_B: 0}
@@ -70,9 +74,15 @@ class Bridge(QObject):
         if downstream:
             self.mt = MtWorker(on_log=self._log,
                                on_translated=self._on_translated)
-            self.tts = TtsWorker(on_log=self._log, on_synth=self._on_synth,
-                                 preload_codes=["en", "es"],
-                                 by_code=self._by_code)
+            self.tts = TtsWorker(
+                on_log=self._log, on_synth=self._on_synth,
+                preload_codes=list(dict.fromkeys(
+                    [self._lang[config.PERSON_A]["code"],
+                     self._lang[config.PERSON_B]["code"]])),
+                by_code=self._by_code,
+                on_ready=self._on_tts_ready,
+                active_codes=lambda: {self._lang[config.PERSON_A]["code"],
+                                      self._lang[config.PERSON_B]["code"]})
 
     def _make_playback(self):
         return Playback(on_log=self._log, ledger=self.frontend.ledger,
@@ -98,6 +108,23 @@ class Bridge(QObject):
         self.playback = self._make_playback()
         self.playback.adopt_items(items)
         self.playback.start()
+
+    def _on_asr_ready(self):
+        self._ready_asr = True
+        self._maybe_ready()
+
+    def _on_tts_ready(self):
+        self._ready_tts = True
+        self._maybe_ready()
+
+    def _maybe_ready(self):
+        with self._lock:
+            if not (self._ready_asr and self._ready_tts) \
+                    or self._ready_emitted:
+                return
+            self._ready_emitted = True
+        self._log("READY pipeline ready (ASR warm; selected voices resident)")
+        self.ready.emit()
 
     def set_fault(self, msg):
         if msg != getattr(self, "_fault", None):
@@ -371,6 +398,8 @@ class Bridge(QObject):
             return
         self._lang[person] = entry
         self._log(f"CTRL {person} language -> {code} ({entry['name']})")
+        if self.tts:   # load the voice NOW, on the TTS thread — not on the
+            self.tts.preload_voice(entry)   # first turn's synth path
         self.langChanged.emit(person, entry)
 
     @Slot(str, result="QVariant")
