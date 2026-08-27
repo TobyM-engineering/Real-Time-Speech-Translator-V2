@@ -7,13 +7,15 @@ append into ONE band per person — no LISTENING/TRANSLATING churn mid-paragraph
 — while pipeline mechanics (per-chunk ASR, and in stage 3 per-chunk playback)
 are untouched. Cancel means "stop everything not yet playing"; in stage 2
 nothing plays, so cancel kills the whole group."""
+import json
 import threading
 import time
 from html import escape
 
+import numpy as np
 from PySide6.QtCore import QObject, QTimer, Signal, Slot
 
-from src import config
+from src import config, levels
 from src.asr_worker import AsrWorker
 from src.frontend import AudioFrontend
 from src.mt_worker import MtWorker
@@ -34,6 +36,7 @@ class Bridge(QObject):
     overlapHint = Signal()
     backlogMeter = Signal(str, float)      # person, seconds untranscribed
     faultChanged = Signal(str)             # device fault banner ("" = clear)
+    levelUpdate = Signal(str)              # mic level panel data, JSON
 
     def __init__(self, catalog, downstream=False):
         super().__init__()
@@ -62,6 +65,7 @@ class Bridge(QObject):
         self._backlog_level = {config.PERSON_A: 0, config.PERSON_B: 0}
         self._meter = {config.PERSON_A: 0.0, config.PERSON_B: 0.0}
         self._meter_low_since = {config.PERSON_A: None, config.PERSON_B: None}
+        self._lvl_timer = None   # mic level panel poll, runs only while open
         self.mt = self.tts = self.playback = None
         if downstream:
             self.mt = MtWorker(on_log=self._log,
@@ -364,3 +368,38 @@ class Bridge(QObject):
     @Slot(str, result="QVariant")
     def getLang(self, person):
         return self._lang[person]
+
+    # -- mic level panel (doctor's measurement, live) --------------------
+    @Slot(bool)
+    def setLevelPanel(self, open_):
+        if open_:
+            if self._lvl_timer is None:
+                self._lvl_timer = QTimer(self)
+                self._lvl_timer.setInterval(100)
+                self._lvl_timer.timeout.connect(self._poll_levels)
+            self._lvl_timer.start()
+        elif self._lvl_timer is not None:
+            self._lvl_timer.stop()
+        self._log(f"LEVEL panel {'open' if open_ else 'closed'}")
+
+    def _poll_levels(self):
+        # last ~5 s of the frontend's 32 ms per-block RMS (post-gain — what
+        # the models hear). Tail slice is atomic under the GIL; the frontend
+        # only appends/prunes in place.
+        tail = self.frontend.energy[-156:]
+        out = {}
+        for key, idx in (("a", 1), ("b", 2)):
+            r = np.array([e[idx] for e in tail], dtype=np.float64)
+            # regroup 3 blocks -> ~96 ms windows = doctor's 100 ms method
+            n = len(r) // 3 * 3
+            w = (np.sqrt((r[:n].reshape(-1, 3) ** 2).mean(axis=1))
+                 if n else r[:0])
+            lvl, flr, gap = levels.stats(w)
+            inst = levels.db(np.sqrt((r[-4:] ** 2).mean())) if len(r) else -120.0
+            out[key] = {"inst": round(inst, 1), "level": round(lvl, 1),
+                        "floor": round(flr, 1), "gap": round(gap, 1)}
+        best = max(("a", "b"), key=lambda k: out[k]["level"])
+        state, headline, advice = levels.verdict(out[best]["level"],
+                                                 out[best]["gap"])
+        out.update(state=state, headline=headline, advice=advice)
+        self.levelUpdate.emit(json.dumps(out))

@@ -13,10 +13,12 @@ Window {
 
     property bool pipelineReady: false
     property string faultMsg: ""
+    property var levelData: null
     Connections {
         target: bridge
         function onReady() { win.pipelineReady = true }
         function onFaultChanged(msg) { win.faultMsg = msg }
+        function onLevelUpdate(j) { win.levelData = JSON.parse(j) }
     }
 
     component PersonHalf: Rectangle {
@@ -334,16 +336,130 @@ Window {
             rotation: 180
             person: "B"
         }
-        Rectangle {
+        Rectangle {  // centre strip — its dot doubles as the mic-check button
             width: win.width; height: 12; color: "black"
-            Rectangle { width: 8; height: 8; radius: 4
+            Rectangle { width: 14; height: 14; radius: 7
                         color: win.pipelineReady ? "#2EE6A8" : "#F5C542"
                         anchors.centerIn: parent }
+            MouseArea {  // generous target: at centre-x the chips and mute
+                         // buttons are ≥150 px away, and both transcript
+                         // bands live at the OUTER screen edges
+                width: 150; height: 110; anchors.centerIn: parent
+                onClicked: levelPanel.visible = true
+            }
         }
         PersonHalf {
             width: win.width; height: (win.height - 12) / 2
             person: "A"
         }
+    }
+
+    component LevelMeter: Item {
+        id: meter
+        property string label: ""
+        property var d: null          // {inst, level, floor, gap} or null
+        height: 140
+        // bar maps -60 dBFS (left) .. 0 dBFS (right)
+        function pos(v) { return Math.max(0, Math.min(1, (v + 60) / 60)) }
+        Text { text: meter.label; color: "#C7CBD1"
+               font.pixelSize: 24; font.bold: true }
+        Text {
+            text: meter.d ? ("speech " + meter.d.level.toFixed(1)
+                    + "   room " + meter.d.floor.toFixed(1)
+                    + "   gap " + meter.d.gap.toFixed(0) + " dB") : "…"
+            color: "white"; font.pixelSize: 24
+            anchors.right: parent.right
+        }
+        Rectangle {
+            id: track
+            y: 40; width: parent.width; height: 48; radius: 8
+            color: "#1A1D22"; border.color: "#2A2E34"; border.width: 1
+            Rectangle {  // live fill (~130 ms RMS)
+                width: track.width * meter.pos(meter.d ? meter.d.inst : -120)
+                height: parent.height; radius: 8; color: "#8CFFFFFF"
+                Behavior on width { NumberAnimation { duration: 90 } }
+            }
+            Rectangle {  // verified good band (levels.py BAND -26..-21)
+                x: track.width * meter.pos(-26)
+                width: track.width * (meter.pos(-21) - meter.pos(-26))
+                height: parent.height; color: "#382EE6A8"
+            }
+            Rectangle {  // too-hot zone (levels.py HOT -15)
+                x: track.width * meter.pos(-15)
+                width: track.width * (1 - meter.pos(-15))
+                height: parent.height; color: "#26FF5A6E"
+            }
+            Rectangle {  // speech level, 90th percentile of last 5 s
+                visible: meter.d !== null
+                x: track.width * meter.pos(meter.d ? meter.d.level : -120) - 2
+                width: 4; height: parent.height; color: "white"
+            }
+            Rectangle {  // background level, 10th percentile
+                visible: meter.d !== null
+                x: track.width * meter.pos(meter.d ? meter.d.floor : -120) - 2
+                width: 4; height: parent.height; color: "#7A828C"
+            }
+        }
+        Text { text: "-60"; color: "#6A7078"; font.pixelSize: 18
+               anchors.top: track.bottom; anchors.topMargin: 4; x: 0 }
+        Text { text: "-40"; color: "#6A7078"; font.pixelSize: 18
+               anchors.top: track.bottom; anchors.topMargin: 4
+               x: track.width / 3 - width / 2 }
+        Text { text: "-20"; color: "#6A7078"; font.pixelSize: 18
+               anchors.top: track.bottom; anchors.topMargin: 4
+               x: track.width * 2 / 3 - width / 2 }
+        Text { text: "0 dBFS"; color: "#6A7078"; font.pixelSize: 18
+               anchors.top: track.bottom; anchors.topMargin: 4
+               x: track.width - width }
+    }
+
+    Rectangle {  // mic level panel — opened by the centre dot, closed by one
+                 // tap anywhere on it. Reads from A's side (a bench tool).
+        id: levelPanel
+        visible: false
+        anchors.centerIn: parent
+        width: win.width - 56; height: 680
+        radius: 20; color: "#F70D0F13"
+        border.color: "#48FFFFFF"; border.width: 2
+        onVisibleChanged: {
+            win.levelData = null
+            bridge.setLevelPanel(visible)
+        }
+        Column {
+            anchors.fill: parent; anchors.margins: 28
+            spacing: 18
+            Item {
+                width: parent.width; height: 36
+                Text { text: "MIC CHECK"; color: "white"
+                       font.pixelSize: 28; font.bold: true }
+                Text { text: "tap anywhere to close  ✕"; color: "#99FFFFFF"
+                       font.pixelSize: 24; anchors.right: parent.right }
+            }
+            LevelMeter { width: parent.width; label: "TX1 · black · A"
+                         d: win.levelData ? win.levelData.a : null }
+            LevelMeter { width: parent.width; label: "TX2 · grey · B"
+                         d: win.levelData ? win.levelData.b : null }
+            Text {
+                text: "green = verified good band (−26…−21 dBFS) · red = too hot"
+                color: "#8A9099"; font.pixelSize: 20
+            }
+            Text {  // verdict from the louder mic — shared logic in levels.py
+                text: win.levelData ? win.levelData.headline : "…"
+                font.pixelSize: 54; font.bold: true
+                color: !win.levelData ? "#8A9099"
+                     : win.levelData.state === "good" ? "#2EE6A8"
+                     : win.levelData.state === "waiting" ? "#8A9099"
+                     : (win.levelData.state === "quiet"
+                        || win.levelData.state === "noisy") ? "#F5C542"
+                     : "#FF5A6E"
+            }
+            Text {
+                text: win.levelData ? win.levelData.advice : ""
+                color: "#D0D4D8"; font.pixelSize: 26
+                wrapMode: Text.Wrap; width: parent.width
+            }
+        }
+        MouseArea { anchors.fill: parent; onClicked: levelPanel.visible = false }
     }
 
     Rectangle {  // device fault pill — overlays the center strip, both readers

@@ -28,6 +28,10 @@ class AudioFrontend:
         self.on_segment = on_segment or (lambda *a: None)
         self.ledger = GateLedger()
         self.registry = TurnRegistry()
+        self.energy = []   # (sample_idx, fl_rms, fr_rms) per 32 ms block,
+                           # post-gain; appended by the processing thread,
+                           # read (atomic tail slices only) by the UI level
+                           # panel
         self.muted = {config.PERSON_A: False, config.PERSON_B: False}
         self.error = None
         self._blocks = queue.Queue(maxsize=256)
@@ -103,7 +107,7 @@ class AudioFrontend:
     def _run(self):
         A, B = config.PERSON_A, config.PERSON_B
         other = {A: B, B: A}
-        energy = []
+        energy = self.energy   # in-place mutations only — shared with the UI
         ENERGY_KEEP = int(180 * config.SR / config.CHUNK)
         raw_tail = {0: [], 1: []}
         TAIL_BLOCKS = int(3 * config.SR / config.CHUNK)
