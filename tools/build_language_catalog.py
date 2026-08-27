@@ -22,11 +22,17 @@ PIPER_JSON, OUT = sys.argv[1], sys.argv[2]
 SUPERTONIC = {"ar", "bg", "cs", "da", "de", "el", "en", "es", "et", "fi", "fr",
               "hi", "hr", "hu", "id", "it", "ja", "ko", "lt", "lv", "nl", "pl",
               "pt", "ro", "ru", "sk", "sl", "sv", "tr", "uk", "vi"}
-# en moved to SenseVoice 2026-08-27: measured 17-30x faster than whisper base
-# (RTF ~0.05 vs 0.21-1.62) with comparable accuracy on 8 real mic clips —
-# drops the en-path compute ratio to ~0.8-1.0x real time. Other Latin-script
-# languages stay on whisper (SenseVoice covers zh/yue/en/ja/ko only).
-SENSEVOICE = {"zh", "ja", "ko", "en"}
+# Three-engine routing (2026-08-27). SenseVoice keeps the CJK languages it
+# is best at (plus yue if it ever gains a voice). Parakeet TDT 0.6B v3 int8
+# takes its 25 European languages — benchmarked on this device at RTF
+# 0.115-0.132 (3-4.7x faster than whisper base) with ~1/3 the WER, full
+# punctuation and casing; en rode along from SenseVoice per the partition
+# (also fixes SenseVoice's sparse punctuation on long input). Whisper base
+# keeps everything else. List verified against the nvidia model card.
+SENSEVOICE = {"zh", "ja", "ko", "yue"}
+PARAKEET = {"bg", "hr", "cs", "da", "nl", "en", "et", "fi", "fr", "de",
+            "el", "hu", "it", "lv", "lt", "mt", "pl", "pt", "ro", "sk",
+            "sl", "es", "sv", "ru", "uk"}
 VERIFIED = ["zh", "ja", "en", "es", "pt", "de", "ru", "fr"]  # bench-tested, best-first
 
 # code: (native name, flag, FLORES code, est. WER %)
@@ -90,7 +96,8 @@ for code, (name, flag, flores, wer) in LANGS.items():
     out.append({
         "code": code, "name": name, "flag": flag, "flores": flores,
         "wer": wer, "verified": code in VERIFIED,
-        "asr": "sensevoice" if code in SENSEVOICE else "whisper",
+        "asr": ("sensevoice" if code in SENSEVOICE
+                else "parakeet" if code in PARAKEET else "whisper"),
         "tts": tts, "ttsVoice": voice, "voiceMB": size_mb,
     })
 

@@ -72,13 +72,23 @@ class AsrWorker(threading.Thread):
             model=f"{config.MODELS}/sensevoice/model.int8.onnx",
             tokens=f"{config.MODELS}/sensevoice/tokens.txt",
             num_threads=config.ASR_THREADS, use_itn=True, language="auto")
-        # warm both so the first real turn pays no first-call cost
+        # Parakeet TDT 0.6B v3 int8 — the 25 European languages (multilingual,
+        # auto language, full punctuation). 641 MB read from SD dominates a
+        # cold start; the READY gate deliberately waits for it.
+        P = f"{config.MODELS}/parakeet-tdt-v3-int8"
+        self._parakeet = so.OfflineRecognizer.from_transducer(
+            encoder=f"{P}/encoder.int8.onnx", decoder=f"{P}/decoder.int8.onnx",
+            joiner=f"{P}/joiner.int8.onnx", tokens=f"{P}/tokens.txt",
+            num_threads=config.ASR_THREADS, model_type="nemo_transducer")
+        # warm all three so the first real turn pays no first-call cost
         list(self._whisper.transcribe(np.zeros(config.SR, dtype=np.float32),
                                       language="en", beam_size=1)[0])
-        st = self._sense.create_stream()
-        st.accept_waveform(config.SR, np.zeros(config.SR, dtype=np.float32))
-        self._sense.decode_stream(st)
-        self.on_log(f"ASR  models loaded and warm in {time.time()-t0:.1f}s")
+        for eng in (self._sense, self._parakeet):
+            st = eng.create_stream()
+            st.accept_waveform(config.SR, np.zeros(config.SR, dtype=np.float32))
+            eng.decode_stream(st)
+        self.on_log(f"ASR  models loaded and warm in {time.time()-t0:.1f}s "
+                    f"(whisper + sensevoice + parakeet)")
         self.on_ready()
 
         held = {}   # person -> dict(turn, audio, text, deadline)
@@ -195,6 +205,11 @@ class AsrWorker(threading.Thread):
             st = self._sense.create_stream()
             st.accept_waveform(config.SR, audio)
             self._sense.decode_stream(st)
+            return st.result.text.strip()
+        if entry["asr"] == "parakeet":
+            st = self._parakeet.create_stream()
+            st.accept_waveform(config.SR, audio)
+            self._parakeet.decode_stream(st)
             return st.result.text.strip()
         segs, _ = self._whisper.transcribe(
             audio, language=entry["code"], beam_size=1,
