@@ -35,6 +35,27 @@ VAD_MAX_SPEECH = 10.0   # force-split monologues; one whisper window, bounded wa
                         # enforces this wall-clock cap itself via
                         # is_speech_detected() + flush().
 
+# Mid-speech chunk closing (2026-08-27): translation starts before the
+# speaker stops. Once a continuous run reaches CHUNK_CAP the segment closes
+# early — preferring a real energy gap: from CHUNK_CAP − CHUNK_DIP_WINDOW
+# onward, the first spot where the channel's block energy stays below
+# CHUNK_DIP_FRAC × the run's median for CHUNK_DIP_MIN_S is the cut (it lands
+# ~0.2 s inside a natural inter-word/clause gap; stop-consonant closures are
+# too short to qualify, which keeps cuts out of the middle of words). No gap
+# by CHUNK_CAP → cut there anyway, marked a seam like the old 10 s cap.
+# Dip cuts are NOT seams — a clean break at a real gap streams straight
+# through the merge window instead of re-merging into big turns.
+# VAD_MAX_SPEECH stays as the outer bound. Tune the first two on the bench.
+CHUNK_CAP = 4.0
+CHUNK_DIP_WINDOW = 1.2
+CHUNK_DIP_FRAC = 0.55    # "low" = below this fraction of the run's median RMS.
+                         # Measured 2026-08-27 on real captures: room floor sits
+                         # at ~0.40 x median at 0 gain, so anything <=0.4 can
+                         # never trigger; 0.55 sits between floor and speech and
+                         # finds 0.13-0.64 s clause gaps in every 10 s sample.
+CHUNK_DIP_MIN_S = 0.12   # low must persist this long to be a real gap
+                         # (stop-consonant closures are ~0.06-0.10 s)
+
 # Ratio is computed over speech-active frames only (own RMS >= this fraction of
 # the segment's peak), not the whole span — pauses inside a segment sit at noise
 # floor on both channels and dilute the ratio toward 0 (bench: dropped an easy

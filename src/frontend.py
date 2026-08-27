@@ -153,6 +153,9 @@ class AudioFrontend:
         speech_start = {A: None, B: None}
         speech_state = {A: False, B: False}
         forced_next = {A: False, B: False}
+        dip_next = {A: False, B: False}
+        run_rms = {A: [], B: []}     # own-channel block RMS of the current run
+        low_run = {A: 0, B: 0}       # consecutive below-threshold blocks
         raw_since = {A: None, B: None}
         last_accept = {A: (-99.0, -99.0), B: (-99.0, -99.0)}
 
@@ -249,15 +252,42 @@ class AudioFrontend:
                 if raw:
                     if speech_start[person] is None:
                         speech_start[person] = s0
-                    elif (s0 - speech_start[person]) / config.SR >= \
-                            config.VAD_MAX_SPEECH:
+                        run_rms[person] = []
+                        low_run[person] = 0
+                    run_rms[person].append(energy[-1][own_i])
+                    age = (s0 - speech_start[person]) / config.SR
+                    cut = None
+                    if config.CHUNK_CAP and \
+                            age >= config.CHUNK_CAP - config.CHUNK_DIP_WINDOW:
+                        ref = float(np.median(run_rms[person]))
+                        if ref > 0 and run_rms[person][-1] < \
+                                config.CHUNK_DIP_FRAC * ref:
+                            low_run[person] += 1
+                        else:
+                            low_run[person] = 0
+                        gap_s = low_run[person] * config.CHUNK / config.SR
+                        if gap_s >= config.CHUNK_DIP_MIN_S:
+                            cut = ("dip", f"dip-cut at {age:.1f}s "
+                                   f"(gap {gap_s:.2f}s)")
+                        elif age >= config.CHUNK_CAP:
+                            cut = ("cap", f"forced at {config.CHUNK_CAP:.1f}s "
+                                   f"(no gap found)")
+                    if cut is None and age >= config.VAD_MAX_SPEECH:
+                        cut = ("cap", f"forced at "
+                               f"{config.VAD_MAX_SPEECH:.0f}s")
+                    if cut is not None:
                         v.flush()
-                        forced_next[person] = True
-                        self.on_log(f"SPLIT ch={person} forced at "
-                                    f"{config.VAD_MAX_SPEECH:.0f}s")
+                        if cut[0] == "dip":
+                            dip_next[person] = True
+                        else:
+                            forced_next[person] = True
+                        self.on_log(f"SPLIT ch={person} {cut[1]}")
                         speech_start[person] = None
+                        run_rms[person] = []
+                        low_run[person] = 0
                 else:
                     speech_start[person] = None
+                    low_run[person] = 0
 
             for person in (A, B):
                 v = self._vads[person]
@@ -267,6 +297,14 @@ class AudioFrontend:
                     b = a + len(seg.samples) / config.SR
                     audio = np.asarray(seg.samples, dtype=np.float32)
                     v.pop()
+                    if b - a < config.VAD_MIN_SPEECH:
+                        # flush artifact: the VAD's own minimum is 0.25 s, so
+                        # anything shorter can only come from a cap/dip flush
+                        # landing on an empty run (seen at PTT release and at
+                        # end-of-speech dip cuts). Never a real utterance.
+                        self.on_log(f"SEG  ch={person} {b-a:4.2f}s span "
+                                    f"{a:6.2f}-{b:6.2f}  -> SKIP flush artifact")
+                        continue
                     own, oth = seg_rms(person, int(a * config.SR),
                                        int(b * config.SR))
                     if self.ptt_covers(person, a, b):
@@ -282,7 +320,11 @@ class AudioFrontend:
                              f"span {a:6.2f}-{b:6.2f}")
                     if dec == arbitration.ACCEPT:
                         t = self.registry.new_turn(person, a, b)
-                        t.forced_split = forced_next[person]
+                        dip = dip_next[person]
+                        dip_next[person] = False
+                        # a dip cut is a clean break at a real gap — NOT a
+                        # seam, so it streams through the merge window
+                        t.forced_split = forced_next[person] and not dip
                         forced_next[person] = False
                         oa, ob = last_accept[other[person]]
                         overlap = a < ob and b > oa
@@ -290,6 +332,7 @@ class AudioFrontend:
                         continues = (a - prev_end) <= config.GROUP_CONTINUE_GAP \
                             or v.is_speech_detected()
                         self.on_log(f"{stamp}  {why} -> ACCEPT turn#{t.turn_id}"
+                                    + ("  [dip-cut]" if dip else "")
                                     + ("  [forced-split seam]"
                                        if t.forced_split else "")
                                     + ("  [OVERLAP]" if overlap else ""))
@@ -297,4 +340,5 @@ class AudioFrontend:
                         self.on_segment(t, audio, overlap, continues)
                     else:
                         forced_next[person] = False
+                        dip_next[person] = False
                         self.on_log(f"{stamp}  -> {dec}: {why}")
