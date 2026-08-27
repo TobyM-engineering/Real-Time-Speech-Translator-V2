@@ -11,14 +11,17 @@ CHUNK = 512           # samples per block = 32 ms; Silero's native chunk
 PERSON_A = "A"        # left channel,  black windscreen
 PERSON_B = "B"        # right channel, grey windscreen
 
-# Fixed digital gain at capture (2026-08-26): DJI app gain maxed at +12 still
-# leaves worn chest speech at -33.4 dBFS vs the -21..-26 verified band — the
-# hardware ran out of range. +8 dB brings worn speech to ≈-25 dBFS. Applied to
-# both channels before VAD/energy/ASR so everything sees the verified level.
-# Ratio math is relative (gain cancels); VAD returns to its verified operating
-# level; the noise floor rises equally — watch for VAD false positives in fan
-# noise.
-CAPTURE_GAIN_DB = 8.0
+# Digital gain at capture: 0 — the mechanism stays, the compensation is gone.
+# History (2026-08-26): worn speech read -33..-45 dBFS and +8 dB was added here
+# to compensate. The low level turned out to be a TRANSIENT DJI TRANSMITTER
+# STATE — after power-cycling both TXs, worn speech measured -19.3 dBFS raw,
+# 21 dB above room noise, at the loud edge of the -21..-26 verified band with
+# no help. +8 on top of the healthy level put speech at -11 dBFS, where peaks
+# flatten against full scale (clipping — a fresh way to garble ASR), so the
+# gain is back to 0 and every threshold below operates at the level it was
+# bench-verified at. If worn levels ever collapse again: POWER-CYCLE THE
+# TRANSMITTERS FIRST — before app gain, before software.
+CAPTURE_GAIN_DB = 0.0
 
 # VAD endpointing (fragment policy, measured)
 VAD_MIN_SILENCE = 0.7
