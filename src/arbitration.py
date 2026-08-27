@@ -15,6 +15,7 @@ DROP_AMBIGUOUS = "DROP_AMBIGUOUS"  # similar coupling: overlap or mid-table voic
 DROP_MUTED = "DROP_MUTED"
 GATE_DISCARD = "GATE_DISCARD"      # our own TTS leaking bud → chest mic
 GATE_TRIM = "GATE_TRIM"            # partial overlap; remainder would proceed
+DROP_PTT_OTHER = "DROP_PTT_OTHER"  # the other half is holding to talk
 
 
 def ratio_db(own_rms, other_rms):
@@ -23,6 +24,18 @@ def ratio_db(own_rms, other_rms):
     if own_rms <= 1e-9:
         return -99.0
     return 20.0 * math.log10(own_rms / other_rms)
+
+
+def decide_ptt(muted):
+    """Hold-to-talk (2026-08-26): the person has explicitly claimed their own
+    mic, so the ratio test AND the anti-feedback gate are both bypassed —
+    only mute still applies. No feedback loop is possible during a hold: the
+    other channel is dropped outright for its duration, so TTS leak accepted
+    here plays into the OTHER ear once, and its re-pickup lands on the
+    dropped channel."""
+    if muted:
+        return DROP_MUTED, "person muted"
+    return ACCEPT, "hold-to-talk (ratio and gate bypassed)"
 
 
 def decide(person, own_rms, other_rms, muted, ledger, t0, t1):

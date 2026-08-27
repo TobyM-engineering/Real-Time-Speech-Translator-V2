@@ -356,6 +356,14 @@ class Bridge(QObject):
         with self._lock:
             self._recompute()
 
+    @Slot(str, bool)
+    def setHold(self, person, value):
+        """Hold-to-talk from the touch layer. Mute wins over a hold."""
+        if value and self.frontend.muted[person]:
+            self._log(f"CTRL {person} hold-to-talk refused (muted)")
+            return
+        self.frontend.set_ptt(person, value)
+
     @Slot(str, str)
     def setLanguage(self, person, code):
         entry = self._by_code.get(code)

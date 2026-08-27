@@ -32,6 +32,7 @@ Window {
         property real hintUntil: 0
 
         property real backlogS: 0
+        property bool holdActive: false
         readonly property var stateColors: ({
             ready: "#101216", listening: "#0B4030",
             translating: "#413306", muted: "#2A0B0F",
@@ -49,8 +50,41 @@ Window {
             return key.indexOf("pause") === 0 ? s : s.toUpperCase()
         }
 
-        color: stateColors[stateKey] || "#101216"
+        color: holdActive ? "#0E5040" : (stateColors[stateKey] || "#101216")
         Behavior on color { ColorAnimation { duration: 350 } }
+
+        MouseArea {  // hold-to-talk: press-and-hold anywhere on the half's
+                     // background. Declared FIRST so every real control —
+                     // chip, mute, band, picker, flash — stacks above it and
+                     // keeps its own tap. A short hold arms nothing.
+            id: pttArea
+            anchors.fill: parent
+            enabled: half.stateKey !== "muted"
+            function endHold() {
+                pttTimer.stop()
+                charge.visible = false
+                if (half.holdActive) {
+                    half.holdActive = false
+                    bridge.setHold(half.person, false)
+                }
+            }
+            onPressed: {
+                charge.visible = true
+                chargeAnim.restart()
+                pttTimer.restart()
+            }
+            onReleased: endHold()
+            onCanceled: endHold()
+            Timer {
+                id: pttTimer; interval: 1000
+                onTriggered: if (pttArea.pressed
+                                 && half.stateKey !== "muted") {
+                    charge.visible = false
+                    half.holdActive = true
+                    bridge.setHold(half.person, true)
+                }
+            }
+        }
 
         Connections {
             target: bridge
@@ -114,6 +148,7 @@ Window {
         Rectangle {  // state ring — smaller and higher so the status word
                      // never collides with it; yields entirely to the band
             visible: half.transcript === "" && half.stateKey.indexOf("pause") !== 0
+                     && !half.holdActive
             width: 150; height: 150; radius: 75
             color: "transparent"; border.width: 11
             border.color: ringColors[half.stateKey] || "#3A3D42"
@@ -127,6 +162,35 @@ Window {
                 NumberAnimation { from: 1.12; to: 1.0; duration: 600
                                   easing.type: Easing.InOutQuad }
             }
+        }
+
+        Rectangle {  // hold-to-talk charge cue: grows through the 1 s press,
+                     // vanishes without trace if released early
+            id: charge
+            visible: false
+            width: 110; height: 110; radius: 55
+            color: "transparent"; border.width: 6; border.color: "#882EE6A8"
+            anchors.centerIn: parent; anchors.verticalCenterOffset: -85
+            NumberAnimation { id: chargeAnim; target: charge
+                              property: "scale"
+                              from: 0.5; to: 1.45; duration: 1000 }
+        }
+        Rectangle {  // hold-to-talk active: filled pulsing dot replaces the ring
+            visible: half.holdActive && half.transcript === ""
+            width: 150; height: 150; radius: 75; color: "#2EE6A8"
+            anchors.centerIn: parent; anchors.verticalCenterOffset: -85
+            SequentialAnimation on opacity {
+                running: half.holdActive
+                loops: Animation.Infinite
+                NumberAnimation { from: 1.0; to: 0.55; duration: 450 }
+                NumberAnimation { from: 0.55; to: 1.0; duration: 450 }
+            }
+        }
+        Rectangle {  // hold-to-talk active: unmistakable frame on this half
+            visible: half.holdActive
+            anchors.fill: parent
+            color: "transparent"; radius: 4
+            border.width: 10; border.color: "#2EE6A8"
         }
 
         Text {  // status word (or localized pause sentence), fit-to-width
@@ -274,6 +338,11 @@ Window {
             visible: false
             anchors.fill: parent
             color: "#FA0E1013"
+            MouseArea {  // tap beside the grid closes the picker — and stops
+                         // presses falling through to the hold-to-talk layer
+                anchors.fill: parent
+                onClicked: picker.visible = false
+            }
             GridView {
                 id: langGrid
                 anchors.fill: parent; anchors.margins: 10
@@ -337,21 +406,25 @@ Window {
             person: "B"
         }
         Rectangle {  // centre strip — its dot doubles as the mic-check button
+                     // (tap target lives at window level, below)
             width: win.width; height: 12; color: "black"
             Rectangle { width: 14; height: 14; radius: 7
                         color: win.pipelineReady ? "#2EE6A8" : "#F5C542"
                         anchors.centerIn: parent }
-            MouseArea {  // generous target: at centre-x the chips and mute
-                         // buttons are ≥150 px away, and both transcript
-                         // bands live at the OUTER screen edges
-                width: 150; height: 110; anchors.centerIn: parent
-                onClicked: levelPanel.visible = true
-            }
         }
         PersonHalf {
             width: win.width; height: (win.height - 12) / 2
             person: "A"
         }
+    }
+
+    MouseArea {  // the centre dot's tap target — at window level so it wins
+                 // over both halves' hold-to-talk layers. Chips and mute
+                 // buttons stay ≥150 px away at centre-x; both transcript
+                 // bands live at the OUTER screen edges.
+        width: 150; height: 110
+        anchors.centerIn: parent
+        onClicked: levelPanel.visible = true
     }
 
     component LevelMeter: Item {

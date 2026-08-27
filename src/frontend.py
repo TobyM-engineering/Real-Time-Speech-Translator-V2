@@ -33,6 +33,8 @@ class AudioFrontend:
                            # read (atomic tail slices only) by the UI level
                            # panel
         self.muted = {config.PERSON_A: False, config.PERSON_B: False}
+        self.ptt = {config.PERSON_A: False, config.PERSON_B: False}
+        self._ptt_ivs = {config.PERSON_A: [], config.PERSON_B: []}
         self.error = None
         self._blocks = queue.Queue(maxsize=256)
         self._stop = threading.Event()
@@ -47,6 +49,28 @@ class AudioFrontend:
     def set_muted(self, person, value):
         self.muted[person] = bool(value)
         self.on_log(f"CTRL {person} muted={bool(value)}")
+
+    def set_ptt(self, person, active):
+        """Hold-to-talk (UI). Hold spans are kept as stream-time intervals so
+        a segment that STRADDLES press or release still counts as held — the
+        closing segment of a hold always arrives ~0.7 s AFTER release, when
+        the endpoint silence completes."""
+        now_s = (time.time() - self.start_wall) if self.start_wall else 0.0
+        ivs = self._ptt_ivs[person]
+        if active and not self.ptt[person]:
+            ivs.append([now_s, None])
+            del ivs[:-6]
+        elif not active and self.ptt[person] and ivs and ivs[-1][1] is None:
+            ivs[-1][1] = now_s
+        self.ptt[person] = bool(active)
+        self.on_log(f"CTRL {person} hold-to-talk={'ON' if active else 'off'}")
+
+    def ptt_covers(self, person, a, b):
+        """Did [a, b] (stream seconds) overlap any of this person's holds?"""
+        for s, e in list(self._ptt_ivs[person]):
+            if a < (e if e is not None else float("inf")) and b > s:
+                return True
+        return False
 
     # -- lifecycle ------------------------------------------------------
     def start(self):
@@ -199,8 +223,12 @@ class AudioFrontend:
                 oth = float(np.sqrt(np.mean([e[oth_i] ** 2 for e in frames])))
                 settled = raw_since[person] is not None and \
                     (s0 - raw_since[person]) / config.SR >= config.LIVE_ONSET_HOLD_S
-                lit = raw and settled and arbitration.ratio_db(own, oth) \
-                    > -config.LIVE_RATIO_SUPPRESS_DB
+                # during a hold, trust the channel: light instantly, no
+                # ratio suppression, no onset hold
+                lit = raw and (self.ptt[person]
+                               or (settled
+                                   and arbitration.ratio_db(own, oth)
+                                   > -config.LIVE_RATIO_SUPPRESS_DB))
                 if lit != speech_state[person]:
                     speech_state[person] = lit
                     self.on_speech(person, lit)
@@ -229,9 +257,15 @@ class AudioFrontend:
                     v.pop()
                     own, oth = seg_rms(person, int(a * config.SR),
                                        int(b * config.SR))
-                    dec, why = arbitration.decide(
-                        person, own, oth, self.muted[person],
-                        self.ledger, a, b)
+                    if self.ptt_covers(person, a, b):
+                        dec, why = arbitration.decide_ptt(self.muted[person])
+                    elif self.ptt_covers(other[person], a, b):
+                        dec, why = (arbitration.DROP_PTT_OTHER,
+                                    "other half is holding to talk")
+                    else:
+                        dec, why = arbitration.decide(
+                            person, own, oth, self.muted[person],
+                            self.ledger, a, b)
                     stamp = (f"SEG  ch={person} {b-a:4.1f}s "
                              f"span {a:6.2f}-{b:6.2f}")
                     if dec == arbitration.ACCEPT:
