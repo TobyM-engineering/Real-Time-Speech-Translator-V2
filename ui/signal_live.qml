@@ -15,6 +15,23 @@ Window {
     property string faultMsg: ""
     property int battPercent: -1
     property string battState: ""
+
+    function battColor(p) {
+        // continuous green -> amber -> red as the pack empties:
+        // solid green >= 60, blend to amber down to 25, blend to red
+        // down to 8, solid red below. No threshold jumps.
+        var g = Qt.color("#2EE6A8"), a = Qt.color("#F5C542"),
+            r = Qt.color("#FF5A6E")
+        function mix(c1, c2, t) {
+            return Qt.rgba(c1.r + (c2.r - c1.r) * t,
+                           c1.g + (c2.g - c1.g) * t,
+                           c1.b + (c2.b - c1.b) * t, 1)
+        }
+        if (p >= 60) return g
+        if (p >= 25) return mix(a, g, (p - 25) / 35)
+        if (p >= 8)  return mix(r, a, (p - 8) / 17)
+        return r
+    }
     property var levelData: null
     Connections {
         target: bridge
@@ -462,8 +479,7 @@ Window {
                     anchors.verticalCenter: parent ? parent.verticalCenter
                                                    : undefined
                     x: win.width / 2 + modelData - width / 2
-                    color: win.battPercent > 30 ? "#2EE6A8"
-                         : win.battPercent > 10 ? "#F5C542" : "#FF5A6E"
+                    color: win.battColor(win.battPercent)
                     SequentialAnimation on opacity {
                         running: win.battState.indexOf("charging") >= 0
                         loops: Animation.Infinite
@@ -552,8 +568,17 @@ Window {
                x: track.width - width }
     }
 
+    MouseArea {  // modal scrim while the panel is open: a tap ANYWHERE on
+                 // the screen closes it (and nothing underneath — chips,
+                 // mute, hold-to-talk — can be hit by accident)
+        visible: levelPanel.visible
+        anchors.fill: parent
+        onClicked: levelPanel.visible = false
+        Rectangle { anchors.fill: parent; color: "#59000000" }
+    }
+
     Rectangle {  // mic level panel — opened by the centre dot, closed by one
-                 // tap anywhere on it. Reads from A's side (a bench tool).
+                 // tap anywhere on the screen. Reads from A's side.
         id: levelPanel
         visible: false
         property real closedAt: 0
@@ -604,8 +629,7 @@ Window {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 text: "🔋 " + win.battPercent + "%  ·  " + win.battState
-                color: win.battPercent > 30 ? "#2EE6A8"
-                     : win.battPercent > 10 ? "#F5C542" : "#FF5A6E"
+                color: win.battColor(win.battPercent)
                 font.pixelSize: 30
             }
         }
