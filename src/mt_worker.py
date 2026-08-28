@@ -29,10 +29,13 @@ def _desubtitle(out):
 
 
 class MtWorker(threading.Thread):
-    def __init__(self, on_log, on_translated):
+    def __init__(self, on_log, on_translated, on_untranslated=None):
+        """on_untranslated(turn, ear): the turn produced NO speakable output
+        (every sentence discarded) — the fall-through gap signal."""
         super().__init__(name="mt", daemon=True)
         self.on_log = on_log
         self.on_translated = on_translated
+        self.on_untranslated = on_untranslated
         self.q = queue.Queue()
         self._stopping = threading.Event()
 
@@ -71,6 +74,8 @@ class MtWorker(threading.Thread):
             if not out:
                 turn.state = "mt_dropped"   # terminal: keeps the lag metric honest
                 self.on_log(f"MT   turn#{turn.turn_id} nothing translatable")
+                if self.on_untranslated and text.strip():
+                    self.on_untranslated(turn, ear)
                 continue
             if turn.cancelled:
                 self.on_log(f"MT   turn#{turn.turn_id} cancelled during MT")

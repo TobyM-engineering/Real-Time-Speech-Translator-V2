@@ -33,6 +33,7 @@ Window {
 
         property real backlogS: 0
         property bool holdActive: false
+        property string gapText: ""
         readonly property var stateColors: ({
             ready: "#101216", listening: "#0B4030",
             translating: "#413306", muted: "#2A0B0F",
@@ -97,6 +98,13 @@ Window {
                 half.draining = false
                 drain.stop()
                 band.drainT = 1.0
+            }
+            function onGapNotice(p, text) {
+                // fall-through: p is the LISTENER — something was said to
+                // them that could not be verified; show it untranslated
+                if (p !== half.person) return
+                half.gapText = text
+                gapTimer.restart()
             }
             function onGroupClosed(p, cancelled) {
                 if (p !== half.person) return
@@ -191,6 +199,34 @@ Window {
             anchors.fill: parent
             color: "transparent"; radius: 4
             border.width: 10; border.color: "#2EE6A8"
+        }
+
+        Timer { id: gapTimer; interval: 5000
+                onTriggered: half.gapText = "" }
+        Rectangle {  // fall-through notice: the other person said something
+                     // that could not be verified — shown untranslated with
+                     // a symbol, no catalog string needed
+            visible: half.gapText !== ""
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top; anchors.topMargin: 168
+            width: parent.width - 48
+            height: gapCol.implicitHeight + 26
+            radius: 12
+            color: "#D91E1A0C"; border.color: "#F5C542"; border.width: 2
+            Row {
+                id: gapCol
+                anchors.centerIn: parent
+                spacing: 14
+                width: parent.width - 36
+                Text { text: "⚠"; color: "#F5C542"; font.pixelSize: 40 }
+                Text {
+                    text: "“" + half.gapText + "”"
+                    color: "#F5C542"; font.pixelSize: 36
+                    width: parent.width - 60
+                    wrapMode: Text.Wrap; maximumLineCount: 2
+                    elide: Text.ElideRight
+                }
+            }
         }
 
         Text {  // status word (or localized pause sentence), fit-to-width

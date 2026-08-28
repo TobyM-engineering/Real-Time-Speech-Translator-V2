@@ -136,6 +136,14 @@ MT_INTRA_THREADS = 2
 # -0.35 across all 180) plus digit check still guard the starved class.
 MT_RATIO_FLAG = 1.9
 
+# Fall-through gap signal (2026-08-27): when a turn yields NO audio (all
+# sentences discarded / nothing translatable / TTS failure), the listener
+# hears a soft double-tone and sees the untranslated source text — the gap
+# is visible, never silent, and no unverified translation is spoken.
+# Historical rate measured across all session logs: 4 triggers in 22 turns,
+# ALL now interjection-table hits -> expected rare. Level relative to speech.
+GAP_TONE_LEVEL = 0.25
+
 # Stage 3 — audio out (D3 spike 2026-08-26: pw-play --raw stdin, pipe shrunk
 # via F_SETPIPE_SZ 64 KB→16 KB = write-to-sink buffering ~100 ms)
 AIRPODS_NODE = "bluez_output.10_B5_88_97_3B_1B.1"

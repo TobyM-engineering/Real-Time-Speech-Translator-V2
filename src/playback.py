@@ -44,6 +44,29 @@ class Playback(threading.Thread):
 
         self.last_write_wall = None   # stall detector: supervisor watches this
 
+        # gap tone: two soft descending notes (~250 ms) — "something didn't
+        # come through", deliberately not an alert chime
+        sr = config.OUT_RATE
+        def note(freq, dur):
+            t = np.arange(int(dur * sr)) / sr
+            x = np.sin(2 * np.pi * freq * t).astype(np.float32)
+            f = int(0.010 * sr)
+            x[:f] *= np.linspace(0, 1, f, dtype=np.float32)
+            x[-f:] *= np.linspace(1, 0, f, dtype=np.float32)
+            return x
+        self._gap_tone = (np.concatenate([
+            note(660, 0.11), np.zeros(int(0.02 * sr), dtype=np.float32),
+            note(520, 0.11)]) * config.GAP_TONE_LEVEL)
+
+    def enqueue_gap(self, ear):
+        """Queue the gap tone into this ear — a turnless signal item: no
+        state changes, no cancel semantics, but it DOES write the gate
+        ledger like any audio into an ear."""
+        with self._lock:
+            self._ears[ear].queue.append(
+                {"turn": None, "samples": self._gap_tone,
+                 "not_before": 0.0, "enqueued_at": time.time()})
+
     def enqueue(self, ear, turn, samples, not_before):
         with self._lock:
             self._ears[ear].queue.append(
@@ -65,7 +88,7 @@ class Playback(threading.Thread):
             for ear, e in self._ears.items():
                 keep = [i for i in e.queue
                         if now - i["enqueued_at"] <= max_age_s
-                        and not i["turn"].cancelled]
+                        and (i["turn"] is None or not i["turn"].cancelled)]
                 dropped = len(e.queue) - len(keep)
                 if dropped:
                     self.on_log(f"PLAY dropped {dropped} stale queued item(s) "
@@ -119,7 +142,8 @@ class Playback(threading.Thread):
                                                 if e.last_end else e.wait_cause)
                             while e.queue:
                                 head = e.queue[0]
-                                if head["turn"].cancelled:
+                                if head["turn"] is not None and \
+                                        head["turn"].cancelled:
                                     e.queue.popleft()
                                     self.on_log(f"PLAY turn#"
                                                 f"{head['turn'].turn_id} "
@@ -134,16 +158,21 @@ class Playback(threading.Thread):
                         if e.current is not None:
                             gap = (now - e.last_end) if e.last_end else 0.0
                             cause = e.wait_cause if gap > 0.05 else "seamless"
-                            self.on_log(f"PLAY ear={person} turn#"
-                                        f"{e.current['turn'].turn_id} start "
-                                        f"gap={gap:.2f}s cause={cause}")
                             e.wait_cause = "tick"
-                            e.current["turn"].state = "playing"
-                            self.on_play_start(e.current["turn"])
+                            if e.current["turn"] is None:
+                                self.on_log(f"PLAY ear={person} gap tone")
+                            else:
+                                self.on_log(f"PLAY ear={person} turn#"
+                                            f"{e.current['turn'].turn_id} "
+                                            f"start gap={gap:.2f}s "
+                                            f"cause={cause}")
+                                e.current["turn"].state = "playing"
+                                self.on_play_start(e.current["turn"])
                             if not e.active:
                                 e.active = True
                                 self.on_ear_active(person, True)
                     if e.current is not None and \
+                            e.current["turn"] is not None and \
                             e.current["turn"].cancelled and \
                             not e.current.get("fading"):
                         # cancel cuts the SOUNDING chunk too (2026-08-27):

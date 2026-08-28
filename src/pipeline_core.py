@@ -36,6 +36,8 @@ class Bridge(QObject):
     overlapHint = Signal()
     backlogMeter = Signal(str, float)      # person, seconds untranscribed
     faultChanged = Signal(str)             # device fault banner ("" = clear)
+    gapNotice = Signal(str, str)           # listener person, untranslated
+                                           # source text (fall-through)
     levelUpdate = Signal(str)              # mic level panel data, JSON
 
     def __init__(self, catalog, downstream=False):
@@ -73,9 +75,11 @@ class Bridge(QObject):
         self.mt = self.tts = self.playback = None
         if downstream:
             self.mt = MtWorker(on_log=self._log,
-                               on_translated=self._on_translated)
+                               on_translated=self._on_translated,
+                               on_untranslated=self._on_untranslated)
             self.tts = TtsWorker(
                 on_log=self._log, on_synth=self._on_synth,
+                on_failed=self._on_untranslated,
                 preload_codes=list(dict.fromkeys(
                     [self._lang[config.PERSON_A]["code"],
                      self._lang[config.PERSON_B]["code"]])),
@@ -323,15 +327,21 @@ class Bridge(QObject):
 
     def _styled_locked(self, g):
         out = []
+        dead = g.get("dead", set())
         for tid, txt in g["texts"]:
             e = escape(txt)
-            out.append(f'<font color="{_GREY}">{e}</font>'
-                       if tid in g["played"] else e)
+            if tid in dead:      # discarded: the speaker sees it undelivered
+                out.append(f'<s><font color="{_GREY}">{e}</font></s>')
+            elif tid in g["played"]:
+                out.append(f'<font color="{_GREY}">{e}</font>')
+            else:
+                out.append(e)
         return " ".join(out)
 
     def _on_transcript(self, turn, text):
         p = turn.person
         turn.t_shown_wall = time.time()
+        turn.src_text = text   # kept for the fall-through gap notice
         with self._lock:
             g = self._groups[p]
             if g is None or turn.turn_id not in g["turns"]:
@@ -371,6 +381,27 @@ class Bridge(QObject):
         # play-start is the moment the LAST in-flight turn can leave the
         # pending set — the close countdown must get a chance to arm here
         self._arm_close_check(p)
+
+    def _on_untranslated(self, turn, ear):
+        """Fall-through (design approved 2026-08-27): the turn yielded no
+        audio — make the gap VISIBLE, never speak an unverified guess. The
+        listener hears a soft tone and sees the untranslated source; the
+        speaker's band strikes the sentence through."""
+        text = getattr(turn, "src_text", "") or ""
+        self._log(f"GAP  turn#{turn.turn_id} signalled to ear {ear} "
+                  f"(untranslated source shown)")
+        if self.playback:
+            self.playback.enqueue_gap(ear)
+        self.gapNotice.emit(ear, text)
+        with self._lock:
+            g = self._groups[turn.person]
+            if g is not None and turn.turn_id in g["turns"]:
+                g.setdefault("dead", set()).add(turn.turn_id)
+                full = self._styled_locked(g)
+            else:
+                full = None
+        if full is not None:
+            self.groupText.emit(turn.person, full)
 
     def _on_ear_active(self, person, active):
         with self._lock:

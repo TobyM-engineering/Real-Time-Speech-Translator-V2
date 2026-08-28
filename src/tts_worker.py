@@ -13,7 +13,7 @@ from src import config
 
 class TtsWorker(threading.Thread):
     def __init__(self, on_log, on_synth, preload_codes, by_code,
-                 on_ready=None, active_codes=None):
+                 on_ready=None, active_codes=None, on_failed=None):
         """on_ready: called once after the startup preloads finish (ready is
         gated on it). active_codes: () -> set of currently selected language
         codes — the LRU never evicts one of these."""
@@ -24,6 +24,7 @@ class TtsWorker(threading.Thread):
         self.by_code = by_code
         self.on_ready = on_ready
         self.active_codes = active_codes
+        self.on_failed = on_failed   # (turn, ear): synth died — gap signal
         self.q = queue.Queue()
         self._voices = {}        # code -> (kind, engine, sr), LRU order
         self._supertonic = None
@@ -72,6 +73,8 @@ class TtsWorker(threading.Thread):
             except Exception as e:
                 turn.state = "tts_failed"   # terminal: keeps the lag metric honest
                 self.on_log(f"TTS  turn#{turn.turn_id} FAILED: {e}")
+                if self.on_failed:
+                    self.on_failed(turn, ear)
                 continue
             if turn.cancelled:
                 self.on_log(f"TTS  turn#{turn.turn_id} cancelled during synth")
