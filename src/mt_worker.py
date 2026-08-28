@@ -11,6 +11,22 @@ from src import config
 _SENT_SPLIT = re.compile(r"(?<=[.!?。！？…])\s+")
 _DIGITS_ONLY = re.compile(r"^[\d\s.,:;%\-+]+$")
 
+from src import interjections
+
+
+def _desubtitle(out):
+    """Strip NLLB's subtitle-dialog artifact (measured on 180 legit
+    translations: short inputs draw a leading '- ' and invented
+    second-speaker segments like '- Espera um momento. - Não.'). Keeps the
+    first speaker segment only."""
+    s = out.strip()
+    if s.startswith("- "):
+        s = s[2:].strip()
+    cut = s.find(" - ")
+    if cut > 0:
+        s = s[:cut].strip()
+    return s
+
 
 class MtWorker(threading.Thread):
     def __init__(self, on_log, on_translated):
@@ -51,8 +67,7 @@ class MtWorker(threading.Thread):
             if src["code"] == tgt["code"]:
                 out = text
             else:
-                out = self._translate(text, src["flores"], tgt["flores"],
-                                      turn.turn_id)
+                out = self._translate(text, src, tgt, turn.turn_id)
             if not out:
                 turn.state = "mt_dropped"   # terminal: keeps the lag metric honest
                 self.on_log(f"MT   turn#{turn.turn_id} nothing translatable")
@@ -65,11 +80,13 @@ class MtWorker(threading.Thread):
             turn.state = "translated"
             self.on_translated(turn, out, tgt, ear)
 
-    def _translate(self, text, src_f, tgt_f, tid):
+    def _translate(self, text, src, tgt, tid):
         """All sentences of a chunk in ONE translate_batch call — the 2x2
-        workers run them in parallel (-61..-75% on multi-sentence chunks,
-        measured; outputs byte-identical to the old per-sentence loop).
-        Digits passthrough and the per-sentence detector are unchanged."""
+        workers run them in parallel. Before MT: digits pass through, and
+        curated interjections take the table (measured 2026-08-27: EVERY
+        one-word input draws NLLB's subtitle-dialog prior). After MT: the
+        dialog-artifact sanitizer strips that prior's signature, and the
+        detector flags on the recalibrated threshold. Every discard logs."""
         sents = [s for s in _SENT_SPLIT.split(text.strip()) if s]
         if not sents:
             return ""
@@ -78,22 +95,38 @@ class MtWorker(threading.Thread):
         for i, sent in enumerate(sents):
             if _DIGITS_ONLY.match(sent):
                 parts[i] = sent   # digits pass through, never hallucinate
-            else:
-                todo.append((i, sent))
+                continue
+            concept = interjections.match(sent, src["code"])
+            if concept:
+                fixed = interjections.render(concept, tgt["code"])
+                if fixed:
+                    parts[i] = fixed
+                    self.on_log(f'MT   turn#{tid} interjection "{sent}" -> '
+                                f'"{fixed}" (curated table)')
+                    continue
+                self.on_log(f'MT   turn#{tid} interjection "{sent}" — no '
+                            f'curated {tgt["code"]} form, using MT')
+            todo.append((i, sent))
         if todo:
-            self._tok.src_lang = src_f
+            self._tok.src_lang = src["flores"]
             toks = [self._tok.convert_ids_to_tokens(self._tok.encode(s))
                     for _, s in todo]
             results = self._tr.translate_batch(
-                toks, target_prefix=[[tgt_f]] * len(toks),
+                toks, target_prefix=[[tgt["flores"]]] * len(toks),
                 beam_size=1, return_scores=True)
             for (i, sent), tk, r in zip(todo, toks, results):
                 out, ratio, per_tok, dig_ok = self._score(sent, tk, r)
-                flagged = ratio > 1.25 or per_tok < -0.40 or not dig_ok
+                clean = _desubtitle(out)
+                if clean != out:
+                    self.on_log(f'MT   turn#{tid} sanitized dialog artifact: '
+                                f'"{out}" -> "{clean}"')
+                    out = clean
+                flagged = (ratio > config.MT_RATIO_FLAG
+                           or per_tok < -0.40 or not dig_ok)
                 if flagged and len(sent.split()) < 4:
-                    self.on_log(f"MT   turn#{tid} dropped suspect fragment "
+                    self.on_log(f"MT   turn#{tid} DISCARDED suspect fragment "
                                 f'"{sent}" -> "{out}" (ratio {ratio:.2f}, '
-                                f"score {per_tok:.2f})")
+                                f"score {per_tok:.2f}, digits_ok={dig_ok})")
                     continue
                 if flagged:
                     self.on_log(f"MT   turn#{tid} FLAG (kept): "

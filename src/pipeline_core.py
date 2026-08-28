@@ -395,19 +395,32 @@ class Bridge(QObject):
         t = self._close_timers.pop(person, None)
         if t:
             t.cancel()
+        killed, cut = 0, 0
         with self._lock:
             g = self._groups[person]
             was_open = g is not None
-            targets = set(g["turns"]) if was_open else set()
+            group_ids = set(g["turns"]) if was_open else set()
             for t2 in self.frontend.registry.snapshot():
-                if t2.person == person and not t2.cancelled \
-                        and t2.state in self._PENDING_STATES:
-                    targets.add(t2.turn_id)
-            for tid in targets:
-                self.frontend.registry.cancel(tid)
+                if t2.person != person or t2.cancelled:
+                    continue
+                if t2.state in self._PENDING_STATES:
+                    self.frontend.registry.cancel(t2.turn_id)
+                    killed += 1          # genuinely stopped before playing
+                elif t2.state == "playing":
+                    self.frontend.registry.cancel(t2.turn_id)
+                    cut += 1             # mixer cuts its audio mid-chunk
+                elif t2.turn_id in group_ids:
+                    pass                 # already dead — not counted
             self._groups[person] = None
             self._recompute()
-        self._log(f"CTRL cancel {person}: {len(targets)} turn(s) killed"
+        bits = []
+        if killed:
+            bits.append(f"{killed} queued turn(s) killed")
+        if cut:
+            bits.append(f"{cut} playing turn(s) cut")
+        if not bits:
+            bits.append("nothing to cancel")
+        self._log(f"CTRL cancel {person}: {', '.join(bits)}"
                   f"{'' if was_open else ' (group was already closed)'}")
         self.groupClosed.emit(person, True)
 

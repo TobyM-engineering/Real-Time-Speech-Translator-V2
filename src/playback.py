@@ -143,6 +143,26 @@ class Playback(threading.Thread):
                             if not e.active:
                                 e.active = True
                                 self.on_ear_active(person, True)
+                    if e.current is not None and \
+                            e.current["turn"].cancelled and \
+                            not e.current.get("fading"):
+                        # cancel cuts the SOUNDING chunk too (2026-08-27):
+                        # play a 50 ms fade-out from the current position,
+                        # then this item ends; the pop loop skips the rest
+                        s = e.current["samples"]
+                        k = int(0.05 * config.OUT_RATE)
+                        end = min(len(s), e.pos + k)
+                        tail = s[e.pos:end].copy()
+                        if len(tail):
+                            tail *= np.linspace(1.0, 0.0, len(tail),
+                                                dtype=np.float32)
+                        e.current = {**e.current,
+                                     "samples": np.concatenate([s[:e.pos],
+                                                                tail]),
+                                     "fading": True}
+                        self.on_log(f"PLAY ear={person} turn#"
+                                    f"{e.current['turn'].turn_id} CUT "
+                                    f"mid-chunk ({len(tail)/config.OUT_RATE*1000:.0f} ms fade)")
                     if e.current is not None:
                         backlog = self.backlog_seconds(person)
                         speed = (config.DRAIN_SPEED

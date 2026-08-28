@@ -126,6 +126,16 @@ MT_THREADS = 3   # legacy serial figure — still used by preserved bench script
 MT_INTER_THREADS = 2
 MT_INTRA_THREADS = 2
 
+# Detector ratio flag, recalibrated 2026-08-27 on n=45 real sentences x 4
+# targets (180 legit translations): clean legit maxima es 1.43 / fr 1.71 /
+# de 1.40 / pt 1.33 — the fragment-study "1.00 ceiling" was ~a dozen
+# es-only samples and does not generalize (French runs long). 1.9 sits
+# above the measured clean maximum with margin; one-word inputs no longer
+# reach MT (interjection table), the dialog-artifact sanitizer handles the
+# subtitle-prior contamination, and the score floor (-0.40; legit min
+# -0.35 across all 180) plus digit check still guard the starved class.
+MT_RATIO_FLAG = 1.9
+
 # Stage 3 — audio out (D3 spike 2026-08-26: pw-play --raw stdin, pipe shrunk
 # via F_SETPIPE_SZ 64 KB→16 KB = write-to-sink buffering ~100 ms)
 AIRPODS_NODE = "bluez_output.10_B5_88_97_3B_1B.1"
