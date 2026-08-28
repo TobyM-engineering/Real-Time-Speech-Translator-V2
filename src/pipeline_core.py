@@ -169,6 +169,12 @@ class Bridge(QObject):
 
     def _poll_backlog(self):
         for p in (config.PERSON_A, config.PERSON_B):
+            # safety net: a turn that dies without a bridge callback
+            # (mt_dropped / tts_failed) lowers _inflight with no event, so
+            # re-arm the close countdown if none is pending
+            t = self._close_timers.get(p)
+            if self._groups[p] is not None and (t is None or not t.is_alive()):
+                self._arm_close_check(p)
             s = self._lag_for(p)
             lvl = (2 if s >= config.BACKLOG_HARD_S
                    else 1 if s >= config.BACKLOG_SOFT_S else 0)
@@ -246,6 +252,19 @@ class Bridge(QObject):
         return True
 
     # -- group close: after real quiet with nothing in flight ------------
+    def _inflight(self, p):
+        """Turns of this person still on their way to the ear. The close
+        check and the cancel sweep share the D5 pending-state set: a turn is
+        in flight until its audio has STARTED playing (or it hit a terminal
+        state). The 2026-08-27 cancel bug was exactly this set being ignored:
+        groups closed on the ASR-only pending counter while MT/TTS/queued
+        audio still trailed, and cancel found nothing to cancel."""
+        if not self.downstream:
+            return 0
+        return sum(1 for t in self.frontend.registry.snapshot()
+                   if t.person == p and not t.cancelled
+                   and t.state in self._PENDING_STATES)
+
     def _arm_close_check(self, person):
         t = self._close_timers.pop(person, None)
         if t:
@@ -253,7 +272,8 @@ class Bridge(QObject):
         with self._lock:
             idle = (self._groups[person] is not None
                     and self._pending[person] == 0
-                    and not self._speech[person])
+                    and not self._speech[person]
+                    and self._inflight(person) == 0)
         if idle:
             t = threading.Timer(config.GROUP_QUIET_CLOSE,
                                 self._try_close, args=(person,))
@@ -264,7 +284,7 @@ class Bridge(QObject):
     def _try_close(self, person):
         with self._lock:
             if (self._groups[person] is None or self._pending[person] > 0
-                    or self._speech[person]):
+                    or self._speech[person] or self._inflight(person) > 0):
                 return
             self._groups[person] = None
             self._recompute()
@@ -341,11 +361,16 @@ class Bridge(QObject):
         p = turn.person
         with self._lock:
             g = self._groups[p]
-            if g is None or turn.turn_id not in g["turns"]:
-                return
-            g["played"].add(turn.turn_id)
-            full = self._styled_locked(g)
-        self.groupText.emit(p, full)
+            if g is not None and turn.turn_id in g["turns"]:
+                g["played"].add(turn.turn_id)
+                full = self._styled_locked(g)
+            else:
+                full = None
+        if full is not None:
+            self.groupText.emit(p, full)
+        # play-start is the moment the LAST in-flight turn can leave the
+        # pending set — the close countdown must get a chance to arm here
+        self._arm_close_check(p)
 
     def _on_ear_active(self, person, active):
         with self._lock:
@@ -363,18 +388,27 @@ class Bridge(QObject):
     # -- QML slots (main thread) ----------------------------------------
     @Slot(str)
     def cancelGroup(self, person):
+        """Stop everything of this person's that is not yet playing —
+        whether or not the group object still exists (it can close under a
+        still-visible band), and even while one sentence is already
+        sounding: that one finishes, everything queued behind it dies."""
         t = self._close_timers.pop(person, None)
         if t:
             t.cancel()
         with self._lock:
             g = self._groups[person]
-            if g is None:
-                return
-            for tid in g["turns"]:
+            was_open = g is not None
+            targets = set(g["turns"]) if was_open else set()
+            for t2 in self.frontend.registry.snapshot():
+                if t2.person == person and not t2.cancelled \
+                        and t2.state in self._PENDING_STATES:
+                    targets.add(t2.turn_id)
+            for tid in targets:
                 self.frontend.registry.cancel(tid)
             self._groups[person] = None
             self._recompute()
-        self._log(f"CTRL cancel group ({len(g['turns'])} turns) for {person}")
+        self._log(f"CTRL cancel {person}: {len(targets)} turn(s) killed"
+                  f"{'' if was_open else ' (group was already closed)'}")
         self.groupClosed.emit(person, True)
 
     @Slot(str, bool)
