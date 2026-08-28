@@ -221,8 +221,11 @@ class AsrWorker(threading.Thread):
                 self._sense.decode_stream(st)
                 text, eng = st.result.text.strip(), "sensevoice"
             elif primary != "whisper":
+                # language pinned to the channel's setting — auto-LID on a
+                # rescue misfired live (es speech rescued as Italian
+                # "Quanto? Questo?", 2026-08-28)
                 segs, _ = self._whisper.transcribe(
-                    audio, language=None, beam_size=1,
+                    audio, language=entry["code"], beam_size=1,
                     condition_on_previous_text=False, without_timestamps=True)
                 text = " ".join(s.text.strip() for s in segs).strip()
                 eng = "whisper"

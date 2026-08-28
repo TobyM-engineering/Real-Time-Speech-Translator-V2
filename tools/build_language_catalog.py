@@ -30,9 +30,16 @@ SUPERTONIC = {"ar", "bg", "cs", "da", "de", "el", "en", "es", "et", "fi", "fr",
 # (also fixes SenseVoice's sparse punctuation on long input). Whisper base
 # keeps everything else. List verified against the nvidia model card.
 SENSEVOICE = {"zh", "ja", "ko", "yue"}
-PARAKEET = {"bg", "hr", "cs", "da", "nl", "en", "et", "fi", "fr", "de",
-            "el", "hu", "it", "lv", "lt", "mt", "pl", "pt", "ro", "sk",
-            "sl", "es", "sv", "ru", "uk"}
+# 2026-08-28 REVERSAL of the 08-27 partition (parakeet's 25 European
+# languages): parakeet runs its own internal language ID and sherpa's
+# transducer API exposes NO way to pin it, so short/accented non-English
+# speech decodes as English phonetics (live two-person bench: "bien" ->
+# "B N.", "¿cuánto cuestan?" -> "Conto question."). Parakeet now serves
+# ONLY en; whisper (explicit language= argument) takes every other
+# non-SenseVoice language. Model capability list kept for reference:
+# bg hr cs da nl en et fi fr de el hu it lv lt mt pl pt ro sk sl es sv
+# ru uk.
+PARAKEET = {"en"}
 VERIFIED = ["zh", "ja", "en", "es", "pt", "de", "ru", "fr"]  # bench-tested, best-first
 
 # code: (native name, flag, FLORES code, est. WER %)
