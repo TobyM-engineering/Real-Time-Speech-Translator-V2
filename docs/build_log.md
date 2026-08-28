@@ -396,3 +396,55 @@ survive power-off): the five measurement scripts CLAUDE.md cites, the eight
 ground-truth bench clips with their reference texts, and
 `piper_voices.json` — the catalog generator's required input — now all under
 `tools/`. Everything is committed; the working tree is clean.
+
+---
+
+## 2026-08-28 — the repo leaves the SD card; the hardware record meets the bench
+
+**Built:** the project's first remote. Toby created a private GitHub repo
+(`TobyM-engineering/Real-Time-Speech-Translator-V2`); before anything was
+pushed, the **entire git history** — every blob in every commit, not just
+the working tree — was scanned for secrets: API keys, provider token
+shapes (`ghp_`, `github_pat_`, `hf_`, `sk-`, `AKIA`), private-key blocks,
+WiFi credentials, `.env`-class filenames. Verdict: clean. Every
+"password"/"token" hit was prose ("passwordless sudo", "per-token
+logprob"); the only WAVs in history are the eight deliberate ground-truth
+bench clips. Identifiers that *do* ship (authorship email, AirPods MAC,
+DJI serial, hostname) were disclosed before pushing — fine for a private
+repo, worth remembering if it ever goes public. `.gitignore` gained
+belt-and-braces rows (logs, dump WAVs, stray model files, `.env`) on top
+of the existing `models/`+`venv/`; the tracked payload is 2.4 MB across
+57 files. `master` was renamed `main`, GitHub's README commit merged with
+`--allow-unrelated-histories`, and the push landed with upstream tracking.
+**Pushing is now part of the sign-off habit** — the SD card is no longer
+the only copy of two days of hard-won fixes.
+
+**Broke, twice, on the way to authenticated:** the first "credentials are
+stored" turned out to be a credentials file containing the literal string
+`PASTE_TOKEN_HERE` — the placeholder had been copied verbatim. Then the
+real fine-grained token authenticated as the right account but got HTTP
+404 for its own repo: the token's **Repository access** step had never
+included it (the classic left-on-"Public repositories" default). Editing
+the token's grants — value unchanged, nothing to re-store — fixed it.
+The token itself ended up pasted in chat despite the keep-it-out-of-the-
+transcript suggestion; it is tightly scoped (this repo, Contents only)
+and flagged for rotation at Toby's convenience.
+
+**Wrongly believed, in the hardware record:** two claims the parts audit
+killed. The table said an official ML2032 RTC battery was connected to
+the BAT header — the connector is in fact **empty** (an XYGStudy
+RTC-Bat-B is on hand, not yet fitted; it matters because the offline
+device has no NTP). And the wiring notes still described the stock
+200 mm display ribbon — the bench actually runs a **longer official FPC
+ribbon** (length unmeasured) so the screen reaches in the stacked layout.
+Both corrected inline with supersession notes, same convention as every
+stale claim before them.
+
+**Resolved into the record as confirmed-in-use, with links:** the
+Waveshare UPS HAT (E) with its I2C gauge at 0x2d already integrated
+(battery pips, level-panel detail, low-battery fault), four 21700 cells
+(brand/model honestly unverified), the NFHK 90° down-angled USB adapter
+carrying the DJI receiver — recorded as a **deliberate part choice whose
+down-angle orientation is load-bearing** (other angles foul the stack),
+and the DJI receiver as its own line item (ALSA card 2, name `Rx`).
+Raspberry Pi OS moved out of the parts table: it is software, not a part.
