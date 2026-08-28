@@ -74,7 +74,7 @@ class AsrWorker(threading.Thread):
         from faster_whisper import WhisperModel
         self._whisper = WhisperModel(f"{config.MODELS}/whisper-base-ct2",
                                      device="cpu", compute_type="int8",
-                                     cpu_threads=config.ASR_THREADS)
+                                     cpu_threads=config.ASR_THREADS_WHISPER)
         self._sense = so.OfflineRecognizer.from_sense_voice(
             model=f"{config.MODELS}/sensevoice/model.int8.onnx",
             tokens=f"{config.MODELS}/sensevoice/tokens.txt",
@@ -86,7 +86,8 @@ class AsrWorker(threading.Thread):
         self._parakeet = so.OfflineRecognizer.from_transducer(
             encoder=f"{P}/encoder.int8.onnx", decoder=f"{P}/decoder.int8.onnx",
             joiner=f"{P}/joiner.int8.onnx", tokens=f"{P}/tokens.txt",
-            num_threads=config.ASR_THREADS, model_type="nemo_transducer")
+            num_threads=config.ASR_THREADS_PARAKEET,
+            model_type="nemo_transducer")
         # warm all three so the first real turn pays no first-call cost
         list(self._whisper.transcribe(np.zeros(config.SR, dtype=np.float32),
                                       language="en", beam_size=1)[0])

@@ -152,7 +152,15 @@ STAGE2_BAND_SECONDS = 5.0
 GROUP_CONTINUE_GAP = 1.0
 GROUP_QUIET_CLOSE = 1.2    # s of real quiet (VAD off, nothing pending) closes it
 
-ASR_THREADS = 3
+ASR_THREADS = 3   # SenseVoice only (RTF 0.05 — never the contention source)
+# Whisper and parakeet run 2 threads EACH (2026-08-28): a deferral-release
+# burst decodes on both engines at once, and 3+3 threads on four A76 cores
+# thrashed — right-sizing to 2+2 measured 4.33 → 2.59 s on the worst
+# contaminated case (17.95 → 7.82 s with the old fallback still armed).
+# Idle cost: whisper +0–2 % (1.86→1.90 s es_short), parakeet +8–11 %
+# (0.95→1.05 s on a 7.8 s clip) — ≤0.1 s, paid for the burst case.
+ASR_THREADS_WHISPER = 2
+ASR_THREADS_PARAKEET = 2
 # Whisper decodes with the temperature fallback DISABLED (2026-08-28,
 # measured on the session's own accented dump + an ambiguous-band mix):
 # the library-default retries (5 temperatures × best_of 5 ≈ up to 26
