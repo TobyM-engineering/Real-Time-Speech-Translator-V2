@@ -177,6 +177,12 @@ class AudioFrontend:
         low_run = {A: 0, B: 0}       # consecutive below-threshold blocks
         raw_since = {A: None, B: None}
         last_accept = {A: (-99.0, -99.0), B: (-99.0, -99.0)}
+        # overlap deferral (2026-08-28): ambiguous-band segments captured
+        # while the other channel was also live wait here for the dominant
+        # speaker's utterance to end, then go to ASR (bounded by
+        # OVERLAP_DEFER_MAX / OVERLAP_DEFER_STALE_S)
+        odefer = {A: [], B: []}
+        last_raw = {A: -99.0, B: -99.0}
 
         def seg_rms(person, s0, s1):
             own_i, oth_i = (1, 2) if person == A else (2, 1)
@@ -242,6 +248,8 @@ class AudioFrontend:
             for person in (A, B):
                 v = self._vads[person]
                 raw = v.is_speech_detected()
+                if raw:
+                    last_raw[person] = (s0 + config.CHUNK) / config.SR
                 if raw and raw_since[person] is None:
                     raw_since[person] = s0
                 elif not raw:
@@ -368,6 +376,29 @@ class AudioFrontend:
                         why = (f"tail-continuation rescue ({why.split(' — ')[0]}, "
                                f"{a - last_accept[person][1]:.2f}s after "
                                f"turn end)")
+                    if (dec == arbitration.DROP_AMBIGUOUS
+                            and (last_raw[other[person]] >= a
+                                 or speech_state[other[person]])):
+                        # simultaneous speech (2026-08-28): the weak-side
+                        # audio is still its wearer's own chest mic — queue
+                        # it for decode after the dominant speaker finishes
+                        # instead of discarding (live: 4.1 s at +4.9 dB died
+                        # here and B re-said it through push-to-talk)
+                        forced_next[person] = False
+                        dip_next[person] = False
+                        odefer[person].append(
+                            {"a": a, "b": b, "audio": audio, "why": why})
+                        if len(odefer[person]) > config.OVERLAP_DEFER_MAX:
+                            old = odefer[person].pop(0)
+                            self.on_log(
+                                f"DEFER ch={person} queue full — dropped "
+                                f"oldest deferred {old['b']-old['a']:.1f}s "
+                                f"span {old['a']:.2f}-{old['b']:.2f}")
+                            self.on_ambiguous()
+                        self.on_log(f"{stamp}  -> DEFER_OVERLAP: {why} — "
+                                    f"queued behind other channel "
+                                    f"(depth {len(odefer[person])})")
+                        continue
                     if dec == arbitration.ACCEPT:
                         t = self.registry.new_turn(person, a, b)
                         dip = dip_next[person]
@@ -393,7 +424,47 @@ class AudioFrontend:
                         dip_next[person] = False
                         self.on_log(f"{stamp}  -> {dec}: {why}")
                         if dec == arbitration.DROP_AMBIGUOUS:
-                            # both channels comparable = simultaneous speech:
-                            # BOTH utterances just died — say so on the glass
-                            # (audit 2026-08-28: this was silent double loss)
+                            # ambiguous WITHOUT other-channel activity
+                            # (mid-table voice, or the trimmed remainder of
+                            # a solo segment) — genuinely dropped, say so
                             self.on_ambiguous()
+
+            # release deferred overlap segments once the dominant speaker's
+            # utterance is over (no raw voice activity and nothing left to
+            # pop on the other channel). Stale audio drops instead — spoken
+            # minutes late is worse than a gap.
+            now_s = (s0 + config.CHUNK) / config.SR
+            for person in (A, B):
+                q = odefer[person]
+                if not q:
+                    continue
+                while q and now_s - q[0]["b"] > config.OVERLAP_DEFER_STALE_S:
+                    old = q.pop(0)
+                    self.on_log(f"DEFER ch={person} dropped stale deferred "
+                                f"span {old['a']:.2f}-{old['b']:.2f} (waited "
+                                f">{config.OVERLAP_DEFER_STALE_S:.0f}s)")
+                    self.on_ambiguous()
+                if not q:
+                    continue
+                oth_v = self._vads[other[person]]
+                if (now_s - last_raw[other[person]]
+                        < config.OVERLAP_RELEASE_QUIET_S
+                        or not oth_v.empty()):
+                    continue
+                for item in q:
+                    if self.muted[person]:
+                        self.on_log(f"DEFER ch={person} dropped deferred "
+                                    f"span {item['a']:.2f}-{item['b']:.2f} "
+                                    f"(muted)")
+                        continue
+                    t = self.registry.new_turn(person, item["a"], item["b"])
+                    t.forced_split = False
+                    last_accept[person] = (item["a"], item["b"])
+                    self.on_log(
+                        f"SEG  ch={person} {item['b']-item['a']:4.1f}s span "
+                        f"{item['a']:6.2f}-{item['b']:6.2f}  deferred overlap "
+                        f"released ({item['why']}; waited "
+                        f"{now_s - item['b']:.1f}s) -> ACCEPT turn#"
+                        f"{t.turn_id}  [deferred-overlap]")
+                    self.on_segment(t, item["audio"], True, False)
+                q.clear()

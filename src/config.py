@@ -77,6 +77,22 @@ RATIO_ACCEPT_DB = 6.0     # segment's own channel must dominate by this much
 TAIL_CONT_MAX_S = 1.2
 TAIL_CONT_GAP = 0.3
 
+# Overlap deferral (2026-08-28, live two-person bench): an ambiguous-band
+# segment captured while the OTHER channel was also live is that wearer's
+# own mic during simultaneous speech — queue it and decode it after the
+# dominant speaker's utterance ends, instead of discarding it (live: 4.1 s
+# at +4.9 dB died here and B re-said it through push-to-talk). Bounded two
+# ways: per-channel depth cap (oldest drops first, loudly), and stale
+# speech is worse than a gap (the D5-recovery philosophy) so old audio is
+# never spoken minutes late.
+OVERLAP_DEFER_MAX = 2       # deferred segments per channel
+OVERLAP_DEFER_STALE_S = 10.0  # deferred audio older than this is dropped
+# Release needs SUSTAINED quiet on the dominant channel: a dip-cut flush
+# resets sherpa's speech state for ~0.3-0.5 s mid-monologue (harness-
+# measured), so an instantaneous check released deferred audio mid-turn.
+# 0.8 s sits above that gap and at the natural >=0.7 s end-of-turn silence.
+OVERLAP_RELEASE_QUIET_S = 0.8
+
 # Anti-feedback gate (D6 starting guesses — tune with real bud-leak data)
 GATE_MARGIN = 0.15        # s, slack around playback intervals
 GATE_AUDIBLE_LEAD_S = 0.25  # ledger stamps are made at pipe-write time; the

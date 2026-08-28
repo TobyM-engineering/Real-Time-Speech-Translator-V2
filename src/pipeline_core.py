@@ -62,7 +62,7 @@ class Bridge(QObject):
         self.frontend = AudioFrontend(on_log=self._log,
                                       on_speech=self._on_speech,
                                       on_segment=self._on_segment,
-                                      on_ambiguous=self.overlapHint.emit)
+                                      on_ambiguous=self._overlap_hint)
         self.asr = AsrWorker(self.frontend.registry,
                              get_lang=lambda p: self._lang[p],
                              on_log=self._log,
@@ -318,6 +318,12 @@ class Bridge(QObject):
             self._recompute()
         self._arm_close_check(person)
 
+    def _overlap_hint(self):
+        # log line added 2026-08-28 — hint firings were previously
+        # unattributable (QML-only)
+        self._log("HINT one-at-a-time shown")
+        self.overlapHint.emit()
+
     def _on_segment(self, turn, audio, overlap, continues):
         p = turn.person
         with self._lock:
@@ -335,7 +341,7 @@ class Bridge(QObject):
             self._pending[p] += 1
             self._recompute()
         if overlap:
-            self.overlapHint.emit()
+            self._overlap_hint()
         self.asr.submit(turn, audio)
 
     def _styled_locked(self, g):
