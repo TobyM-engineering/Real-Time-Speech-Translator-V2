@@ -87,6 +87,14 @@ TAIL_CONT_GAP = 0.3
 # never spoken minutes late.
 OVERLAP_DEFER_MAX = 2       # deferred segments per channel
 OVERLAP_DEFER_STALE_S = 10.0  # deferred audio older than this is dropped
+# Only the NON-NEGATIVE half of the ambiguous band defers (2026-08-28,
+# regression session): a negative ratio means the other person's voice
+# dominates this mic, and deferring it decoded B's Spanish on A's channel
+# as English junk played back into B's own ear (live turn#13: her speech
+# at -5.6 on A -> "Did it say palabra? Something." -> es -> her ear).
+# The positive half recovered real speech (turn#8, +1.2). Below zero
+# stays a drop.
+OVERLAP_DEFER_MIN_DB = 0.0
 # Release needs SUSTAINED quiet on the dominant channel: a dip-cut flush
 # resets sherpa's speech state for ~0.3-0.5 s mid-monologue (harness-
 # measured), so an instantaneous check released deferred audio mid-turn.

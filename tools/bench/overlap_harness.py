@@ -94,14 +94,19 @@ def run(name, stereo, timeout=30):
     return segs, logs
 
 
-en = load("/tmp/translator_dumps/asr_turn1.wav")          # 3.5 s live English
+# COMMITTED clips only — dump files get overwritten by every live session
+# (learned 2026-08-28: asr_turn1.wav silently became a 0.7 s clip and the
+# blip slices came out empty). deL is the continuous "dominant" voice.
+deL = load("tools/bench/clips/bench_de_long.wav")         # 7.8 s continuous
+en = deL[:int(3.5 * SR)]                                  # "A utterance"
 es = load("tools/bench/clips/bench_es_short.wav")         # 3.6 s Spanish
 
 # --- scenario 1: B speaks INSIDE A's utterance; A speaks again right after,
 # so B's deferred segment must WAIT for A's second utterance to finish
 s1 = mix(11.0,
          a_events=[(0.0, en), (4.3, en)],
-         b_events=[(0.8, es[:int(2.4 * SR)])])
+         b_events=[(0.8, es[:int(2.4 * SR)])],
+         b_amp=1.3)   # lands B ~+1..+2 dB: positive-half, deferrable
 segs, logs = run("scenario 1: defer, wait, release, decode", s1)
 
 deferred = [m for m in logs if "DEFER_OVERLAP" in m]
@@ -133,20 +138,36 @@ for t, audio in segs:
 
 # --- scenario 2: three B blips inside one long A stretch -> depth cap drops
 # the oldest (OVERLAP_DEFER_MAX = 2)
-# B's blips are copies of A's CONCURRENT audio at parity gain, so the
-# cross-channel ratio is ~0 dB by construction (deterministic ambiguity —
-# the physical analog of a mid-table voice; free-running two-voice mixes
-# ride the speech envelopes and dodge the ±6 band). Four blips against
-# OVERLAP_DEFER_MAX=2 forces two queue-full drops.
+# B's blips are copies of A's CONCURRENT audio at controlled gain, so the
+# cross-channel ratio is deterministic (free-running two-voice mixes ride
+# the speech envelopes and dodge the ±6 band). b_amp=1.5 lands the blips
+# slightly POSITIVE (~+1 dB, inside the deferrable non-negative half —
+# b_amp=1.12 measured -1.0..-1.5 dB, which now correctly drops). Four
+# blips against OVERLAP_DEFER_MAX=2 forces two queue-full drops.
 blips = []
 for t in (0.8, 2.6, 4.4, 6.2):
     pos = t % 3.5
-    blips.append((t, en[int(pos * SR):int((pos + 0.7) * SR)]))
+    blips.append((t, deL[int(pos * SR):int((pos + 0.7) * SR)]))
 s2 = mix(13.0,
          a_events=[(0.0, en), (3.5, en), (7.0, en)],
          b_events=blips,
-         fr_cross=0.0, b_amp=1.12)
+         fr_cross=0.0, b_amp=1.5)
 segs2, logs2 = run("scenario 2: depth cap", s2)
 full = [m for m in logs2 if "queue full" in m]
 rel2 = [m for m in logs2 if "deferred-overlap" in m]
 print(f"\n  queue-full drops: {len(full)}  released after: {len(rel2)}")
+
+# --- scenario 3: NEGATIVE-half ambiguity (other voice dominant on this
+# mic, ratio ~ -1 dB) must DROP, never defer — the 2026-08-28 regression
+# (B's bleed decoded on A and played back into her own ear)
+neg = [(t, deL[int((t % 3.5) * SR):int((t % 3.5 + 0.7) * SR)])
+       for t in (0.8, 2.6)]
+s3 = mix(8.0,
+         a_events=[(0.0, en), (3.5, en)],
+         b_events=neg,
+         fr_cross=0.0, b_amp=1.12)
+segs3, logs3 = run("scenario 3: negative half drops", s3)
+d3 = [m for m in logs3 if "DEFER_OVERLAP" in m and "ch=B" in m]
+amb3 = [m for m in logs3 if "DROP_AMBIGUOUS" in m and "ch=B" in m]
+print(f"\n  B deferred: {len(d3)} (expect 0)  B ambiguous-dropped: "
+      f"{len(amb3)} (expect >=1)")

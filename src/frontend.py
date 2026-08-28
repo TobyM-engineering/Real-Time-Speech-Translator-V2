@@ -377,6 +377,8 @@ class AudioFrontend:
                                f"{a - last_accept[person][1]:.2f}s after "
                                f"turn end)")
                     if (dec == arbitration.DROP_AMBIGUOUS
+                            and arbitration.ratio_db(own, oth)
+                            >= config.OVERLAP_DEFER_MIN_DB
                             and (last_raw[other[person]] >= a
                                  or speech_state[other[person]])):
                         # simultaneous speech (2026-08-28): the weak-side
