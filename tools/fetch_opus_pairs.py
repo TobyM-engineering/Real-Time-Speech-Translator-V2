@@ -64,6 +64,62 @@ def newest_zip(prefix_url):
     return f"{bucket}/{keys[-1].replace('+', '%2B')}"
 
 
+def _yml_vocabs(pkg):
+    """Newer Tatoeba packages ship PLAIN vocab files (one token per line,
+    index = line number); ct2's converter needs 'token: idx' YAML. Convert
+    in place and repoint decoder.yml. (Learned on en-ko, 2026-08-27.)"""
+    decp = f"{pkg}/decoder.yml"
+    dec = open(decp, encoding="utf-8").read()
+    for name in re.findall(r"^\s*-\s*(\S+\.vocab)\s*$", dec, re.M):
+        path = f"{pkg}/{name}"
+        head = open(path, encoding="utf-8").read(4000)
+        if re.search(r":\s*\d+\s*$", head, re.M):
+            continue                     # already token: idx format
+        out = path + ".yml"
+        with open(path, encoding="utf-8") as fin, \
+                open(out, "w", encoding="utf-8") as fo:
+            for i, line in enumerate(fin):
+                tok = line.rstrip("\n\r")
+                fo.write("'" + tok.replace("'", "''") + f"': {i}\n")
+        dec = dec.replace(name, name + ".yml")
+    open(decp, "w", encoding="utf-8").write(dec)
+
+
+def convert_package(pkg, out):
+    """Run the converter with the plain-vocab shim and per-side vocabulary
+    padding (Marian pads embeddings past the spm size; the error names the
+    side and the expected size). Returns None on success, stderr on
+    failure."""
+    _yml_vocabs(pkg)
+    dec = open(f"{pkg}/decoder.yml", encoding="utf-8").read()
+    vocabs = re.findall(r"^\s*-\s*(\S+)\s*$", dec, re.M)
+    side_file = {"Source": f"{pkg}/{vocabs[0]}",
+                 "Target": f"{pkg}/{vocabs[-1]}"}
+    for _ in range(4):
+        r = subprocess.run([f"{ROOT}/venv/bin/ct2-opus-mt-converter",
+                            "--model_dir", pkg, "--output_dir", out,
+                            "--quantization", "int8", "--force"],
+                           capture_output=True, text=True)
+        if r.returncode == 0:
+            return None
+        m = re.search(r"(Source|Target) vocabulary \d+ has size (\d+) but "
+                      r"the model expected a vocabulary of size (\d+)",
+                      r.stderr)
+        if not m:
+            return r.stderr
+        side, have, want = m.group(1), int(m.group(2)), int(m.group(3))
+        path = side_file[side]
+        lines = open(path, encoding="utf-8").read().splitlines()
+        if have < want:
+            with open(path, "a", encoding="utf-8") as f:
+                for i in range(have, want):
+                    f.write(f"'<madeupword{i}>': {i}\n")
+        else:
+            open(path, "w", encoding="utf-8").write(
+                "\n".join(lines[:want]) + "\n")
+    return "vocab padding did not converge"
+
+
 def fetch_pair(a, b, pairs):
     dst = f"{OUT}/{a}-{b}-int8"
     if os.path.exists(f"{dst}/model.bin") and os.path.exists(f"{dst}/source.spm"):
@@ -88,14 +144,9 @@ def fetch_pair(a, b, pairs):
             return False
         subprocess.run(["unzip", "-o", "-q", f"{tmp}/pkg.zip", "-d",
                         f"{tmp}/pkg"], check=True)
-        r = subprocess.run([f"{ROOT}/venv/bin/ct2-opus-mt-converter",
-                            "--model_dir", f"{tmp}/pkg",
-                            "--output_dir", f"{tmp}/ct2",
-                            "--quantization", "int8", "--force"],
-                           capture_output=True, text=True)
-        if r.returncode != 0:
-            print(f"{a}-{b}: CONVERT FAILED: {r.stderr.strip()[:200]}",
-                  flush=True)
+        r = convert_package(f"{tmp}/pkg", f"{tmp}/ct2")
+        if r is not None:
+            print(f"{a}-{b}: CONVERT FAILED: {r.strip()[-300:]}", flush=True)
             return False
         os.makedirs(OUT, exist_ok=True)
         if os.path.exists(dst):
