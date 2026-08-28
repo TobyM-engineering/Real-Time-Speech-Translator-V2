@@ -452,18 +452,16 @@ Window {
             Rectangle { width: 14; height: 14; radius: 7
                         color: win.pipelineReady ? "#2EE6A8" : "#F5C542"
                         anchors.centerIn: parent }
-            Row {   // battery: pip colored by charge, pulses while charging;
-                    // percentage small here, full detail one tap away in the
-                    // level panel
-                visible: win.battPercent >= 0
-                spacing: 8
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.horizontalCenter
-                anchors.leftMargin: 96
-                Rectangle {
-                    id: battPip
+            Repeater {   // battery pips, mirrored so the strip stays
+                         // symmetric and both readers see charge state;
+                         // percentage lives in the level panel
+                model: win.battPercent >= 0 ? [-96, 96] : []
+                delegate: Rectangle {
+                    required property int modelData
                     width: 12; height: 12; radius: 6
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: parent ? parent.verticalCenter
+                                                   : undefined
+                    x: win.width / 2 + modelData - width / 2
                     color: win.battPercent > 30 ? "#2EE6A8"
                          : win.battPercent > 10 ? "#F5C542" : "#FF5A6E"
                     SequentialAnimation on opacity {
@@ -473,11 +471,6 @@ Window {
                         NumberAnimation { from: 0.3; to: 1.0; duration: 700 }
                     }
                     onColorChanged: opacity = 1.0
-                }
-                Text {
-                    text: win.battPercent + "%"
-                    color: "#99FFFFFF"; font.pixelSize: 20
-                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
         }
@@ -490,10 +483,14 @@ Window {
     MouseArea {  // the centre dot's tap target — at window level so it wins
                  // over both halves' hold-to-talk layers. Chips and mute
                  // buttons stay ≥150 px away at centre-x; both transcript
-                 // bands live at the OUTER screen edges.
+                 // bands live at the OUTER screen edges. The reopen guard
+                 // stops a close-tap's bounce (or a quick second contact)
+                 // from landing here and instantly reopening the panel —
+                 // which looked like "tap anywhere doesn't close".
         width: 150; height: 110
         anchors.centerIn: parent
-        onClicked: levelPanel.visible = true
+        onClicked: if (Date.now() - levelPanel.closedAt > 400)
+                       levelPanel.visible = true
     }
 
     component LevelMeter: Item {
@@ -559,11 +556,13 @@ Window {
                  // tap anywhere on it. Reads from A's side (a bench tool).
         id: levelPanel
         visible: false
+        property real closedAt: 0
         anchors.centerIn: parent
-        width: win.width - 56; height: 680
+        width: win.width - 56; height: 724
         radius: 20; color: "#F70D0F13"
         border.color: "#48FFFFFF"; border.width: 2
         onVisibleChanged: {
+            if (!visible) closedAt = Date.now()
             win.levelData = null
             bridge.setLevelPanel(visible)
         }
@@ -600,15 +599,15 @@ Window {
                 color: "#D0D4D8"; font.pixelSize: 26
                 wrapMode: Text.Wrap; width: parent.width
             }
-        }
-        Text {   // battery detail, readable size — the strip pip's big sibling
-            visible: win.battPercent >= 0
-            anchors.bottom: parent.bottom; anchors.bottomMargin: 22
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "🔋 " + win.battPercent + "%  ·  " + win.battState
-            color: win.battPercent > 30 ? "#2EE6A8"
-                 : win.battPercent > 10 ? "#F5C542" : "#FF5A6E"
-            font.pixelSize: 34
+            Text {   // battery — in the Column flow so nothing collides
+                visible: win.battPercent >= 0
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                text: "🔋 " + win.battPercent + "%  ·  " + win.battState
+                color: win.battPercent > 30 ? "#2EE6A8"
+                     : win.battPercent > 10 ? "#F5C542" : "#FF5A6E"
+                font.pixelSize: 30
+            }
         }
         MouseArea { anchors.fill: parent; onClicked: levelPanel.visible = false }
     }
