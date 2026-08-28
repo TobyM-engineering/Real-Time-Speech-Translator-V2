@@ -66,6 +66,17 @@ RATIO_ACTIVE_FRAC = 0.3
 RATIO_ACCEPT_DB = 6.0     # segment's own channel must dominate by this much
 # |ratio| below RATIO_ACCEPT_DB → ambiguous → drop (D7)
 
+# Tail-continuation rescue (2026-08-28, measured): the trailing words of an
+# utterance decay toward the floor where the ratio compresses (+3.8 dB on a
+# tail whose voiced body measured +15) and were dying as DROP_AMBIGUOUS —
+# the "last few words missing" bench finding. A short segment starting
+# right after the SAME channel's accepted turn is a continuation: rescue it
+# from the ambiguous band UNLESS the other person's ratio-gated live
+# indicator is lit (their genuine speech onset must win) — and never
+# rescue a bleed verdict (ratio <= -6 stays dropped).
+TAIL_CONT_MAX_S = 1.2
+TAIL_CONT_GAP = 0.3
+
 # Anti-feedback gate (D6 starting guesses — tune with real bud-leak data)
 GATE_MARGIN = 0.15        # s, slack around playback intervals
 GATE_AUDIBLE_LEAD_S = 0.25  # ledger stamps are made at pipe-write time; the

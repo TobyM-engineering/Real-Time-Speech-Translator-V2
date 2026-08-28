@@ -254,6 +254,9 @@ class Bridge(QObject):
                 s = "ready"
             if s != self._state[p]:
                 self._state[p] = s
+                # every half-state transition is logged so wrong-half
+                # sightings become attributable evidence (bench 2026-08-28)
+                self._log(f"UI   {p} state -> {s}")
                 self.stateChanged.emit(p, s)
 
     def _finish(self, turn):

@@ -338,6 +338,15 @@ class AudioFrontend:
                         dec, why = arbitration.decide(
                             person, own, oth, self.muted[person],
                             self.ledger, a, b)
+                        if (dec == arbitration.DROP_AMBIGUOUS
+                                and (b - a) < config.TAIL_CONT_MAX_S
+                                and (a - last_accept[person][1])
+                                <= config.TAIL_CONT_GAP
+                                and not speech_state[other[person]]):
+                            dec = arbitration.ACCEPT
+                            why = (f"tail-continuation rescue ({why.split(' — ')[0]}, "
+                                   f"{a - last_accept[person][1]:.2f}s after "
+                                   f"turn end)")
                     stamp = (f"SEG  ch={person} {b-a:4.1f}s "
                              f"span {a:6.2f}-{b:6.2f}")
                     if dec == arbitration.ACCEPT:
