@@ -6,6 +6,9 @@
   "stop": "citable translations are infinitives — wrong register for a shouted command; per-language imperatives need hand curation",
   "excuse_me": "only citable sense is the farewell; recognition variants merged into 'sorry' (judgement call)",
   "again": "no translation table for the 'once more' sense — the near-miss tables would miscite",
+  "good_night": "no direct table — wiktionary only cross-references ('see you tomorrow'); candidate for a signed-off hand-curated exception",
+  "youre_welcome": "reply-sense filed under 'of course'/'no problem'; recognition folded into no_problem (function-equivalent reply, judgement call)",
+  "youre_right": "only a cross-reference to verb 'be right' — wrong register",
   "how": "interrogative sense has no translation table on wiktionary (only the 'How!' greeting is tabled) — wrong-sense data forbidden by the citation rule"
  },
  "gloss_fallbacks": [
@@ -18,7 +21,12 @@
   "no_problem: gloss keywords missed; used first table ('it does not pose a problem')",
   "good: gloss keywords missed; used first table ('acting in the interest of good; ethical good intentions')",
   "of_course: gloss keywords missed; used first table ('indicates enthusiastic agreement')",
-  "more: gloss keywords missed; used first table ('comparative of much')"
+  "more: gloss keywords missed; used first table ('comparative of much')",
+  "take_care: gloss keywords missed; used first table ('good-bye')",
+  "congratulations: gloss keywords missed; used first table ('expressing approbation')",
+  "me_too: gloss keywords missed; used first table ('I agree')",
+  "why_not: gloss keywords missed; used first table ('state one has no objection')",
+  "thats_all: gloss keywords missed; used first table ('that's all')"
  ],
  "uncovered": [
   "bye/ar (no cited candidate)",
@@ -27,6 +35,8 @@
   "bye/nl (no cited candidate)",
   "bye/uk (no cited candidate)",
   "bye/vi (no cited candidate)",
+  "dont_worry/hi (no cited candidate)",
+  "dont_worry/vi (no cited candidate)",
   "enough/ko (no cited candidate)",
   "enough/uk (no cited candidate)",
   "enough/zh (no cited candidate)",
@@ -37,11 +47,34 @@
   "exactly/ko (no cited candidate)",
   "exactly/pt (no cited candidate)",
   "exactly/zh (no cited candidate)",
+  "good_afternoon/vi (no cited candidate)",
+  "good_morning/ko (no cited candidate)",
+  "got_it/fr (no cited candidate)",
+  "got_it/hi (no cited candidate)",
+  "got_it/id (no cited candidate)",
+  "got_it/ja (no cited candidate)",
+  "got_it/ko (no cited candidate)",
+  "got_it/nl (no cited candidate)",
+  "got_it/pt (no cited candidate)",
+  "got_it/uk (no cited candidate)",
+  "got_it/vi (no cited candidate)",
   "help/hi (no cited candidate)",
   "help/id (no cited candidate)",
   "help/ja (cited candidates are wrong register for standalone use)",
   "help/ja (no cited candidate)",
   "help/vi (no cited candidate)",
+  "i_know/hi (no cited candidate)",
+  "i_know/id (no cited candidate)",
+  "i_know/ja (no cited candidate)",
+  "i_know/nl (no cited candidate)",
+  "i_know/vi (no cited candidate)",
+  "im_fine/id (no cited candidate)",
+  "it_depends/id (no cited candidate)",
+  "it_depends/ja (no cited candidate)",
+  "it_depends/ko (no cited candidate)",
+  "it_depends/ru (no cited candidate)",
+  "it_depends/uk (no cited candidate)",
+  "it_depends/vi (no cited candidate)",
   "later/ar (no cited candidate)",
   "later/de (no cited candidate)",
   "later/fr (no cited candidate)",
@@ -56,12 +89,25 @@
   "later/uk (no cited candidate)",
   "later/vi (no cited candidate)",
   "later/zh (no cited candidate)",
+  "lets_go/id (no cited candidate)",
+  "lets_go/ja (cited candidates are wrong register for standalone use)",
+  "lets_go/ja (no cited candidate)",
+  "me_too/de (no cited candidate)",
+  "me_too/hi (no cited candidate)",
+  "me_too/id (no cited candidate)",
   "more/id (no cited candidate)",
   "more/ja (cited candidates are wrong register for standalone use)",
   "more/ja (no cited candidate)",
   "more/vi (no cited candidate)",
   "no_problem/hi (no cited candidate)",
   "no_problem/id (no cited candidate)",
+  "no_thanks/ar (no cited candidate)",
+  "no_thanks/hi (no cited candidate)",
+  "no_thanks/id (no cited candidate)",
+  "no_thanks/ko (no cited candidate)",
+  "no_thanks/tr (no cited candidate)",
+  "no_thanks/uk (no cited candidate)",
+  "no_thanks/vi (no cited candidate)",
   "of_course/ar (no cited candidate)",
   "of_course/hi (no cited candidate)",
   "of_course/ko (no cited candidate)",
@@ -88,6 +134,21 @@
   "sure/vi (no cited candidate)",
   "sure/zh (cited candidates are wrong register for standalone use)",
   "sure/zh (no cited candidate)",
+  "take_care/ar (no cited candidate)",
+  "take_care/hi (no cited candidate)",
+  "take_care/id (no cited candidate)",
+  "take_care/it (no cited candidate)",
+  "take_care/vi (no cited candidate)",
+  "thats_all/ar (no cited candidate)",
+  "thats_all/hi (no cited candidate)",
+  "thats_all/ja (no cited candidate)",
+  "thats_all/ko (no cited candidate)",
+  "thats_all/nl (no cited candidate)",
+  "thats_all/pl (no cited candidate)",
+  "thats_all/tr (no cited candidate)",
+  "thats_all/uk (no cited candidate)",
+  "thats_all/zh (cited candidates are wrong register for standalone use)",
+  "thats_all/zh (no cited candidate)",
   "why/ar (no cited candidate)",
   "why/es (cited candidates are wrong register for standalone use)",
   "why/es (no cited candidate)",
@@ -95,7 +156,13 @@
   "why/ko (no cited candidate)",
   "why/tr (no cited candidate)",
   "why/uk (no cited candidate)",
-  "why/zh (no cited candidate)"
+  "why/zh (no cited candidate)",
+  "why_not/hi (no cited candidate)",
+  "why_not/ko (no cited candidate)",
+  "why_not/nl (no cited candidate)",
+  "why_not/vi (no cited candidate)",
+  "why_not/zh (cited candidates are wrong register for standalone use)",
+  "why_not/zh (no cited candidate)"
  ],
  "extra_recognize": {
   "en": {
@@ -124,7 +191,23 @@
    "excuse me": "sorry",
    "pardon me": "sorry",
    "pardon": "sorry",
+   "i m sorry": "sorry",
    "please": "please",
+   "morning": "good_morning",
+   "afternoon": "good_afternoon",
+   "evening": "good_evening",
+   "good day": "good_morning",
+   "my pleasure": "no_problem",
+   "you re welcome": "no_problem",
+   "many thanks": "thanks",
+   "thanks a lot": "thanks",
+   "thank you very much": "thanks",
+   "so long": "bye",
+   "later": "see_you_later",
+   "congrats": "congratulations",
+   "no thanks": "no_thanks",
+   "that s it": "thats_all",
+   "no worries": "no_problem",
    "wait": "wait",
    "wait a moment": "wait",
    "wait a second": "wait",
@@ -9134,6 +9217,5534 @@
      "text": "Enough.",
      "recognize": [
       "enough"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "good_morning": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "صَبَاح الْخَيْر.",
+     "recognize": [
+      "صَبَاح الْخَيْر",
+      "صَبَاح النُّور"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "bn": {
+     "text": "শুভ সকাল.",
+     "recognize": [
+      "শুভ সকাল",
+      "সুপ্রভাত",
+      "খোশবিয়ান"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "добро́ у́тро.",
+     "recognize": [
+      "добро́ у́тро"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "bon dia.",
+     "recognize": [
+      "bon dia"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "早。",
+     "recognize": [
+      "早",
+      "早上好",
+      "早安",
+      "你早"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "dobré ráno.",
+     "recognize": [
+      "dobré ráno"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "da": {
+     "text": "godmorgen.",
+     "recognize": [
+      "godmorgen"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "goedemorgen.",
+     "recognize": [
+      "goedemorgen",
+      "goeiemorgen"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "et": {
+     "text": "tere hommikust.",
+     "recognize": [
+      "tere hommikust"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "hyvää huomenta.",
+     "recognize": [
+      "hyvää huomenta",
+      "huomenta"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "bonjour.",
+     "recognize": [
+      "bonjour",
+      "bon matin"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "de": {
+     "text": "guten Morgen.",
+     "recognize": [
+      "guten Morgen"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "el": {
+     "text": "καλημέρα.",
+     "recognize": [
+      "καλημέρα"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "he": {
+     "text": "בוקר טוב.",
+     "recognize": [
+      "בוקר טוב",
+      "בוקר אור"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "सुप्रभात.",
+     "recognize": [
+      "सुप्रभात",
+      "नमस्ते",
+      "नमस्कार",
+      "सुबह बख़ैर"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "jó reggelt.",
+     "recognize": [
+      "jó reggelt",
+      "jó reggelt kívánok"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "id": {
+     "text": "selamat pagi.",
+     "recognize": [
+      "selamat pagi"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "it": {
+     "text": "buon giorno.",
+     "recognize": [
+      "buon giorno",
+      "buongiorno"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "おはようございます。",
+     "recognize": [
+      "おはようございます",
+      "おはよう",
+      "おはようさん"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "labrīt.",
+     "recognize": [
+      "labrīt",
+      "labs rīts"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "lãbas rýtas.",
+     "recognize": [
+      "lãbas rýtas"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "no": {
+     "text": "god morgen.",
+     "recognize": [
+      "god morgen",
+      "morn"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "بامداد خوش.",
+     "recognize": [
+      "بامداد خوش"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "dzień dobry.",
+     "recognize": [
+      "dzień dobry"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "bom dia.",
+     "recognize": [
+      "bom dia"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "bună dimineața.",
+     "recognize": [
+      "bună dimineața"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "доброе утро.",
+     "recognize": [
+      "доброе утро",
+      "доброго утра",
+      "с добрым утром"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "dobré ráno.",
+     "recognize": [
+      "dobré ráno"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "dobro jutro.",
+     "recognize": [
+      "dobro jutro"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "es": {
+     "text": "buenos días.",
+     "recognize": [
+      "buenos días",
+      "buen día",
+      "buenas",
+      "buenas matinas"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "god morgon.",
+     "recognize": [
+      "god morgon",
+      "goder morgon"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "th": {
+     "text": "อรุณสวัสดิ์.",
+     "recognize": [
+      "อรุณสวัสดิ์",
+      "สวัสดี"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "günaydın.",
+     "recognize": [
+      "günaydın",
+      "günaydınlar",
+      "iyi sabahlar",
+      "hayırlı sabahlar"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "доброго ранку.",
+     "recognize": [
+      "доброго ранку",
+      "добрий ранок"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "صُبْح بَخَیر.",
+     "recognize": [
+      "صُبْح بَخَیر"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "chào buổi sáng.",
+     "recognize": [
+      "chào buổi sáng"
+     ],
+     "source": "en.wiktionary.org/wiki/good_morning (gloss: when seeing someone for the first time in the morn)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Good morning.",
+     "recognize": [
+      "good morning"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "good_afternoon": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "مَسَاء الْخَيْر.",
+     "recognize": [
+      "مَسَاء الْخَيْر",
+      "مَسَاء النُّور",
+      "السَّلَامُ عَلَيْكُم",
+      "نَهَارُكُم سَعِيد"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "bn": {
+     "text": "শুভ অপরাহ্ন.",
+     "recognize": [
+      "শুভ অপরাহ্ন"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "добъ́р ден.",
+     "recognize": [
+      "добъ́р ден"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "bona tarda.",
+     "recognize": [
+      "bona tarda"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "下午好。",
+     "recognize": [
+      "下午好",
+      "你好",
+      "午安"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "dobrý den.",
+     "recognize": [
+      "dobrý den"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "da": {
+     "text": "god dag.",
+     "recognize": [
+      "god dag",
+      "god eftermiddag"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "goedenamiddag.",
+     "recognize": [
+      "goedenamiddag",
+      "goeienamiddag",
+      "goedemiddag",
+      "goeiemiddag",
+      "goedendag"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "et": {
+     "text": "tere päevast.",
+     "recognize": [
+      "tere päevast"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "hyvää päivää.",
+     "recognize": [
+      "hyvää päivää",
+      "hyvää iltapäivää"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "bonjour.",
+     "recognize": [
+      "bonjour",
+      "bon après-midi"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "de": {
+     "text": "guten Tag.",
+     "recognize": [
+      "guten Tag",
+      "guten Nachmittag"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "el": {
+     "text": "καλό απόγευμα.",
+     "recognize": [
+      "καλό απόγευμα",
+      "καλημέρα"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "he": {
+     "text": "צָהֳרַיִם טוֹבִים.",
+     "recognize": [
+      "צָהֳרַיִם טוֹבִים"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "नमस्ते.",
+     "recognize": [
+      "नमस्ते",
+      "शुभ दोपहर",
+      "गुड आफ़्टरनून"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "jó napot.",
+     "recognize": [
+      "jó napot",
+      "jó napot kívánok"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "id": {
+     "text": "selamat siang.",
+     "recognize": [
+      "selamat siang",
+      "selamat sore"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "it": {
+     "text": "buon pomeriggio.",
+     "recognize": [
+      "buon pomeriggio",
+      "buongiorno"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "こんにちは。",
+     "recognize": [
+      "こんにちは",
+      "今日は"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "안녕-하세요.",
+     "recognize": [
+      "안녕-하세요",
+      "안녕-하십니까",
+      "안녕",
+      "좋은 오후-에요"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "labvakar.",
+     "recognize": [
+      "labvakar"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "laba diena.",
+     "recognize": [
+      "laba diena"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "no": {
+     "text": "god dag.",
+     "recognize": [
+      "god dag",
+      "god ettermiddag"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "dzień dobry.",
+     "recognize": [
+      "dzień dobry"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "boa tarde.",
+     "recognize": [
+      "boa tarde"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "bună ziua.",
+     "recognize": [
+      "bună ziua"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "добрый день.",
+     "recognize": [
+      "добрый день"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "dobrý deň.",
+     "recognize": [
+      "dobrý deň"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "dober dan.",
+     "recognize": [
+      "dober dan"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "es": {
+     "text": "buenas tardes.",
+     "recognize": [
+      "buenas tardes"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "god eftermiddag.",
+     "recognize": [
+      "god eftermiddag",
+      "god dag"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "th": {
+     "text": "สวัสดี.",
+     "recognize": [
+      "สวัสดี"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "iyi günler.",
+     "recognize": [
+      "iyi günler",
+      "tünaydın"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "добрий день.",
+     "recognize": [
+      "добрий день",
+      "добридень"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "دوپَہَر بَخَیر.",
+     "recognize": [
+      "دوپَہَر بَخَیر",
+      "گُڈ آفْٹَرْنُون",
+      "سَلام عَلَیکُم",
+      "سہ پہر بخیر"
+     ],
+     "source": "en.wiktionary.org/wiki/good_afternoon (gloss: greeting said in the afternoon)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Good afternoon.",
+     "recognize": [
+      "good afternoon"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "good_evening": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "مَسَاء الْخَيْر.",
+     "recognize": [
+      "مَسَاء الْخَيْر",
+      "مَسَاء النُّور"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "bn": {
+     "text": "শুভ সন্ধ্যা.",
+     "recognize": [
+      "শুভ সন্ধ্যা"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "добъ́р ве́чер.",
+     "recognize": [
+      "добъ́р ве́чер"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "bon vespre.",
+     "recognize": [
+      "bon vespre"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "晚上好。",
+     "recognize": [
+      "晚上好",
+      "晚安"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "dobrý večer.",
+     "recognize": [
+      "dobrý večer"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "da": {
+     "text": "godaften.",
+     "recognize": [
+      "godaften"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "goedenavond.",
+     "recognize": [
+      "goedenavond"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "et": {
+     "text": "tere õhtust.",
+     "recognize": [
+      "tere õhtust",
+      "õhtust"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "hyvää iltaa.",
+     "recognize": [
+      "hyvää iltaa",
+      "iltaa"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "bonsoir.",
+     "recognize": [
+      "bonsoir"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "de": {
+     "text": "guten Abend.",
+     "recognize": [
+      "guten Abend"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "el": {
+     "text": "καλησπέρα.",
+     "recognize": [
+      "καλησπέρα",
+      "καλό βράδυ"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "he": {
+     "text": "עֶרֶב טוֹב.",
+     "recognize": [
+      "עֶרֶב טוֹב"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "नमस्ते.",
+     "recognize": [
+      "नमस्ते",
+      "शुभ संध्या"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "jó estét.",
+     "recognize": [
+      "jó estét",
+      "jó estét kívánok"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "id": {
+     "text": "selamat malam.",
+     "recognize": [
+      "selamat malam"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "it": {
+     "text": "buona sera.",
+     "recognize": [
+      "buona sera",
+      "buonasera"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "今晩は。",
+     "recognize": [
+      "今晩は",
+      "お晩です"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "안녕하세요.",
+     "recognize": [
+      "안녕하세요",
+      "좋은 저녁-이다"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "labvakar.",
+     "recognize": [
+      "labvakar",
+      "labs vakars"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "labas vakaras.",
+     "recognize": [
+      "labas vakaras"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "no": {
+     "text": "god kveld.",
+     "recognize": [
+      "god kveld",
+      "god aften"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "dobry wieczór.",
+     "recognize": [
+      "dobry wieczór"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "boa noite.",
+     "recognize": [
+      "boa noite",
+      "boa tarde"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "bună seara.",
+     "recognize": [
+      "bună seara"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "добрый вечер.",
+     "recognize": [
+      "добрый вечер"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "dobrý večer.",
+     "recognize": [
+      "dobrý večer"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "dober večer.",
+     "recognize": [
+      "dober večer"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "es": {
+     "text": "buenas noches.",
+     "recognize": [
+      "buenas noches",
+      "buenas tardes",
+      "buenos vésperos"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "god kväll.",
+     "recognize": [
+      "god kväll",
+      "god afton"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "th": {
+     "text": "สวัสดี.",
+     "recognize": [
+      "สวัสดี",
+      "สายัณห์สวัสดิ์"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "iyi akşamlar.",
+     "recognize": [
+      "iyi akşamlar",
+      "tünaydın"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "добрий вечір.",
+     "recognize": [
+      "добрий вечір",
+      "добривечір"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "شام بَخَیر.",
+     "recognize": [
+      "شام بَخَیر",
+      "شَب بَخَیر"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "chào buổi tối.",
+     "recognize": [
+      "chào buổi tối",
+      "xin chào buổi tối"
+     ],
+     "source": "en.wiktionary.org/wiki/good_evening (gloss: greeting said in the evening)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Good evening.",
+     "recognize": [
+      "good evening"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "welcome": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "أَهْلًا وَسَهْلًا.",
+     "recognize": [
+      "أَهْلًا وَسَهْلًا",
+      "مَرْحَبًا",
+      "أَهْلًا بِكُمْ",
+      "أَهْلًا بِكَ",
+      "أَهْلًا بِكِ"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "bn": {
+     "text": "খোশ আমদেদ.",
+     "recognize": [
+      "খোশ আমদেদ",
+      "স্বাগতম"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "добре́ дошъ́л.",
+     "recognize": [
+      "добре́ дошъ́л",
+      "добре́ дошла́",
+      "добре́ дошли́"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "benvingut.",
+     "recognize": [
+      "benvingut",
+      "benvinguda",
+      "benvinguts",
+      "benvingudes"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "欢迎。",
+     "recognize": [
+      "欢迎光临",
+      "欢迎"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": true,
+     "note": "register pick among cited candidates"
+    },
+    "cs": {
+     "text": "vítáme tě.",
+     "recognize": [
+      "vítáme tě",
+      "vítej",
+      "vítáme vás",
+      "vítejte"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "da": {
+     "text": "velkommen.",
+     "recognize": [
+      "velkommen"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "welkom!",
+     "recognize": [
+      "welkom!"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "et": {
+     "text": "tere tulemast!",
+     "recognize": [
+      "tere tulemast!"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "tervetuloa!",
+     "recognize": [
+      "tervetuloa!"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "bienvenue.",
+     "recognize": [
+      "bienvenue"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "de": {
+     "text": "willkommen.",
+     "recognize": [
+      "willkommen"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "el": {
+     "text": "καλώς ορίσατε.",
+     "recognize": [
+      "καλώς ορίσατε",
+      "καλώς όρισες",
+      "καλώς ήρθατε",
+      "καλώς ήρθες"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "he": {
+     "text": "ברוך הבא.",
+     "recognize": [
+      "ברוך הבא",
+      "ברוכה הבאה",
+      "ברוכים הבאים",
+      "ברוכות הבאות"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "स्वागतम.",
+     "recognize": [
+      "स्वागतम",
+      "स्वागत है",
+      "स्वागत",
+      "पधारो",
+      "अभ्यर्थना"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "üdvözöljük.",
+     "recognize": [
+      "üdvözöljük",
+      "üdvözlöm",
+      "üdvözlünk",
+      "üdvözöllek",
+      "üdvözlet",
+      "Isten hozott",
+      "Isten hozta",
+      "köszöntöm önöket"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "id": {
+     "text": "selamat datang.",
+     "recognize": [
+      "selamat datang"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "it": {
+     "text": "benvenuto!",
+     "recognize": [
+      "benvenuto!",
+      "benvenuta!",
+      "benvenuti!",
+      "benvenute!",
+      "salve"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "ようこそ。",
+     "recognize": [
+      "ようこそ",
+      "いらっしゃいませ",
+      "いらっしゃい"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "잘 오셨습니다.",
+     "recognize": [
+      "잘 오셨습니다",
+      "환영하다",
+      "어서 오세요",
+      "어서 오십시오"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "laipni lūdzam!",
+     "recognize": [
+      "laipni lūdzam!"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "sveiki atvykę.",
+     "recognize": [
+      "sveiki atvykę"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "no": {
+     "text": "velkommen.",
+     "recognize": [
+      "velkommen"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "witaj!",
+     "recognize": [
+      "witaj!",
+      "witajcie!",
+      "witamy"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "bem-vindo!",
+     "recognize": [
+      "bem-vindo!",
+      "bem-vinda!",
+      "bem-vindos!",
+      "bem-vindas!"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "bine ai venit!",
+     "recognize": [
+      "bine ai venit!",
+      "bine ați venit!",
+      "bun venit",
+      "bine ai venit"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "добро пожаловать.",
+     "recognize": [
+      "добро пожаловать",
+      "приветствовать"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "vitajte.",
+     "recognize": [
+      "vitajte"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "dobrodošel!",
+     "recognize": [
+      "dobrodošel!",
+      "dobrodošla!",
+      "dobrodošli!"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "es": {
+     "text": "bienvenido.",
+     "recognize": [
+      "bienvenido",
+      "bienvenida",
+      "bienvenidos"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "välkommen.",
+     "recognize": [
+      "välkommen",
+      "välkomna"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "th": {
+     "text": "ยินดีต้อนรับ.",
+     "recognize": [
+      "ยินดีต้อนรับ"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "hoş geldin.",
+     "recognize": [
+      "hoş geldin",
+      "hoş geldiniz"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "ласкаво просимо.",
+     "recognize": [
+      "ласкаво просимо"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "خُوش آمَدِید.",
+     "recognize": [
+      "خُوش آمَدِید",
+      "خَیر مُقَدَّم",
+      "خَیر مَقْدَم"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "xin chào.",
+     "recognize": [
+      "xin chào",
+      "chào",
+      "hoan nghênh"
+     ],
+     "source": "en.wiktionary.org/wiki/welcome (gloss: greeting given upon someone's arrival)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Welcome.",
+     "recognize": [
+      "welcome"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "see_you_later": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "إِلَى اللِّقَاء.",
+     "recognize": [
+      "إِلَى اللِّقَاء",
+      "أَرَاكَ لَاحِقًا",
+      "إِلَى اللِّقَاء قَرِيبًا"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "до ско́ро.",
+     "recognize": [
+      "до ско́ро"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "fins ara.",
+     "recognize": [
+      "fins ara",
+      "fins després"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "回见。",
+     "recognize": [
+      "再会",
+      "拜拜",
+      "回见"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": true,
+     "note": "register pick among cited candidates"
+    },
+    "cs": {
+     "text": "zatím.",
+     "recognize": [
+      "zatím",
+      "na shledanou",
+      "ahoj"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "da": {
+     "text": "vi ses.",
+     "recognize": [
+      "vi ses",
+      "ses senere",
+      "vi ses senere"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "tot straks.",
+     "recognize": [
+      "tot straks",
+      "tot later",
+      "tot zo",
+      "zie je later",
+      "later",
+      "tot binnenkort"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "et": {
+     "text": "nägudeni.",
+     "recognize": [
+      "nägudeni",
+      "varsti näeme"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "näkemiin.",
+     "recognize": [
+      "näkemiin",
+      "heippa",
+      "näkemisiin",
+      "hei hei"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "à plus tard.",
+     "recognize": [
+      "à plus tard",
+      "à bientôt",
+      "à la prochaine",
+      "à tout à l'heure",
+      "au revoir"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "de": {
+     "text": "bis später.",
+     "recognize": [
+      "auf Wiedersehen",
+      "bis später",
+      "tschüss",
+      "man sieht sich"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": true,
+     "note": "register pick among cited candidates"
+    },
+    "el": {
+     "text": "τα λέμε.",
+     "recognize": [
+      "τα λέμε",
+      "γεια χαρά",
+      "γεια"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "he": {
+     "text": "לְהִתְרָאוֹת.",
+     "recognize": [
+      "לְהִתְרָאוֹת"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "बाद में मिलेंगे.",
+     "recognize": [
+      "बाद में मिलेंगे",
+      "फिर मिलते हैं",
+      "फिर मिलेंगे"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "viszlát.",
+     "recognize": [
+      "viszlát"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "id": {
+     "text": "sampai jumpa.",
+     "recognize": [
+      "sampai jumpa",
+      "sampai nanti"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "it": {
+     "text": "a più tardi.",
+     "recognize": [
+      "a più tardi",
+      "a dopo",
+      "si rivede"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "また後で。",
+     "recognize": [
+      "また後で",
+      "バイバイ",
+      "では",
+      "じゃ",
+      "じゃあまたね",
+      "ではまた",
+      "またね",
+      "行ってきます",
+      "いってらっしゃい"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "안녕하세요.",
+     "recognize": [
+      "안녕하세요",
+      "안녕",
+      "잘 있어",
+      "잘 가",
+      "또 뵙겠읍니다",
+      "안녕히 계십시오",
+      "안녕히 가십시오",
+      "또 봐요"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "no": {
+     "text": "vi ses.",
+     "recognize": [
+      "vi ses",
+      "ses senere",
+      "vi ses senere"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "بعداً می‌بینمت.",
+     "recognize": [
+      "بعداً می‌بینمت",
+      "به امید دیدار"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "do zobaczenia.",
+     "recognize": [
+      "do zobaczenia",
+      "na razie",
+      "cześć",
+      "nara",
+      "pa",
+      "pa pa",
+      "do zobaczenia później"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "até logo.",
+     "recognize": [
+      "até logo",
+      "até mais ver",
+      "até mais",
+      "falou",
+      "te vejo mais tarde"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "pe mai târziu.",
+     "recognize": [
+      "pe mai târziu"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "увидимся позже.",
+     "recognize": [
+      "увидимся позже",
+      "увидеться",
+      "до встречи",
+      "пока",
+      "бай-бай",
+      "до свидания",
+      "до скорой встречи",
+      "чао"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "dovidenia.",
+     "recognize": [
+      "dovidenia",
+      "ahoj"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "es": {
+     "text": "hasta luego.",
+     "recognize": [
+      "hasta luego",
+      "nos vemos",
+      "nos veremos",
+      "nos vemos pronto",
+      "nos estamos viendo",
+      "hasta la próxima"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "vi ses.",
+     "recognize": [
+      "vi ses",
+      "ses senare",
+      "vi ses senare"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "th": {
+     "text": "สวัสดี.",
+     "recognize": [
+      "สวัสดี",
+      "แล้วเจอกัน",
+      "เจอกันใหม่",
+      "แล้วพบกันใหม่"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "görüşmek üzere.",
+     "recognize": [
+      "görüşmek üzere",
+      "görüşürüz"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "побачимося пізніше.",
+     "recognize": [
+      "побачимося пізніше",
+      "побачимося",
+      "до зустрічі",
+      "до побачення"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "پھر ملینگے.",
+     "recognize": [
+      "پھر ملینگے"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "gặp lại sau nhé.",
+     "recognize": [
+      "gặp lại sau nhé",
+      "hẹn gặp lại"
+     ],
+     "source": "en.wiktionary.org/wiki/see_you_later (gloss: goodbye)",
+     "judgement": false
+    },
+    "en": {
+     "text": "See you later.",
+     "recognize": [
+      "see you later"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "take_care": {
+   "question": false,
+   "langs": {
+    "bg": {
+     "text": "късме́т!",
+     "recognize": [
+      "късме́т!"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "zh": {
+     "text": "好走。",
+     "recognize": [
+      "好走",
+      "小心",
+      "保重"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "cs": {
+     "text": "opatruj se.",
+     "recognize": [
+      "opatruj se"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "nl": {
+     "text": "hou je haaks.",
+     "recognize": [
+      "hou je haaks",
+      "het ga je goed"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "fi": {
+     "text": "pidä huolta itsestäsi.",
+     "recognize": [
+      "pidä huolta itsestäsi"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "fr": {
+     "text": "prenez soin de vous.",
+     "recognize": [
+      "prenez soin de vous",
+      "prends soin de toi"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "de": {
+     "text": "pass auf dich auf.",
+     "recognize": [
+      "pass auf dich auf",
+      "mach's gut"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "hu": {
+     "text": "vigyázz magadra.",
+     "recognize": [
+      "vigyázz magadra",
+      "vigyázzon magára"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "ja": {
+     "text": "大切にしてください。",
+     "recognize": [
+      "大切にしてください",
+      "気をつけて下さい",
+      "お大事に"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "ko": {
+     "text": "몸 조심하십시오.",
+     "recognize": [
+      "몸 조심하십시오",
+      "몸조리 잘하십시오",
+      "몸 조심하세요",
+      "몸조리 잘하세요",
+      "몸 조심해",
+      "몸조리 잘해"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "pl": {
+     "text": "trzymaj się.",
+     "recognize": [
+      "trzymaj się"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "pt": {
+     "text": "se cuida.",
+     "recognize": [
+      "se cuida"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "ru": {
+     "text": "будьте здоровы.",
+     "recognize": [
+      "будьте здоровы",
+      "будь здоров",
+      "будь здорова",
+      "берегите себя",
+      "береги себя"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "es": {
+     "text": "ten cuidado.",
+     "recognize": [
+      "ten cuidado",
+      "cuídate",
+      "cuídese"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "sv": {
+     "text": "sköt om dig.",
+     "recognize": [
+      "sköt om dig",
+      "sköt om er"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "tr": {
+     "text": "kendine iyi bak.",
+     "recognize": [
+      "kendine iyi bak",
+      "kendinize iyi bakın"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "uk": {
+     "text": "бувайте здорові.",
+     "recognize": [
+      "бувайте здорові",
+      "бувай здоровий",
+      "бувай здоров",
+      "бувай здорова",
+      "бережіть себе",
+      "бережи себе",
+      "пока",
+      "щасливо"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "ur": {
+     "text": "اپنا خیال رکھنا.",
+     "recognize": [
+      "اپنا خیال رکھنا",
+      "اپنا خیال رکھیے گا"
+     ],
+     "source": "en.wiktionary.org/wiki/take_care (gloss: good-bye)",
+     "judgement": true
+    },
+    "en": {
+     "text": "Take care.",
+     "recognize": [
+      "take care"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "good_luck": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "بِالتَّوْفِيق!",
+     "recognize": [
+      "بِالتَّوْفِيق!",
+      "حَظًّا سَعِيدًا!",
+      "حَظّ سَعِيد!",
+      "بِالنَّجَاح"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "на до́бър час!",
+     "recognize": [
+      "на до́бър час!",
+      "успех!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "祝你好运。",
+     "recognize": [
+      "祝你好运",
+      "加油",
+      "乾巴得"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "hodně štěstí.",
+     "recognize": [
+      "hodně štěstí"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "da": {
+     "text": "held og lykke.",
+     "recognize": [
+      "held og lykke"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "veel geluk!",
+     "recognize": [
+      "veel geluk!",
+      "succes"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "et": {
+     "text": "edu!",
+     "recognize": [
+      "edu!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "onnea!",
+     "recognize": [
+      "onnea!",
+      "tsemppiä",
+      "lykkyä tykö",
+      "onnea matkaan"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "bonne chance.",
+     "recognize": [
+      "bonne chance",
+      "bon courage"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "de": {
+     "text": "viel Glück!",
+     "recognize": [
+      "viel Glück!",
+      "viel Erfolg!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "el": {
+     "text": "καλή τύχη.",
+     "recognize": [
+      "καλή τύχη",
+      "καλή επιτυχία"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "he": {
+     "text": "בְּהַצְלָחָה.",
+     "recognize": [
+      "בְּהַצְלָחָה"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "शुभ कामना!",
+     "recognize": [
+      "शुभ कामना!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "sok szerencsét!",
+     "recognize": [
+      "sok szerencsét!",
+      "sok sikert!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "id": {
+     "text": "semoga beruntung.",
+     "recognize": [
+      "semoga beruntung",
+      "semangat"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "it": {
+     "text": "buona fortuna.",
+     "recognize": [
+      "buona fortuna",
+      "in bocca al lupo"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "頑張って。",
+     "recognize": [
+      "頑張って",
+      "がんばれ",
+      "健闘",
+      "幸運を"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "행운을 빕니다.",
+     "recognize": [
+      "행운을 빕니다",
+      "행운을 빌어요",
+      "행운을 빈다",
+      "파이팅",
+      "화이팅"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "veiksmi!",
+     "recognize": [
+      "veiksmi!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "sėkmės!",
+     "recognize": [
+      "sėkmės!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "موفق باشید.",
+     "recognize": [
+      "موفق باشید",
+      "موفق باشی"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "powodzenia.",
+     "recognize": [
+      "powodzenia"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "boa sorte.",
+     "recognize": [
+      "boa sorte"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "noroc!",
+     "recognize": [
+      "noroc!",
+      "mult noroc!",
+      "succes!",
+      "bună șansă!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "удачи!",
+     "recognize": [
+      "удачи!",
+      "желаю удачи!",
+      "успеха!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "veľa šťastia.",
+     "recognize": [
+      "veľa šťastia"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "sréčno!",
+     "recognize": [
+      "sréčno!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "es": {
+     "text": "buena suerte.",
+     "recognize": [
+      "buena suerte",
+      "suerte",
+      "mucha suerte"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "lycka till.",
+     "recognize": [
+      "lycka till"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "th": {
+     "text": "โชคดี.",
+     "recognize": [
+      "โชคดี",
+      "ขอให้โชคดี"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "iyi şanslar.",
+     "recognize": [
+      "iyi şanslar"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "удачі!",
+     "recognize": [
+      "удачі!",
+      "щасти!",
+      "хай щастить!",
+      "нехай щастить!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "شبھ کامنا.",
+     "recognize": [
+      "شبھ کامنا",
+      "کامیاب رہیے"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "chúc may mắn!",
+     "recognize": [
+      "chúc may mắn!"
+     ],
+     "source": "en.wiktionary.org/wiki/good_luck (gloss: ''used to wish fortune on someone or as encouragem)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Good luck.",
+     "recognize": [
+      "good luck"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "congratulations": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "مُبَارَك.",
+     "recognize": [
+      "مُبَارَك",
+      "مَبْرُوك"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "bn": {
+     "text": "মোবারক.",
+     "recognize": [
+      "মোবারক",
+      "মুবারক",
+      "মারহাবা"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "bg": {
+     "text": "поздравле́ния.",
+     "recognize": [
+      "поздравле́ния"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "ca": {
+     "text": "felicitats.",
+     "recognize": [
+      "felicitats",
+      "enhorabona"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "zh": {
+     "text": "恭喜。",
+     "recognize": [
+      "恭喜"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "cs": {
+     "text": "gratuluji.",
+     "recognize": [
+      "gratuluji"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "da": {
+     "text": "tillykke.",
+     "recognize": [
+      "tillykke"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "nl": {
+     "text": "gefeliciteerd.",
+     "recognize": [
+      "gefeliciteerd",
+      "proficiat",
+      "van harte"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "fi": {
+     "text": "onnea.",
+     "recognize": [
+      "onnea",
+      "onneksi olkoon",
+      "onnittelut"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "fr": {
+     "text": "félicitations.",
+     "recognize": [
+      "félicitations"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "de": {
+     "text": "Glückwunsch.",
+     "recognize": [
+      "Glückwunsch",
+      "herzlichen Glückwunsch"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "el": {
+     "text": "συγχαρητήρια.",
+     "recognize": [
+      "συγχαρητήρια"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "he": {
+     "text": "מַזָּל טוֹב.",
+     "recognize": [
+      "מַזָּל טוֹב",
+      "כָּל הַכָּבוֹד"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "hi": {
+     "text": "मुबारक.",
+     "recognize": [
+      "मुबारक",
+      "बधाई"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "hu": {
+     "text": "gratulálok.",
+     "recognize": [
+      "gratulálok",
+      "gratulálunk"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "id": {
+     "text": "selamat.",
+     "recognize": [
+      "selamat"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "it": {
+     "text": "congratulazioni.",
+     "recognize": [
+      "congratulazioni",
+      "complimenti"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "ja": {
+     "text": "おめでとう。",
+     "recognize": [
+      "おめでとう",
+      "おめでとうございます"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "ko": {
+     "text": "축하하다.",
+     "recognize": [
+      "축하하다"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "lv": {
+     "text": "apsveicam.",
+     "recognize": [
+      "apsveicam"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "lt": {
+     "text": "sveikiname.",
+     "recognize": [
+      "sveikiname"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "no": {
+     "text": "gratulerer.",
+     "recognize": [
+      "gratulerer",
+      "til lykke",
+      "tillykke"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "fa": {
+     "text": "تبریک.",
+     "recognize": [
+      "تبریک"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "pl": {
+     "text": "gratulacje.",
+     "recognize": [
+      "gratulacje"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "pt": {
+     "text": "parabéns.",
+     "recognize": [
+      "parabéns",
+      "congratulações"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "ro": {
+     "text": "felicitări.",
+     "recognize": [
+      "felicitări"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "ru": {
+     "text": "поздравлять.",
+     "recognize": [
+      "поздравлять",
+      "мои поздравления",
+      "молодец"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "sk": {
+     "text": "blahoželať.",
+     "recognize": [
+      "blahoželať",
+      "gratulovať"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "sl": {
+     "text": "čestitke.",
+     "recognize": [
+      "čestitke"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "es": {
+     "text": "felicidades.",
+     "recognize": [
+      "felicidades",
+      "enhorabuena"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "sv": {
+     "text": "grattis.",
+     "recognize": [
+      "grattis",
+      "gratulerar"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "th": {
+     "text": "ยินดี​ด้วย.",
+     "recognize": [
+      "ยินดี​ด้วย"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "tr": {
+     "text": "tebrikler.",
+     "recognize": [
+      "tebrikler",
+      "tebrik ederim"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "uk": {
+     "text": "вітати.",
+     "recognize": [
+      "вітати"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "ur": {
+     "text": "مبارک.",
+     "recognize": [
+      "مبارک"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "vi": {
+     "text": "chúc mừng.",
+     "recognize": [
+      "chúc mừng",
+      "xin chúc mừng"
+     ],
+     "source": "en.wiktionary.org/wiki/congratulations (gloss: expressing approbation)",
+     "judgement": true
+    },
+    "en": {
+     "text": "Congratulations.",
+     "recognize": [
+      "congratulations"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "happy_birthday": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "كُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ.",
+     "recognize": [
+      "كُلُّ عَامٍ وَأَنْتُمْ بِخَيْرٍ",
+      "عِيد مِيلَاد سَعِيد",
+      "سَنَة حلو"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "bn": {
+     "text": "শুভ জন্মদিন.",
+     "recognize": [
+      "শুভ জন্মদিন"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "чести́т рожде́н ден.",
+     "recognize": [
+      "чести́т рожде́н ден"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "per molts anys.",
+     "recognize": [
+      "per molts anys"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "生日快乐。",
+     "recognize": [
+      "生日快乐",
+      "祝你生日快乐"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "všechno nejlepší.",
+     "recognize": [
+      "všechno nejlepší",
+      "všechno nejlepší k narozeninám"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "da": {
+     "text": "tillykke med fødselsdagen.",
+     "recognize": [
+      "tillykke med fødselsdagen",
+      "tillykke"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "gelukkige verjaardag.",
+     "recognize": [
+      "gelukkige verjaardag",
+      "gefeliciteerd met je verjaardag",
+      "gefeliciteerd",
+      "proficiat",
+      "fijne verjaardag"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "et": {
+     "text": "palju õnne sünnipäevaks.",
+     "recognize": [
+      "palju õnne sünnipäevaks",
+      "palju õnne"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "hyvää syntymäpäivää.",
+     "recognize": [
+      "hyvää syntymäpäivää",
+      "onneksi olkoon",
+      "onnea",
+      "paljon onnea"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "bon anniversaire.",
+     "recognize": [
+      "bon anniversaire",
+      "joyeux anniversaire",
+      "bonne fête"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "de": {
+     "text": "alles Gute zum Geburtstag.",
+     "recognize": [
+      "alles Gute zum Geburtstag",
+      "herzlichen Glückwunsch zum Geburtstag",
+      "viel Glück zum Geburtstag"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "el": {
+     "text": "να τα εκατοστήσεις.",
+     "recognize": [
+      "να τα εκατοστήσεις",
+      "χρόνια πολλά",
+      "να τα εκατοστίσεις"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "he": {
+     "text": "יום הולדת שמח.",
+     "recognize": [
+      "יום הולדת שמח",
+      "עַד מֵאָה וְעֵשְׂרִים"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "जन्मदिन की शुभकामनाएँ.",
+     "recognize": [
+      "जन्मदिन की शुभकामनाएँ",
+      "जन्मदिन मुबारक हो",
+      "जन्मदिन की बधाई"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "boldog születésnapot.",
+     "recognize": [
+      "boldog születésnapot",
+      "boldog szülinapot",
+      "Isten éltessen!",
+      "Isten éltessen sokáig!"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "id": {
+     "text": "selamat ulang tahun.",
+     "recognize": [
+      "selamat ulang tahun"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "it": {
+     "text": "buon compleanno.",
+     "recognize": [
+      "buon compleanno"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "お誕生日おめでとうございます。",
+     "recognize": [
+      "お誕生日おめでとうございます",
+      "誕生日おめでとう"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "생신 축하-드립니다.",
+     "recognize": [
+      "생신 축하-드립니다",
+      "생일 축하-합니다",
+      "생일 축하-해요",
+      "생일 축하-해"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "daudz laimes.",
+     "recognize": [
+      "daudz laimes",
+      "daudz laimes dzimšanas dienā"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "su gimtadieniu.",
+     "recognize": [
+      "su gimtadieniu",
+      "sveikinu gimtadienio proga"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "no": {
+     "text": "gratulerer med dagen.",
+     "recognize": [
+      "gratulerer med dagen"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "wszystkiego najlepszego.",
+     "recognize": [
+      "wszystkiego najlepszego",
+      "sto lat"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "feliz aniversário.",
+     "recognize": [
+      "feliz aniversário",
+      "parabéns"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "la mulți ani.",
+     "recognize": [
+      "la mulți ani",
+      "aniversare fericită"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "с днём рождения.",
+     "recognize": [
+      "с днём рождения",
+      "поздравляю с днём рождения"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "všetko najlepšie.",
+     "recognize": [
+      "všetko najlepšie",
+      "všetko najlepšie k narodeninám"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "vse najboljše za tvoj rojstni dan.",
+     "recognize": [
+      "vse najboljše za tvoj rojstni dan"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "es": {
+     "text": "feliz cumpleaños.",
+     "recognize": [
+      "feliz cumpleaños",
+      "feliz cumple"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "grattis på födelsedagen.",
+     "recognize": [
+      "grattis på födelsedagen",
+      "har den äran",
+      "har den äran på födelsedagen",
+      "gratulerar på födelsedagen",
+      "grattis på bemärkelsedagen",
+      "gratulerar med dagen"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "th": {
+     "text": "สุขสันต์วันเกิด.",
+     "recognize": [
+      "สุขสันต์วันเกิด"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "doğum günün kutlu olsun.",
+     "recognize": [
+      "doğum günün kutlu olsun",
+      "nice mutlu yıllara",
+      "mutlu yıllar"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "з днем народження.",
+     "recognize": [
+      "з днем народження"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "سالْگِرَہ مُبارَک.",
+     "recognize": [
+      "سالْگِرَہ مُبارَک"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "chúc mừng sinh nhật.",
+     "recognize": [
+      "chúc mừng sinh nhật",
+      "祝𢜠生日",
+      "sinh nhật vui vẻ nhé",
+      "生日𢠿𨤔𥅡"
+     ],
+     "source": "en.wiktionary.org/wiki/happy_birthday (gloss: good wishes for a birthday)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Happy birthday.",
+     "recognize": [
+      "happy birthday"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "me_too": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "انا ايضا.",
+     "recognize": [
+      "انا ايضا",
+      "أَنَا كَذٰلِك"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "ca": {
+     "text": "d'acord.",
+     "recognize": [
+      "d'acord"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "zh": {
+     "text": "我也是。",
+     "recognize": [
+      "我也是"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "nl": {
+     "text": "ik ook.",
+     "recognize": [
+      "ik ook"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "fi": {
+     "text": "sama täällä.",
+     "recognize": [
+      "sama täällä",
+      "minä myös"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "fr": {
+     "text": "moi aussi.",
+     "recognize": [
+      "moi aussi"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "el": {
+     "text": "εγώ το ίδιο.",
+     "recognize": [
+      "εγώ το ίδιο"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "he": {
+     "text": "גם אני.",
+     "recognize": [
+      "גם אני"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "hu": {
+     "text": "én is.",
+     "recognize": [
+      "én is",
+      "nekem is",
+      "engem is"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "it": {
+     "text": "anch'io.",
+     "recognize": [
+      "anch'io"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "ja": {
+     "text": "私も。",
+     "recognize": [
+      "私も",
+      "僕も",
+      "俺も"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "ko": {
+     "text": "나-도.",
+     "recognize": [
+      "나-도"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "lv": {
+     "text": "es arī.",
+     "recognize": [
+      "es arī"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "lt": {
+     "text": "aš taip pat.",
+     "recognize": [
+      "aš taip pat"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "fa": {
+     "text": "من هم همین‌طور.",
+     "recognize": [
+      "من هم همین‌طور"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "pl": {
+     "text": "ja też.",
+     "recognize": [
+      "ja też"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "pt": {
+     "text": "eu também.",
+     "recognize": [
+      "eu também"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "ro": {
+     "text": "și eu.",
+     "recognize": [
+      "și eu"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "ru": {
+     "text": "я тоже.",
+     "recognize": [
+      "я тоже",
+      "я также"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "sl": {
+     "text": "tudi jaz.",
+     "recognize": [
+      "tudi jaz"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "es": {
+     "text": "yo también.",
+     "recognize": [
+      "yo también"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "sv": {
+     "text": "jag med.",
+     "recognize": [
+      "jag med",
+      "jag också"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "th": {
+     "text": "ฉันด้วย.",
+     "recognize": [
+      "ฉันด้วย"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "tr": {
+     "text": "ben de.",
+     "recognize": [
+      "ben de"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "uk": {
+     "text": "я теж.",
+     "recognize": [
+      "я теж"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "vi": {
+     "text": "tôi cũng vậy.",
+     "recognize": [
+      "tôi cũng vậy",
+      "tôi cũng thế"
+     ],
+     "source": "en.wiktionary.org/wiki/me_too (gloss: I agree)",
+     "judgement": true
+    },
+    "en": {
+     "text": "Me too.",
+     "recognize": [
+      "me too"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "why_not": {
+   "question": true,
+   "langs": {
+    "ar": {
+     "text": "لِمَ لَا؟",
+     "recognize": [
+      "لِمَ لَا"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "bg": {
+     "text": "защо пък не?",
+     "recognize": [
+      "защо пък не"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "da": {
+     "text": "hvorfor ikke?",
+     "recognize": [
+      "hvorfor ikke"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "fi": {
+     "text": "miksipä ei?",
+     "recognize": [
+      "miksipä ei",
+      "mikä ettei",
+      "mikä jottei",
+      "mikäpäs siinä",
+      "vois"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "fr": {
+     "text": "pourquoi pas?",
+     "recognize": [
+      "pourquoi pas"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "de": {
+     "text": "warum nicht?",
+     "recognize": [
+      "warum nicht",
+      "wieso nicht"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "he": {
+     "text": "לָמָּה לֹא?",
+     "recognize": [
+      "לָמָּה לֹא"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "hu": {
+     "text": "miért ne?",
+     "recognize": [
+      "miért ne"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "id": {
+     "text": "tentu saja?",
+     "recognize": [
+      "tentu saja"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "it": {
+     "text": "perché no?",
+     "recognize": [
+      "perché no"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "ja": {
+     "text": "もちろん？",
+     "recognize": [
+      "もちろん"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "no": {
+     "text": "hvorfor ikke?",
+     "recognize": [
+      "hvorfor ikke"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "fa": {
+     "text": "چرا که نه؟",
+     "recognize": [
+      "چرا که نه؟"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "pl": {
+     "text": "czemu nie?",
+     "recognize": [
+      "czemu nie"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "pt": {
+     "text": "por que não?",
+     "recognize": [
+      "por que não"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "ru": {
+     "text": "почему бы и нет?",
+     "recognize": [
+      "почему бы и нет"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "sl": {
+     "text": "zakaj pa ne?",
+     "recognize": [
+      "zakaj pa ne"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "es": {
+     "text": "¿por qué no?",
+     "recognize": [
+      "por qué no"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "sv": {
+     "text": "varför inte?",
+     "recognize": [
+      "varför inte"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "tr": {
+     "text": "neden olmasın?",
+     "recognize": [
+      "neden olmasın"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "uk": {
+     "text": "чому б і ні?",
+     "recognize": [
+      "чому б і ні"
+     ],
+     "source": "en.wiktionary.org/wiki/why_not (gloss: state one has no objection)",
+     "judgement": true
+    },
+    "en": {
+     "text": "Why not?",
+     "recognize": [
+      "why not"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "how_much": {
+   "question": true,
+   "langs": {
+    "ar": {
+     "text": "كَمْ؟",
+     "recognize": [
+      "كَمْ"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "bn": {
+     "text": "কত?",
+     "recognize": [
+      "কত"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "ко́лко?",
+     "recognize": [
+      "ко́лко"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "quant?",
+     "recognize": [
+      "quant"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "多少？",
+     "recognize": [
+      "多少",
+      "幾"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "kolik?",
+     "recognize": [
+      "kolik"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "da": {
+     "text": "hvor meget?",
+     "recognize": [
+      "hvor meget"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "hoeveel?",
+     "recognize": [
+      "hoeveel"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "et": {
+     "text": "kui palju?",
+     "recognize": [
+      "kui palju"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "paljonko?",
+     "recognize": [
+      "paljonko",
+      "kuinka paljon"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "combien?",
+     "recognize": [
+      "combien"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "de": {
+     "text": "wie viel?",
+     "recognize": [
+      "wie viel"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "el": {
+     "text": "πόσος?",
+     "recognize": [
+      "πόσος",
+      "πόση",
+      "πόσο"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "he": {
+     "text": "כַּמָּה?",
+     "recognize": [
+      "כַּמָּה"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "कितना?",
+     "recognize": [
+      "कितना"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "mennyi?",
+     "recognize": [
+      "mennyi"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "id": {
+     "text": "berapa?",
+     "recognize": [
+      "berapa"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "it": {
+     "text": "quanto?",
+     "recognize": [
+      "quanto",
+      "quanta"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "幾ら？",
+     "recognize": [
+      "幾ら",
+      "いくら",
+      "何ぼ"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "얼마나?",
+     "recognize": [
+      "얼마나",
+      "얼마"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "cik?",
+     "recognize": [
+      "cik"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "kiek?",
+     "recognize": [
+      "kiek"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "no": {
+     "text": "hvor mye?",
+     "recognize": [
+      "hvor mye"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "چِقَدر?",
+     "recognize": [
+      "چِقَدر",
+      "چَند"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "ile?",
+     "recognize": [
+      "ile"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "quanto?",
+     "recognize": [
+      "quanto",
+      "quanta"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "cât?",
+     "recognize": [
+      "cât"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "сколько?",
+     "recognize": [
+      "сколько"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "koľko?",
+     "recognize": [
+      "koľko"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "kóliko?",
+     "recognize": [
+      "kóliko"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "es": {
+     "text": "¿cuánto?",
+     "recognize": [
+      "cuánto"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "hur mycket?",
+     "recognize": [
+      "hur mycket"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "th": {
+     "text": "เท่าไร?",
+     "recognize": [
+      "เท่าไร",
+      "กี่"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "ne kadar?",
+     "recognize": [
+      "ne kadar"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "скільки?",
+     "recognize": [
+      "скільки"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "کِتْنا?",
+     "recognize": [
+      "کِتْنا"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "mấy?",
+     "recognize": [
+      "mấy",
+      "bao nhiêu"
+     ],
+     "source": "en.wiktionary.org/wiki/how_much (gloss: what quantity)",
+     "judgement": false
+    },
+    "en": {
+     "text": "How much?",
+     "recognize": [
+      "how much"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "how_many": {
+   "question": true,
+   "langs": {
+    "ar": {
+     "text": "كَم؟",
+     "recognize": [
+      "كَم"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "ко́лко?",
+     "recognize": [
+      "ко́лко"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "quants?",
+     "recognize": [
+      "quants",
+      "quantes"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "多少？",
+     "recognize": [
+      "多少",
+      "幾",
+      "幾個"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "kolik?",
+     "recognize": [
+      "kolik"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "da": {
+     "text": "hvor mange?",
+     "recognize": [
+      "hvor mange"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "hoeveel?",
+     "recognize": [
+      "hoeveel"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "et": {
+     "text": "kui mitu?",
+     "recognize": [
+      "kui mitu"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "kuinka monta?",
+     "recognize": [
+      "kuinka monta",
+      "montako"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "combien?",
+     "recognize": [
+      "combien"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "de": {
+     "text": "wie viele?",
+     "recognize": [
+      "wie viele"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "el": {
+     "text": "πόσοι?",
+     "recognize": [
+      "πόσοι"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "he": {
+     "text": "כַּמָּה?",
+     "recognize": [
+      "כַּמָּה"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "कितने?",
+     "recognize": [
+      "कितने"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "hány?",
+     "recognize": [
+      "hány"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "id": {
+     "text": "berapa?",
+     "recognize": [
+      "berapa"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "it": {
+     "text": "quanti?",
+     "recognize": [
+      "quanti",
+      "quante"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "幾つ？",
+     "recognize": [
+      "幾つ",
+      "いくつ",
+      "何",
+      "幾-"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "몇?",
+     "recognize": [
+      "몇",
+      "얼마",
+      "얼마나"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "cik?",
+     "recognize": [
+      "cik"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "kiek?",
+     "recognize": [
+      "kiek"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "no": {
+     "text": "hvor mange?",
+     "recognize": [
+      "hvor mange"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "چند?",
+     "recognize": [
+      "چند",
+      "چند تا"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "ile?",
+     "recognize": [
+      "ile"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "quantos?",
+     "recognize": [
+      "quantos",
+      "quantas"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "câți?",
+     "recognize": [
+      "câți",
+      "câte"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "сколько?",
+     "recognize": [
+      "сколько"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "koľko?",
+     "recognize": [
+      "koľko"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "kóliko?",
+     "recognize": [
+      "kóliko"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "es": {
+     "text": "¿cuántos?",
+     "recognize": [
+      "cuántos",
+      "cuántas"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "hur många?",
+     "recognize": [
+      "hur många"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "th": {
+     "text": "เท่าไร?",
+     "recognize": [
+      "เท่าไร",
+      "กี่"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "kaç?",
+     "recognize": [
+      "kaç"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "скільки?",
+     "recognize": [
+      "скільки",
+      "кілько"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "کِتنے?",
+     "recognize": [
+      "کِتنے"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "mấy?",
+     "recognize": [
+      "mấy",
+      "bao nhiêu"
+     ],
+     "source": "en.wiktionary.org/wiki/how_many (gloss: what number)",
+     "judgement": false
+    },
+    "en": {
+     "text": "How many?",
+     "recognize": [
+      "how many"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "lets_go": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "لِنَذْهَب.",
+     "recognize": [
+      "لِنَذْهَب",
+      "دَعْنَا نَذْهَب",
+      "يَلَّا",
+      "هَيَّا نَذْهَب"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "bg": {
+     "text": "хайде.",
+     "recognize": [
+      "хайде",
+      "хайде да не ходя"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "ca": {
+     "text": "som-hi.",
+     "recognize": [
+      "som-hi",
+      "va"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "zh": {
+     "text": "走吧。",
+     "recognize": [
+      "走吧"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "cs": {
+     "text": "pojďme.",
+     "recognize": [
+      "pojďme"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "da": {
+     "text": "lad os gå.",
+     "recognize": [
+      "lad os gå"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "nl": {
+     "text": "laten we gaan.",
+     "recognize": [
+      "laten we gaan"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "et": {
+     "text": "lähme.",
+     "recognize": [
+      "lähme",
+      "läki"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "fi": {
+     "text": "mennään.",
+     "recognize": [
+      "mennään",
+      "lähdetään"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "fr": {
+     "text": "allons.",
+     "recognize": [
+      "allons"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "de": {
+     "text": "gehen wir.",
+     "recognize": [
+      "gehen wir",
+      "lasst uns gehen",
+      "los geht's"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "el": {
+     "text": "πάμε.",
+     "recognize": [
+      "πάμε",
+      "άντε"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "he": {
+     "text": "בא נלך.",
+     "recognize": [
+      "בא נלך",
+      "בואי נלך",
+      "הבה נלך",
+      "הלכנו"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "hi": {
+     "text": "चलो.",
+     "recognize": [
+      "चलो",
+      "चलें"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "hu": {
+     "text": "gyerünk.",
+     "recognize": [
+      "gyerünk",
+      "menjünk",
+      "induljunk"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "it": {
+     "text": "andiamo.",
+     "recognize": [
+      "andiamo"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "ko": {
+     "text": "가다.",
+     "recognize": [
+      "가다",
+      "가즈아"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "lv": {
+     "text": "ejam.",
+     "recognize": [
+      "ejam",
+      "iesim",
+      "dodamies"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "lt": {
+     "text": "eime.",
+     "recognize": [
+      "eime"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "fa": {
+     "text": "بیا بریم.",
+     "recognize": [
+      "بیا بریم"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "pl": {
+     "text": "iść.",
+     "recognize": [
+      "iść",
+      "chodzić"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "pt": {
+     "text": "vamos.",
+     "recognize": [
+      "vamos",
+      "vamos lá",
+      "bora!"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "ro": {
+     "text": "să mergem.",
+     "recognize": [
+      "să mergem"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "ru": {
+     "text": "идти.",
+     "recognize": [
+      "идти",
+      "пойти",
+      "айда",
+      "идёмте"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "sk": {
+     "text": "poďme.",
+     "recognize": [
+      "poďme"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "sl": {
+     "text": "pojdimo.",
+     "recognize": [
+      "pojdimo"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "es": {
+     "text": "vamos.",
+     "recognize": [
+      "vamos",
+      "venga"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "sv": {
+     "text": "nu går vi.",
+     "recognize": [
+      "nu går vi",
+      "låt oss gå",
+      "kom så går vi",
+      "vi går",
+      "vi sticker",
+      "vi drar"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "th": {
+     "text": "ไปกันเถอะ.",
+     "recognize": [
+      "ไปกันเถอะ",
+      "ไปกันเหอะ"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "tr": {
+     "text": "gidelim.",
+     "recognize": [
+      "gidelim",
+      "haydi"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "uk": {
+     "text": "йдемо.",
+     "recognize": [
+      "йдемо",
+      "пішли",
+      "ходімо"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "ur": {
+     "text": "چلو.",
+     "recognize": [
+      "چلو",
+      "چلیں",
+      "چلیے"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "vi": {
+     "text": "hãy đi.",
+     "recognize": [
+      "hãy đi"
+     ],
+     "source": "en.wiktionary.org/wiki/let's_go (gloss: hortative of ''go'')",
+     "judgement": false
+    },
+    "en": {
+     "text": "Let's go.",
+     "recognize": [
+      "let's go"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "dont_worry": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "لَا تَقْلَقْ.",
+     "recognize": [
+      "لَا تَقْلَقْ",
+      "لَا تَقْلَقِي",
+      "لَا تَقْلَقُوا"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "ca": {
+     "text": "no et preocupis.",
+     "recognize": [
+      "no et preocupis",
+      "no es preocupi"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "不要紧。",
+     "recognize": [
+      "不要紧",
+      "不要擔心",
+      "別擔心"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "da": {
+     "text": "bare rolig.",
+     "recognize": [
+      "bare rolig"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "maak je geen zorgen.",
+     "recognize": [
+      "maak je geen zorgen"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "älä huoli.",
+     "recognize": [
+      "älä huoli"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "inquiéter.",
+     "recognize": [
+      "inquiéter",
+      "t'inquiète"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "de": {
+     "text": "sich Sorgen machen.",
+     "recognize": [
+      "sich Sorgen machen",
+      "keine Sorge",
+      "keine Angst"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "ne aggódj.",
+     "recognize": [
+      "ne aggódj",
+      "ne aggódjon"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "id": {
+     "text": "jangan khawatir.",
+     "recognize": [
+      "jangan khawatir"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "it": {
+     "text": "non preoccuparti.",
+     "recognize": [
+      "non preoccuparti",
+      "non preoccupatevi",
+      "non si preoccupi",
+      "non temere",
+      "non temete",
+      "non tema"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "心配。",
+     "recognize": [
+      "心配",
+      "気にする"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "걱정하지 마세요.",
+     "recognize": [
+      "걱정하지 마세요",
+      "걱정 마"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "nie martw się.",
+     "recognize": [
+      "nie martw się"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "não se preocupe.",
+     "recognize": [
+      "não se preocupe",
+      "não te preocupes"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "nu-ți face griji.",
+     "recognize": [
+      "nu-ți face griji",
+      "nu vă faceți griji"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "волноваться.",
+     "recognize": [
+      "волноваться",
+      "беспокоиться"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "es": {
+     "text": "descuide.",
+     "recognize": [
+      "descuide",
+      "no se preocupe",
+      "pierda cuidado"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "oroa dig inte.",
+     "recognize": [
+      "oroa dig inte",
+      "det är lugnt"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "endişelenme.",
+     "recognize": [
+      "endişelenme"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "не хвилюйся.",
+     "recognize": [
+      "не хвилюйся"
+     ],
+     "source": "en.wiktionary.org/wiki/don't_worry (gloss: indicates to the interlocutor not to worry about s)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Don't worry.",
+     "recognize": [
+      "don't worry"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "no_thanks": {
+   "question": false,
+   "langs": {
+    "zh": {
+     "text": "不要，谢谢。",
+     "recognize": [
+      "不要，谢谢",
+      "不客氣"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "nl": {
+     "text": "nee, dank u.",
+     "recognize": [
+      "nee, dank u"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "fi": {
+     "text": "ei kiitos.",
+     "recognize": [
+      "ei kiitos"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "fr": {
+     "text": "non merci.",
+     "recognize": [
+      "non merci",
+      "sans façon"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "de": {
+     "text": "nein, danke.",
+     "recognize": [
+      "nein, danke",
+      "danke",
+      "ich danke"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "hu": {
+     "text": "nem, köszönöm.",
+     "recognize": [
+      "nem, köszönöm",
+      "köszönöm, nem kérem"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "it": {
+     "text": "no, grazie.",
+     "recognize": [
+      "no, grazie"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "ja": {
+     "text": "結構です。",
+     "recognize": [
+      "結構です"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "pl": {
+     "text": "nie, dziękuję.",
+     "recognize": [
+      "nie, dziękuję"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "pt": {
+     "text": "não, obrigado.",
+     "recognize": [
+      "não, obrigado",
+      "não, obrigada"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "ro": {
+     "text": "nu, mulțumesc.",
+     "recognize": [
+      "nu, mulțumesc"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "ru": {
+     "text": "нет, спасибо.",
+     "recognize": [
+      "нет, спасибо"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "es": {
+     "text": "no, gracias.",
+     "recognize": [
+      "no, gracias"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "sv": {
+     "text": "nej tack.",
+     "recognize": [
+      "nej tack"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "th": {
+     "text": "ไม่เป็นไรขอบคุณ.",
+     "recognize": [
+      "ไม่เป็นไรขอบคุณ"
+     ],
+     "source": "en.wiktionary.org/wiki/no,_thanks (gloss: (polite refusal of an offer))",
+     "judgement": false
+    },
+    "en": {
+     "text": "No, thanks.",
+     "recognize": [
+      "no, thanks"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "got_it": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "فَهِمْتُ.",
+     "recognize": [
+      "فَهِمْتُ"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "懂。",
+     "recognize": [
+      "懂",
+      "听得懂"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "chápu.",
+     "recognize": [
+      "chápu"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "da": {
+     "text": "forstået.",
+     "recognize": [
+      "forstået",
+      "modtaget",
+      "har det"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "ymmärrän.",
+     "recognize": [
+      "ymmärrän",
+      "tajusin"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "de": {
+     "text": "verstanden.",
+     "recognize": [
+      "verstanden"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "el": {
+     "text": "κατάλαβα.",
+     "recognize": [
+      "κατάλαβα",
+      "καταλάβαμε"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "he": {
+     "text": "הֵבַנְתִּי.",
+     "recognize": [
+      "הֵבַנְתִּי"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "értem.",
+     "recognize": [
+      "értem",
+      "világos"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "it": {
+     "text": "ho capito.",
+     "recognize": [
+      "ho capito",
+      "io capisco"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "فهمیدم.",
+     "recognize": [
+      "فهمیدم"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "jasne.",
+     "recognize": [
+      "jasne"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "понимаю.",
+     "recognize": [
+      "понимаю"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "es": {
+     "text": "entendido.",
+     "recognize": [
+      "entendido",
+      "oído cocina"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "anladım.",
+     "recognize": [
+      "anladım"
+     ],
+     "source": "en.wiktionary.org/wiki/got_it (gloss: I understand)",
+     "judgement": false
+    },
+    "en": {
+     "text": "Got it.",
+     "recognize": [
+      "got it"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "i_know": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "أَنَا أَعْرِفُ.",
+     "recognize": [
+      "أَنَا أَعْرِفُ"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "bn": {
+     "text": "আমি জানি.",
+     "recognize": [
+      "আমি জানি"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "знам.",
+     "recognize": [
+      "знам",
+      "аз знам"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "我知道。",
+     "recognize": [
+      "我知道"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "vím.",
+     "recognize": [
+      "vím"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "tiedän.",
+     "recognize": [
+      "tiedän"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "je sais.",
+     "recognize": [
+      "je sais",
+      "je le sais",
+      "je sais bien"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "de": {
+     "text": "ich weiß.",
+     "recognize": [
+      "ich weiß"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "el": {
+     "text": "ξέρω.",
+     "recognize": [
+      "ξέρω"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "he": {
+     "text": "אני יודע.",
+     "recognize": [
+      "אני יודע",
+      "אני יודעת"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "tudom.",
+     "recognize": [
+      "tudom"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "it": {
+     "text": "lo so.",
+     "recognize": [
+      "lo so"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "나도 안다.",
+     "recognize": [
+      "나도 안다"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "zinu.",
+     "recognize": [
+      "zinu",
+      "es zinu"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "žinau.",
+     "recognize": [
+      "žinau",
+      "aš žinau"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "من می‌دانم.",
+     "recognize": [
+      "من می‌دانم",
+      "می‌دانم",
+      "می‌دونم"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "wiem.",
+     "recognize": [
+      "wiem",
+      "znam"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "eu sei.",
+     "recognize": [
+      "eu sei"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "știu.",
+     "recognize": [
+      "știu"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "я знаю.",
+     "recognize": [
+      "я знаю",
+      "знаю"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "viem.",
+     "recognize": [
+      "viem"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "vem.",
+     "recognize": [
+      "vem",
+      "jaz vem"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "es": {
+     "text": "lo sé.",
+     "recognize": [
+      "lo sé"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "jag vet.",
+     "recognize": [
+      "jag vet"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "biliyorum.",
+     "recognize": [
+      "biliyorum"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "я знаю.",
+     "recognize": [
+      "я знаю",
+      "знаю"
+     ],
+     "source": "en.wiktionary.org/wiki/I_know (gloss: response indicating agreement with prior statement)",
+     "judgement": false
+    },
+    "en": {
+     "text": "I know.",
+     "recognize": [
+      "I know"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "thats_all": {
+   "question": false,
+   "langs": {
+    "fi": {
+     "text": "siinä kaikki.",
+     "recognize": [
+      "siinä kaikki"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "fr": {
+     "text": "c'est tout.",
+     "recognize": [
+      "c'est tout"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "de": {
+     "text": "bloss.",
+     "recognize": [
+      "bloss"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "he": {
+     "text": "זה הכל.",
+     "recognize": [
+      "זה הכל"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "hu": {
+     "text": "ennyi.",
+     "recognize": [
+      "ennyi",
+      "ennyi lesz"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "id": {
+     "text": "itu saja.",
+     "recognize": [
+      "itu saja"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "it": {
+     "text": "tutto qua.",
+     "recognize": [
+      "tutto qua"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "lt": {
+     "text": "ir tiek.",
+     "recognize": [
+      "ir tiek"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "pt": {
+     "text": "é isso.",
+     "recognize": [
+      "é isso"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "ru": {
+     "text": "вот и всё.",
+     "recognize": [
+      "вот и всё"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "es": {
+     "text": "y para de contar.",
+     "recognize": [
+      "y para de contar",
+      "ya está",
+      "y ya"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "vi": {
+     "text": "thôi.",
+     "recognize": [
+      "thôi",
+      "có vậy thôi"
+     ],
+     "source": "en.wiktionary.org/wiki/that's_all (gloss: that's all)",
+     "judgement": true
+    },
+    "en": {
+     "text": "That's all.",
+     "recognize": [
+      "that's all"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "it_depends": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "ذلك يعتمد.",
+     "recognize": [
+      "ذلك يعتمد"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "看情况。",
+     "recognize": [
+      "看情况",
+      "取決於……"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "het hangt ervan af.",
+     "recognize": [
+      "het hangt ervan af"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "se riippuu.",
+     "recognize": [
+      "se riippuu"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "ça dépendre.",
+     "recognize": [
+      "ça dépendre"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "de": {
+     "text": "das kommt darauf an.",
+     "recognize": [
+      "das kommt darauf an"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "वह निर्भर करता हैं.",
+     "recognize": [
+      "वह निर्भर करता हैं"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "attól függ.",
+     "recognize": [
+      "attól függ"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "it": {
+     "text": "dipende.",
+     "recognize": [
+      "dipende"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "fa": {
+     "text": "بستگی دارد.",
+     "recognize": [
+      "بستگی دارد"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "to zależy.",
+     "recognize": [
+      "to zależy"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "depende.",
+     "recognize": [
+      "depende"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "depinde.",
+     "recognize": [
+      "depinde"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "es": {
+     "text": "depende.",
+     "recognize": [
+      "depende"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "det beror på.",
+     "recognize": [
+      "det beror på"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "duruma göre değişir.",
+     "recognize": [
+      "duruma göre değişir"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "صورت حال پر منحصر ہے.",
+     "recognize": [
+      "صورت حال پر منحصر ہے",
+      "صورت حال پر انحصار کرتا ہے",
+      "صورت حال پر دار و مدار ہے"
+     ],
+     "source": "en.wiktionary.org/wiki/it_depends (gloss: it depends)",
+     "judgement": false
+    },
+    "en": {
+     "text": "It depends.",
+     "recognize": [
+      "it depends"
+     ],
+     "source": "headword",
+     "judgement": false
+    }
+   }
+  },
+  "im_fine": {
+   "question": false,
+   "langs": {
+    "ar": {
+     "text": "بِخَيْر.",
+     "recognize": [
+      "بِخَيْر",
+      "أَنَا بِخَيْر",
+      "الْحَمْدُ لِلّٰهِ"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "bg": {
+     "text": "добре́ съм.",
+     "recognize": [
+      "добре́ съм"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "zh": {
+     "text": "我很好。",
+     "recognize": [
+      "我很好"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "cs": {
+     "text": "mám se dobře.",
+     "recognize": [
+      "mám se dobře"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "da": {
+     "text": "jeg har det fint.",
+     "recognize": [
+      "jeg har det fint"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "nl": {
+     "text": "het gaat goed.",
+     "recognize": [
+      "het gaat goed"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "et": {
+     "text": "hästi.",
+     "recognize": [
+      "hästi",
+      "minul läheb hästi"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "fi": {
+     "text": "kiitos hyvää.",
+     "recognize": [
+      "kiitos hyvää"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "fr": {
+     "text": "ça va.",
+     "recognize": [
+      "ça va",
+      "je vais bien"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "de": {
+     "text": "es geht mir gut.",
+     "recognize": [
+      "es geht mir gut",
+      "mir geht's gut"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "el": {
+     "text": "καλά.",
+     "recognize": [
+      "καλά",
+      "είμαι καλά"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "he": {
+     "text": "אני בסדר.",
+     "recognize": [
+      "אני בסדר"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "hi": {
+     "text": "मैं ठीक हूँ.",
+     "recognize": [
+      "मैं ठीक हूँ"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "hu": {
+     "text": "jól.",
+     "recognize": [
+      "jól"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "it": {
+     "text": "sto bene.",
+     "recognize": [
+      "sto bene"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "ja": {
+     "text": "おかげさまで元気です。",
+     "recognize": [
+      "おかげさまで元気です",
+      "元気です"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "ko": {
+     "text": "덕분-에 잘 지내고 있어요.",
+     "recognize": [
+      "덕분-에 잘 지내고 있어요",
+      "덕택-에 잘 지냅니다",
+      "잘 지내요"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "lv": {
+     "text": "labi.",
+     "recognize": [
+      "labi",
+      "man viss kārtībā"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "lt": {
+     "text": "gerai.",
+     "recognize": [
+      "gerai",
+      "man viskas gerai"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "no": {
+     "text": "jeg har det bra.",
+     "recognize": [
+      "jeg har det bra",
+      "det går bra"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "pl": {
+     "text": "mam się dobrze.",
+     "recognize": [
+      "mam się dobrze"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "pt": {
+     "text": "estou bem.",
+     "recognize": [
+      "estou bem",
+      "tudo bem"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "ro": {
+     "text": "sunt bine.",
+     "recognize": [
+      "sunt bine",
+      "bine"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "ru": {
+     "text": "у меня всё хорошо.",
+     "recognize": [
+      "у меня всё хорошо",
+      "всё хорошо",
+      "хорошо",
+      "всё в порядке",
+      "в порядке"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "sk": {
+     "text": "mám sa dobre.",
+     "recognize": [
+      "mám sa dobre"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "sl": {
+     "text": "v redu sem.",
+     "recognize": [
+      "v redu sem",
+      "dobro"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "es": {
+     "text": "estoy bien.",
+     "recognize": [
+      "estoy bien",
+      "yo estoy bien"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "sv": {
+     "text": "jag mår bra.",
+     "recognize": [
+      "jag mår bra"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "th": {
+     "text": "สบายดี.",
+     "recognize": [
+      "สบายดี"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "tr": {
+     "text": "iyi-im.",
+     "recognize": [
+      "iyi-im"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "uk": {
+     "text": "у мене все добре.",
+     "recognize": [
+      "у мене все добре",
+      "добре",
+      "усе добре"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "ur": {
+     "text": "مَیں ٹِھیک ہُوں.",
+     "recognize": [
+      "مَیں ٹِھیک ہُوں"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "vi": {
+     "text": "tôi khỏe.",
+     "recognize": [
+      "tôi khỏe"
+     ],
+     "source": "en.wiktionary.org/wiki/I'm_fine (gloss: response)",
+     "judgement": false
+    },
+    "en": {
+     "text": "I'm fine.",
+     "recognize": [
+      "I'm fine"
      ],
      "source": "headword",
      "judgement": false

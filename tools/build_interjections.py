@@ -31,6 +31,14 @@ SKIPPED = {
                  "merged into 'sorry' (judgement call)",
     "again": "no translation table for the 'once more' sense — the "
              "near-miss tables would miscite",
+    "good_night": "no direct table — wiktionary only cross-references "
+                  "('see you tomorrow'); candidate for a signed-off "
+                  "hand-curated exception",
+    "youre_welcome": "reply-sense filed under 'of course'/'no problem'; "
+                     "recognition folded into no_problem (function-"
+                     "equivalent reply, judgement call)",
+    "youre_right": "only a cross-reference to verb 'be right' — wrong "
+                   "register",
     "how":   "interrogative sense has no translation table on wiktionary "
              "(only the 'How!' greeting is tabled) — wrong-sense data "
              "forbidden by the citation rule",
@@ -72,6 +80,31 @@ WORDS = {
     "later":     ("later", ["some time in the future"], False),
     "more":      ("more", ["greater", "additional"], False),
     "enough":    ("enough", ["stop", "sufficient"], False),
+    # 2026-08-27 expansion 2: phrasebook-class utterances (selection evidence:
+    # Wiktionary Category:English phrasebook membership + Toby's named set)
+    "good_morning":   ("good morning", ["morning"], False),
+    "good_afternoon": ("good afternoon", ["afternoon"], False),
+    "good_evening":   ("good evening", ["evening"], False),
+    "welcome":        ("welcome", ["greeting", "arrival"], False),
+    "see_you_later":  ("see you later", ["farewell", "goodbye"], False),
+    "take_care":      ("take care", ["farewell", "parting", "goodbye"], False),
+    "good_luck":      ("good luck", ["luck", "wish"], False),
+    "congratulations": ("congratulations", ["congratulat", "praise"], False),
+    "happy_birthday": ("happy birthday", ["birthday"], False),
+    "me_too":         ("me too", ["likewise", "same", "also"], False),
+    "why_not":        ("why not", ["assent", "agree", "reason"], True),
+    "how_much":       ("how much", ["price", "cost", "what quantity"], True),
+    "how_many":       ("how many", ["what number", "quantity"], True),
+    "lets_go":        ("let's go", ["hortative", "suggestion", "let us",
+                       "movement"], False),
+    "dont_worry":     ("don't worry", ["reassur", "worry"], False),
+    "no_thanks":      ("no, thanks", ["polite", "refus", "declin"], False),
+    "got_it":         ("got it", ["understand", "understood",
+                       "acknowledg"], False),
+    "i_know":         ("I know", ["aware", "agree", "known"], False),
+    "thats_all":      ("that's all", ["nothing more", "conclud"], False),
+    "it_depends":     ("it depends", ["depend", "uncertain"], False),
+    "im_fine":        ("I'm fine", ["well", "fine", "response"], False),
 }
 
 # wiktionary language label -> our catalog code (nested labels handled too)
@@ -102,17 +135,21 @@ PICKS = {
     ("when", "ja"): "いつ",
     ("why", "ja"): "どうして",
     ("who", "ja"): "だれ",
+    ("welcome", "zh"): "欢迎",
+    ("see_you_later", "zh"): "回见",
+    ("see_you_later", "de"): "bis später",
     ("enough", "de"): "das genügt",
 }
 
 # cells whose only cited candidates are the wrong register for a standalone
 # utterance (e.g. bare infinitives) — excluded, logged uncovered
 DROPS = {("help", "ja"), ("more", "ja"), ("sure", "ja"), ("sure", "zh"),
-         ("why", "es"), ("really", "zh")}  # only wrong-register/wrong-word candidates cited
+         ("why", "es"), ("really", "zh"), ("lets_go", "ja"),
+         ("why_not", "zh"), ("thats_all", "zh")}  # wrong-register/wrong-word candidates
 
 # script normalization: cited traditional-Chinese forms rendered in the
 # catalog's simplified script (mechanical char mapping, not translation)
-TRAD2SIMP = str.maketrans("沒麼甚謝對見長訴幫問請誰為時裡裏遲總現當許確壞從題", "没么什谢对见长诉帮问请谁为时里里迟总现当许确坏从题")
+TRAD2SIMP = str.maketrans("沒麼甚謝對見長訴幫問請誰為時裡裏遲總現當許確壞從題會歡臨運樂緊況聽", "没么什谢对见长诉帮问请谁为时里里迟总现当许确坏从题会欢临运乐紧况听")
 
 
 # The pre-expansion table (src/interjections.py, 2026-08-27): bench-exposed
@@ -163,7 +200,16 @@ LEGACY_RECOGNIZE = {
            "hello": "hello", "hi": "hello", "hey": "hello",
            "bye": "bye", "goodbye": "bye", "see you": "bye",
            "sorry": "sorry", "my bad": "sorry", "excuse me": "sorry",
-           "pardon me": "sorry", "pardon": "sorry", "please": "please",
+           "pardon me": "sorry", "pardon": "sorry", "i m sorry": "sorry",
+           "please": "please", "morning": "good_morning",
+           "afternoon": "good_afternoon", "evening": "good_evening",
+           "good day": "good_morning",
+           "my pleasure": "no_problem",
+           "you re welcome": "no_problem", "many thanks": "thanks",
+           "thanks a lot": "thanks", "thank you very much": "thanks",
+           "so long": "bye", "later": "see_you_later",
+           "congrats": "congratulations", "no thanks": "no_thanks",
+           "that s it": "thats_all", "no worries": "no_problem",
            "wait": "wait", "wait a moment": "wait", "wait a second": "wait",
            "hold on": "wait", "one moment": "wait", "one second": "wait"},
     "es": {"sí": "yes", "si": "yes", "no": "no", "vale": "okay",
