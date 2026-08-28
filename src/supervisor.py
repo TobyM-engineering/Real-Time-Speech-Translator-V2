@@ -174,10 +174,16 @@ class Supervisor(threading.Thread):
                 self.b.set_fault("")
             return
         self._disconnect_seen = False  # full recovery path handles it below
+        # The on-screen state is plain and persistent while unhealthy —
+        # recovery detail stays in the log. (Toby, 2026-08-27: "not
+        # connected" must be visible on the glass, not only logged.)
+        if not connected:
+            self.b.set_fault("Earbuds not connected — open the AirPods case")
+        else:
+            self.b.set_fault("Earbud audio stalled — reconnecting…")
         if now < self._bt_next_try:
             return
         self._bt_attempt += 1
-        self.b.set_fault("Reconnecting earbuds…")
         level = min(2, (self._bt_attempt - 1) // 2)
         self.log(f"bt recovery attempt {self._bt_attempt} (level {level}): "
                  f"connected={connected} playback_sick={sick}")

@@ -535,20 +535,28 @@ Window {
         MouseArea { anchors.fill: parent; onClicked: levelPanel.visible = false }
     }
 
-    Rectangle {  // device fault pill — overlays the center strip, both readers
+    Rectangle {  // device fault pill — overlays the center strip, both
+                 // readers. Text obeys the 0.5 m readability line (~44 px,
+                 // fit-to-width): the original 20 px was invisible in
+                 // practice — the "Reconnecting earbuds…" nobody saw at
+                 // boot, 2026-08-27.
         visible: win.faultMsg !== ""
         anchors.centerIn: parent
-        width: Math.min(win.width - 40, fcol.width + 48); height: 72
+        width: win.width - 32
+        height: fcol.implicitHeight + 30
         radius: 14; color: "#E5300A10"; border.color: "#FF5A6E"; border.width: 2
         Column {
             id: fcol
-            anchors.centerIn: parent; spacing: 2
-            Text { text: win.faultMsg; color: "#FFB4BC"; font.pixelSize: 20
-                   font.bold: true; rotation: 180
-                   anchors.horizontalCenter: parent.horizontalCenter }
-            Text { text: win.faultMsg; color: "#FFB4BC"; font.pixelSize: 20
-                   font.bold: true
-                   anchors.horizontalCenter: parent.horizontalCenter }
+            width: parent.width - 40
+            anchors.centerIn: parent; spacing: 4
+            Text { text: win.faultMsg; color: "#FFB4BC"; rotation: 180
+                   width: parent.width; horizontalAlignment: Text.AlignHCenter
+                   font.pixelSize: 44; font.bold: true
+                   fontSizeMode: Text.HorizontalFit; minimumPixelSize: 22 }
+            Text { text: win.faultMsg; color: "#FFB4BC"
+                   width: parent.width; horizontalAlignment: Text.AlignHCenter
+                   font.pixelSize: 44; font.bold: true
+                   fontSizeMode: Text.HorizontalFit; minimumPixelSize: 22 }
         }
     }
 }
