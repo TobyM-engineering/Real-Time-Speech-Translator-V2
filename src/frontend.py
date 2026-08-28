@@ -162,6 +162,13 @@ class AudioFrontend:
         selfcheck_done = False
         selfcheck_next = 3 * config.SR
         deferred_logged = False
+        fed = 0          # samples fed to the VADs — sherpa's span scale
+        vad_offset = 0   # capture-head minus fed: converts sherpa spans to
+                         # the capture scale at pop. Sherpa's internal
+                         # counter diverged 38 s from the capture head over
+                         # a 9 h session (2026-08-28) — every consumer of a
+                         # span (ratio energy windows, gate, PTT, D5, groups)
+                         # must live on ONE scale: the capture head.
         speech_start = {A: None, B: None}
         speech_state = {A: False, B: False}
         forced_next = {A: False, B: False}
@@ -191,6 +198,8 @@ class AudioFrontend:
                 block, s0 = self._blocks.get(timeout=0.25)
             except queue.Empty:
                 continue
+            fed += config.CHUNK
+            vad_offset = s0 + config.CHUNK - fed
             frames = np.frombuffer(block, dtype=np.int16).reshape(-1, 2)
             g = 10.0 ** (config.CAPTURE_GAIN_DB / 20.0)
             fl = np.clip(frames[:, 0].astype(np.float32) / 32768.0 * g, -1, 1)
@@ -305,7 +314,8 @@ class AudioFrontend:
                 v = self._vads[person]
                 while not v.empty():
                     seg = v.front
-                    a = seg.start / config.SR
+                    # sherpa span -> capture scale (see vad_offset above)
+                    a = (seg.start + vad_offset) / config.SR
                     b = a + len(seg.samples) / config.SR
                     audio = np.asarray(seg.samples, dtype=np.float32)
                     v.pop()
