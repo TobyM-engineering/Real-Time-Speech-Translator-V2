@@ -154,6 +154,8 @@ class Bridge(QObject):
         self._poll.start()
         a, b = self._lang[config.PERSON_A], self._lang[config.PERSON_B]
         self._log(f"LANG A={a['code']}({a['asr']})  B={b['code']}({b['asr']})")
+        if self.mt:
+            self.mt.preload_pair(a, b)   # both directions, on the MT thread
         self._log(f"stage {'3' if self.downstream else '2'} up — capture live")
         with self._lock:
             self._recompute()
@@ -478,6 +480,9 @@ class Bridge(QObject):
         self._log(f"CTRL {person} language -> {code} ({entry['name']})")
         if self.tts:   # load the voice NOW, on the TTS thread — not on the
             self.tts.preload_voice(entry)   # first turn's synth path
+        if self.mt:    # and the opus pair for the new language combination
+            self.mt.preload_pair(self._lang[config.PERSON_A],
+                                 self._lang[config.PERSON_B])
         self.langChanged.emit(person, entry)
 
     @Slot(str, result="QVariant")

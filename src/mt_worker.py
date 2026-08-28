@@ -1,6 +1,7 @@
 """T3 MT worker: NLLB via CTranslate2, greedy, per-sentence, with the measured
 fragment policy — digits pass through untranslated, hallucination detector on
 every output (ratio > 1.25 / per-token < -0.40 / invented digits)."""
+import os
 import queue
 import re
 import threading
@@ -37,7 +38,15 @@ class MtWorker(threading.Thread):
         self.on_translated = on_translated
         self.on_untranslated = on_untranslated
         self.q = queue.Queue()
+        self._pairs = {}                 # (src,tgt) -> (sp_in, sp_out, tr)
+        self._pair_missing_logged = set()
         self._stopping = threading.Event()
+
+    def preload_pair(self, src_entry, tgt_entry):
+        """Picker-time load of BOTH directions of the active pair — a
+        sentinel through the queue, so it runs on this worker's thread
+        (nothing stalls; ~0.2 s per direction)."""
+        self.q.put((None, "__pair__", src_entry, tgt_entry, None))
 
     def submit(self, turn, text, src_entry, tgt_entry, ear):
         self.q.put((turn, text, src_entry, tgt_entry, ear))
@@ -62,6 +71,11 @@ class MtWorker(threading.Thread):
             try:
                 turn, text, src, tgt, ear = self.q.get(timeout=0.25)
             except queue.Empty:
+                continue
+            if turn is None and text == "__pair__":
+                if src["code"] != tgt["code"]:
+                    self._get_pair(src, tgt)
+                    self._get_pair(tgt, src)
                 continue
             if turn.cancelled:
                 self.on_log(f"MT   turn#{turn.turn_id} cancelled — skipped")
@@ -113,20 +127,24 @@ class MtWorker(threading.Thread):
                             f'curated {tgt["code"]} form, using MT')
             todo.append((i, sent))
         if todo:
-            self._tok.src_lang = src["flores"]
-            toks = [self._tok.convert_ids_to_tokens(self._tok.encode(s))
-                    for _, s in todo]
-            results = self._tr.translate_batch(
-                toks, target_prefix=[[tgt["flores"]]] * len(toks),
-                beam_size=1, return_scores=True)
-            for (i, sent), tk, r in zip(todo, toks, results):
-                out, ratio, per_tok, dig_ok = self._score(sent, tk, r)
+            sents = [s for _, s in todo]
+            pair = self._get_pair(src, tgt)
+            if pair is not None:
+                triples = self._opus_batch(pair, sents)
+                ratio_flag = config.MT_RATIO_FLAG_OPUS
+            else:
+                triples = self._nllb_batch(sents, src["flores"],
+                                           tgt["flores"])
+                ratio_flag = config.MT_RATIO_FLAG
+            for (i, sent), (out, ratio, per_tok) in zip(todo, triples):
+                dig_ok = set(re.findall(r"\d", out)) <= \
+                    set(re.findall(r"\d", sent))
                 clean = _desubtitle(out)
                 if clean != out:
                     self.on_log(f'MT   turn#{tid} sanitized dialog artifact: '
                                 f'"{out}" -> "{clean}"')
                     out = clean
-                flagged = (ratio > config.MT_RATIO_FLAG
+                flagged = (ratio > ratio_flag
                            or per_tok < -0.40 or not dig_ok)
                 if flagged and len(sent.split()) < 4:
                     self.on_log(f"MT   turn#{tid} DISCARDED suspect fragment "
@@ -139,6 +157,75 @@ class MtWorker(threading.Thread):
                                 f"digits_ok={dig_ok}")
                 parts[i] = out
         return " ".join(p for p in parts if p).strip()
+
+    # -- engines --------------------------------------------------------
+    def _get_pair(self, src, tgt):
+        """The opus engine for this directed pair, LRU-cached (4), or None
+        -> NLLB fallback. Missing models log once per pair, never silent."""
+        key = (src["code"], tgt["code"])
+        if key in self._pairs:
+            v = self._pairs.pop(key)
+            self._pairs[key] = v
+            return v
+        d = f"{config.OPUS_DIR}/{key[0]}-{key[1]}-int8"
+        if not (os.path.exists(f"{d}/model.bin")
+                and os.path.exists(f"{d}/source.spm")):
+            if key not in self._pair_missing_logged:
+                self._pair_missing_logged.add(key)
+                self.on_log(f"MT   pair {key[0]}->{key[1]}: NLLB fallback "
+                            f"(no opus model installed)")
+            return None
+        import ctranslate2
+        import sentencepiece as spm_mod
+        t0 = time.time()
+        try:
+            v = (spm_mod.SentencePieceProcessor(f"{d}/source.spm"),
+                 spm_mod.SentencePieceProcessor(f"{d}/target.spm"),
+                 ctranslate2.Translator(d, device="cpu", compute_type="int8",
+                                        inter_threads=config.MT_INTER_THREADS,
+                                        intra_threads=config.MT_INTRA_THREADS))
+        except Exception as e:
+            self.on_log(f"MT   pair {key[0]}->{key[1]}: load FAILED ({e}) — "
+                        f"NLLB fallback")
+            return None
+        self._pairs[key] = v
+        if len(self._pairs) > 4:
+            old = next(iter(self._pairs))
+            del self._pairs[old]
+            self.on_log(f"MT   pair {old[0]}->{old[1]} unloaded (LRU)")
+        self.on_log(f"MT   pair {key[0]}->{key[1]}: opus loaded "
+                    f"({time.time()-t0:.1f}s)")
+        return v
+
+    def _opus_batch(self, pair, sents):
+        sp_in, sp_out, tr = pair
+        toks = [sp_in.encode(s, out_type=str) for s in sents]
+        rs = tr.translate_batch(toks, beam_size=1, return_scores=True)
+        out = []
+        for tk, r in zip(toks, rs):
+            hyp = r.hypotheses[0]
+            text = sp_out.decode(hyp).strip()
+            ratio = len(hyp) / max(1, len(tk))
+            per = (r.scores[0] / max(1, len(hyp))) if r.scores else 0.0
+            out.append((text, ratio, per))
+        return out
+
+    def _nllb_batch(self, sents, src_f, tgt_f):
+        self._tok.src_lang = src_f
+        toks = [self._tok.convert_ids_to_tokens(self._tok.encode(s))
+                for s in sents]
+        rs = self._tr.translate_batch(
+            toks, target_prefix=[[tgt_f]] * len(toks),
+            beam_size=1, return_scores=True)
+        out = []
+        for tk, r in zip(toks, rs):
+            hyp = r.hypotheses[0][1:]
+            text = self._tok.decode(self._tok.convert_tokens_to_ids(hyp),
+                                    skip_special_tokens=True).strip()
+            ratio = len(hyp) / max(1, len(tk))
+            per = (r.scores[0] / max(1, len(hyp))) if r.scores else 0.0
+            out.append((text, ratio, per))
+        return out
 
     def _score(self, sent, toks, r):
         hyp = r.hypotheses[0][1:]

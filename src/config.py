@@ -136,6 +136,15 @@ MT_INTRA_THREADS = 2
 # -0.35 across all 180) plus digit check still guard the starved class.
 MT_RATIO_FLAG = 1.9
 
+# opus-mt per-pair engines (2026-08-27): the active pair's two directions
+# load at picker time (~0.2 s each, LRU of 4); NLLB stays resident as the
+# universal fallback (uncovered pair / missing files / load failure — all
+# logged, never silent). Detector recalibrated on 66 legit opus
+# translations (en<->es): ratio max 2.00, score min -0.26 -> opus ratio
+# flag 2.2 (NLLB keeps 1.9), shared score floor -0.40 keeps margin.
+MT_RATIO_FLAG_OPUS = 2.2
+OPUS_DIR = "<REPO-ROOT>/models/opus"
+
 # Fall-through gap signal (2026-08-27): when a turn yields NO audio (all
 # sentences discarded / nothing translatable / TTS failure), the listener
 # hears a soft double-tone and sees the untranslated source text — the gap
