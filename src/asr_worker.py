@@ -9,18 +9,25 @@ concatenated and re-decoded as one utterance; the later turn is marked merged.
 """
 import os
 import queue
+import re
 import threading
 import time
 import wave
 
 import numpy as np
 
-from src import config
+from src import config, interjections
 
 _DUMP_DIR = os.environ.get("TXV2_DUMP_DIR")
 _DUMP_MAX = 8
 
 _CJK = {"zh", "ja", "ko"}
+_NONWORD = re.compile(r"[\W_]+", re.UNICODE)
+
+
+def _normtokens(text, cjk):
+    t = _NONWORD.sub(" ", text.casefold()).strip()
+    return list(t.replace(" ", "")) if cjk else t.split()
 
 
 class AsrWorker(threading.Thread):
@@ -164,6 +171,8 @@ class AsrWorker(threading.Thread):
         if turn.cancelled:
             self.on_dropped(turn, "cancelled during decode")
             return
+        if self._nonspeech_reject(entry, audio, text, turn):
+            return
 
         dur = len(audio) / config.SR
         n_units = len(text) if entry["code"] in _CJK else len(text.split())
@@ -190,6 +199,56 @@ class AsrWorker(threading.Thread):
                         f"for merge ({why})")
         else:
             self._release(turn, text, None)
+
+    def _nonspeech_reject(self, entry, audio, text, turn):
+        """Tier-1 non-speech floor: very short, few-word segments get a free
+        SenseVoice cross-decode. A language flip (noise reads as ja/yue) or
+        zero token overlap means the primary engine invented words from a
+        non-speech sound — drop silently (no gap tone: nothing was said),
+        log loudly. Only where SenseVoice knows the source language, and
+        never when SenseVoice IS the primary engine."""
+        dur = len(audio) / config.SR
+        if (dur >= config.NONSPEECH_MAX_S
+                or entry["asr"] == "sensevoice"
+                or entry["code"] not in ("en", "zh", "ja", "ko", "yue")):
+            return False
+        cjk = entry["code"] in _CJK
+        units = len(text) if cjk else len(text.split())
+        if units > config.NONSPEECH_MAX_WORDS:
+            return False
+        st = self._sense.create_stream()
+        st.accept_waveform(config.SR, audio)
+        self._sense.decode_stream(st)
+        sv_text = st.result.text.strip()
+        sv_lang = st.result.lang.strip("<|>")
+        flip = sv_lang != entry["code"]
+        # prefix counts as agreement: SenseVoice truncates legit short words
+        # ("Yeah." -> "Y.") while noise yields DIFFERENT words (Blob/Blurp)
+        ta = _normtokens(text, cjk)
+        tb = _normtokens(sv_text, cjk)
+        agree = any(a == b or a.startswith(b) or b.startswith(a)
+                    for a in ta for b in tb)
+        # semantic agreement through the interjection table: the engines can
+        # word the same concept differently ("Yeah." vs "Yes.", はい vs うん)
+        if not agree:
+            c_pk = interjections.match(text, entry["code"])
+            c_sv = interjections.match(sv_text, entry["code"]) or (
+                interjections.match(sv_text, sv_lang)
+                if sv_lang in interjections.RECOGNIZE else None)
+            agree = c_pk is not None and c_pk == c_sv
+        # disagreement alone decides: every measured noise specimen fails
+        # both tests anyway, and SenseVoice's language tag misfires on legit
+        # clean shorts (synth "Yeah." tagged non-en) — the flip is logged as
+        # evidence, not used as a trigger
+        if agree:
+            return False
+        turn.state = "rejected_nonspeech"
+        self.on_log(f'ASR  turn#{turn.turn_id} REJECTED non-speech floor '
+                    f'({dur:.1f}s): pk="{text}" sv="{sv_text}" '
+                    f'lang={sv_lang} '
+                    f'{"lang-flip" if flip else "no-overlap"}')
+        self.on_dropped(turn, "non-speech floor")
+        return True
 
     def _release(self, turn, text, why):
         if turn.cancelled:

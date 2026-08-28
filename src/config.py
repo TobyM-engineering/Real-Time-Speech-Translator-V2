@@ -144,6 +144,17 @@ MT_RATIO_FLAG = 1.9
 # ALL now interjection-table hits -> expected rare. Level relative to speech.
 GAP_TONE_LEVEL = 0.25
 
+# Tier-1 non-speech floor (2026-08-27, Toby: tier 1 only — speed over
+# catching every noise; the +1.5 s whisper referee was declined). Segments
+# under NONSPEECH_MAX_S with at most NONSPEECH_MAX_WORDS get a free
+# SenseVoice cross-decode (~20-70 ms): a language flip (bleats read as
+# ja/yue) or zero token overlap = the primary engine invented words from
+# noise -> silent drop, loudly logged. Catches 5 of the 6 live specimens;
+# noise both engines agree on (the sheep-"Okay.") passes — accepted.
+# Only active where SenseVoice knows the source language: en today.
+NONSPEECH_MAX_S = 1.5
+NONSPEECH_MAX_WORDS = 2
+
 # Stage 3 — audio out (D3 spike 2026-08-26: pw-play --raw stdin, pipe shrunk
 # via F_SETPIPE_SZ 64 KB→16 KB = write-to-sink buffering ~100 ms)
 AIRPODS_NODE = "bluez_output.10_B5_88_97_3B_1B.1"
