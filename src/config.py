@@ -153,6 +153,15 @@ GROUP_CONTINUE_GAP = 1.0
 GROUP_QUIET_CLOSE = 1.2    # s of real quiet (VAD off, nothing pending) closes it
 
 ASR_THREADS = 3
+# Whisper decodes with the temperature fallback DISABLED (2026-08-28,
+# measured on the session's own accented dump + an ambiguous-band mix):
+# the library-default retries (5 temperatures × best_of 5 ≈ up to 26
+# decoder passes) cost ×2.8 on contaminated audio and produced WORSE
+# text ("esperad." vs the correct "Esperar"); clean clips never
+# triggered them. Residual risk accepted: whisper's repetition-loop
+# rescue is gone — bounded by ≤7 s dip-cut chunks and the downstream
+# output detector.
+WHISPER_TEMPERATURE = 0.0
 MT_THREADS = 3   # legacy serial figure — still used by preserved bench scripts
 
 # MT clause batching (measured 2026-08-27): every sentence of a chunk goes to

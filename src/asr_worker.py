@@ -226,6 +226,7 @@ class AsrWorker(threading.Thread):
                 # "Quanto? Questo?", 2026-08-28)
                 segs, _ = self._whisper.transcribe(
                     audio, language=entry["code"], beam_size=1,
+                    temperature=config.WHISPER_TEMPERATURE, best_of=1,
                     condition_on_previous_text=False, without_timestamps=True)
                 text = " ".join(s.text.strip() for s in segs).strip()
                 eng = "whisper"
@@ -312,5 +313,6 @@ class AsrWorker(threading.Thread):
             return st.result.text.strip()
         segs, _ = self._whisper.transcribe(
             audio, language=entry["code"], beam_size=1,
+            temperature=config.WHISPER_TEMPERATURE, best_of=1,
             condition_on_previous_text=False, without_timestamps=True)
         return " ".join(s.text.strip() for s in segs).strip()
