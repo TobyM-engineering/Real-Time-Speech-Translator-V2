@@ -22,7 +22,7 @@ import subprocess
 import threading
 import time
 
-from src import config
+from src import battery, config
 
 _MAC = "<EARBUDS-MAC>"
 
@@ -50,6 +50,9 @@ class Supervisor(threading.Thread):
         self._therm_fault = False
         self._drift_logged = 0.0
         self._drift_next = 0.0
+        self._batt_next = 0.0
+        self._batt_last = None
+        self._batt_fault = False
 
     def stop(self):
         self._stopping.set()
@@ -68,6 +71,35 @@ class Supervisor(threading.Thread):
             self._check_bt(now)
             self._check_thermal(now)
             self._check_drift(now)
+            self._check_battery(now)
+
+    # -- UPS HAT (E) fuel gauge (verified live 2026-08-28) ---------------
+    def _check_battery(self, now):
+        if now < self._batt_next:
+            return
+        self._batt_next = now + 10.0
+        r = battery.read()
+        if r is None:
+            self.b.set_battery(-1, "")   # no gauge — indicator hides
+            return
+        self.b.set_battery(r["percent"], r["state"])
+        key = (r["percent"] // 5, r["state"])
+        if key != self._batt_last:
+            self._batt_last = key
+            self.log(f"BATT {r['percent']}% {r['state']} "
+                     f"pack {r['pack_mv']/1000:.2f}V "
+                     f"min-cell {r['cell_min_mv']}mV")
+        # Waveshare's own threshold: any cell under 3150 mV while
+        # discharging — surface it well before their 60 s auto-cutoff
+        if r["low"] and r["state"] == "discharging" and not self._batt_fault:
+            self._batt_fault = True
+            self.log(f"BATTERY LOW: min cell {r['cell_min_mv']}mV")
+            self.b.set_fault("Battery low — charge now")
+        elif self._batt_fault and (r["cell_min_mv"] > 3300
+                                   or "charging" in r["state"]):
+            self._batt_fault = False
+            self.log("battery recovered")
+            self.b.set_fault("")
 
     # -- stream-vs-wall drift monitor (audit 2026-08-28: a one-time +9.8 s
     # surge appeared under background I/O load and was invisible). All

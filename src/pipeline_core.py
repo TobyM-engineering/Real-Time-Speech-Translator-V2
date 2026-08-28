@@ -38,6 +38,7 @@ class Bridge(QObject):
     faultChanged = Signal(str)             # device fault banner ("" = clear)
     gapNotice = Signal(str, str)           # listener person, untranslated
                                            # source text (fall-through)
+    batteryChanged = Signal(int, str)      # percent (-1 = no gauge), state
     levelUpdate = Signal(str)              # mic level panel data, JSON
 
     def __init__(self, catalog, downstream=False):
@@ -130,6 +131,12 @@ class Bridge(QObject):
             self._ready_emitted = True
         self._log("READY pipeline ready (ASR warm; selected voices resident)")
         self.ready.emit()
+
+    def set_battery(self, percent, state):
+        key = (percent, state)
+        if key != getattr(self, "_battery", None):
+            self._battery = key
+            self.batteryChanged.emit(percent, state)
 
     def set_fault(self, msg):
         if msg != getattr(self, "_fault", None):

@@ -13,11 +13,16 @@ Window {
 
     property bool pipelineReady: false
     property string faultMsg: ""
+    property int battPercent: -1
+    property string battState: ""
     property var levelData: null
     Connections {
         target: bridge
         function onReady() { win.pipelineReady = true }
         function onFaultChanged(msg) { win.faultMsg = msg }
+        function onBatteryChanged(pct, state) {
+            win.battPercent = pct; win.battState = state
+        }
         function onLevelUpdate(j) { win.levelData = JSON.parse(j) }
     }
 
@@ -447,6 +452,34 @@ Window {
             Rectangle { width: 14; height: 14; radius: 7
                         color: win.pipelineReady ? "#2EE6A8" : "#F5C542"
                         anchors.centerIn: parent }
+            Row {   // battery: pip colored by charge, pulses while charging;
+                    // percentage small here, full detail one tap away in the
+                    // level panel
+                visible: win.battPercent >= 0
+                spacing: 8
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.horizontalCenter
+                anchors.leftMargin: 96
+                Rectangle {
+                    id: battPip
+                    width: 12; height: 12; radius: 6
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: win.battPercent > 30 ? "#2EE6A8"
+                         : win.battPercent > 10 ? "#F5C542" : "#FF5A6E"
+                    SequentialAnimation on opacity {
+                        running: win.battState.indexOf("charging") >= 0
+                        loops: Animation.Infinite
+                        NumberAnimation { from: 1.0; to: 0.3; duration: 700 }
+                        NumberAnimation { from: 0.3; to: 1.0; duration: 700 }
+                    }
+                    onColorChanged: opacity = 1.0
+                }
+                Text {
+                    text: win.battPercent + "%"
+                    color: "#99FFFFFF"; font.pixelSize: 20
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
         }
         PersonHalf {
             width: win.width; height: (win.height - 12) / 2
@@ -567,6 +600,15 @@ Window {
                 color: "#D0D4D8"; font.pixelSize: 26
                 wrapMode: Text.Wrap; width: parent.width
             }
+        }
+        Text {   // battery detail, readable size — the strip pip's big sibling
+            visible: win.battPercent >= 0
+            anchors.bottom: parent.bottom; anchors.bottomMargin: 22
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "🔋 " + win.battPercent + "%  ·  " + win.battState
+            color: win.battPercent > 30 ? "#2EE6A8"
+                 : win.battPercent > 10 ? "#F5C542" : "#FF5A6E"
+            font.pixelSize: 34
         }
         MouseArea { anchors.fill: parent; onClicked: levelPanel.visible = false }
     }
