@@ -25,11 +25,9 @@ class GateLedger:
             if len(iv) > 500:
                 del iv[:100]
 
-    def _covered(self, person, t0, t1):
-        """Coverage of [t0, t1] by margin-extended playback intervals,
-        MERGED before summing. The 2026-08-26 bug was summing unmerged
-        extensions: a fragmented ledger's ±margin islands overlap each
-        other and double-count (live: printed 84% where geometry was 22%)."""
+    def _merged_extended(self, person):
+        """Playback intervals extended by ±GATE_MARGIN and merged — the
+        coverage geometry every gate query shares."""
         m = config.GATE_MARGIN
         with self._lock:
             spans = sorted(self._intervals[person])
@@ -40,13 +38,39 @@ class GateLedger:
                 merged[-1][1] = max(merged[-1][1], b)
             else:
                 merged.append([a, b])
+        return merged
+
+    def _covered(self, person, t0, t1):
+        """Coverage of [t0, t1] by margin-extended playback intervals,
+        MERGED before summing. The 2026-08-26 bug was summing unmerged
+        extensions: a fragmented ledger's ±margin islands overlap each
+        other and double-count (live: printed 84% where geometry was 22%)."""
+        m = config.GATE_MARGIN
         covered, matched = 0.0, []
-        for a, b in merged:
+        for a, b in self._merged_extended(person):
             lo, hi = max(t0, a), min(t1, b)
             if hi > lo:
                 covered += hi - lo
                 matched.append((round(a + m, 2), round(b - m, 2)))
         return covered, matched
+
+    def keep_intervals(self, person, t0, t1):
+        """Complement of the merged margin-extended coverage within
+        [t0, t1]: the playback-free runs a trim may keep. Added 2026-08-28
+        when the trim path was completed — the frontend decodes the longest
+        of these instead of discarding the whole segment."""
+        keep, cur = [], t0
+        for a, b in self._merged_extended(person):
+            if b <= cur or a >= t1:
+                continue
+            if a > cur:
+                keep.append((cur, a))
+            cur = max(cur, b)
+            if cur >= t1:
+                break
+        if cur < t1:
+            keep.append((cur, t1))
+        return keep
 
     def overlap_detail(self, person, t0, t1):
         """(fraction, matched merged intervals) — forensic form for the

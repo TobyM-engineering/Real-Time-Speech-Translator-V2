@@ -329,26 +329,45 @@ class AudioFrontend:
                         continue
                     own, oth = seg_rms(person, int(a * config.SR),
                                        int(b * config.SR))
+                    stamp = (f"SEG  ch={person} {b-a:4.1f}s "
+                             f"span {a:6.2f}-{b:6.2f}")
+                    keep = None
                     if self.ptt_covers(person, a, b):
                         dec, why = arbitration.decide_ptt(self.muted[person])
                     elif self.ptt_covers(other[person], a, b):
                         dec, why = (arbitration.DROP_PTT_OTHER,
                                     "other half is holding to talk")
                     else:
-                        dec, why = arbitration.decide(
+                        dec, why, keep = arbitration.decide(
                             person, own, oth, self.muted[person],
                             self.ledger, a, b)
-                        if (dec == arbitration.DROP_AMBIGUOUS
-                                and (b - a) < config.TAIL_CONT_MAX_S
-                                and (a - last_accept[person][1])
-                                <= config.TAIL_CONT_GAP
-                                and not speech_state[other[person]]):
-                            dec = arbitration.ACCEPT
-                            why = (f"tail-continuation rescue ({why.split(' — ')[0]}, "
-                                   f"{a - last_accept[person][1]:.2f}s after "
-                                   f"turn end)")
-                    stamp = (f"SEG  ch={person} {b-a:4.1f}s "
-                             f"span {a:6.2f}-{b:6.2f}")
+                    if dec == arbitration.GATE_TRIM:
+                        # completed 2026-08-28: this verdict used to fall
+                        # into the generic drop — the surviving audio never
+                        # reached ASR (live: three barge-in replies at
+                        # +11..+18 dB eaten while their translation played).
+                        # Slice to the longest playback-free run, then
+                        # re-run the ratio test on what actually survives.
+                        ka, kb = keep
+                        i0 = max(0, int((ka - a) * config.SR))
+                        i1 = min(len(audio), int((kb - a) * config.SR))
+                        stamp += (f"  GATE_TRIM {why}; removed "
+                                  f"{(b - a) - (kb - ka):.2f}s -> kept "
+                                  f"{kb - ka:.2f}s span {ka:.2f}-{kb:.2f} ")
+                        audio = audio[i0:i1]
+                        a, b = ka, kb
+                        own, oth = seg_rms(person, int(a * config.SR),
+                                           int(b * config.SR))
+                        dec, why = arbitration.decide_ratio(own, oth)
+                    if (dec == arbitration.DROP_AMBIGUOUS
+                            and (b - a) < config.TAIL_CONT_MAX_S
+                            and (a - last_accept[person][1])
+                            <= config.TAIL_CONT_GAP
+                            and not speech_state[other[person]]):
+                        dec = arbitration.ACCEPT
+                        why = (f"tail-continuation rescue ({why.split(' — ')[0]}, "
+                               f"{a - last_accept[person][1]:.2f}s after "
+                               f"turn end)")
                     if dec == arbitration.ACCEPT:
                         t = self.registry.new_turn(person, a, b)
                         dip = dip_next[person]

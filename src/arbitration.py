@@ -38,28 +38,42 @@ def decide_ptt(muted):
     return ACCEPT, "hold-to-talk (ratio and gate bypassed)"
 
 
-def decide(person, own_rms, other_rms, muted, ledger, t0, t1):
-    """Returns (decision, detail-string). Order matters: mute is absolute,
-    the gate runs before ratio (own-voice leak can be loud AND own-dominant),
-    then the wearer-authenticity ratio test."""
-    if muted:
-        return DROP_MUTED, "person muted"
-
-    frac, matched = ledger.overlap_detail(person, t0, t1)
-    if frac >= config.GATE_DISCARD_FRAC:
-        return GATE_DISCARD, (f"{frac:.0%} overlap with playback into own ear "
-                              f"[ledger {matched}]")
+def decide_ratio(own_rms, other_rms):
+    """The wearer-authenticity ratio test alone (±RATIO_ACCEPT_DB).
+    Split out 2026-08-28 so the completed trim path can re-test the
+    surviving audio on its own energy."""
     r = ratio_db(own_rms, other_rms)
-    if frac > 0.0:
-        kept = (t1 - t0) * (1.0 - frac)
-        if kept < config.GATE_MIN_KEEP:
-            return GATE_DISCARD, (f"{frac:.0%} overlap, only {kept:.2f}s "
-                                  f"would survive trim [ledger {matched}]")
-        return GATE_TRIM, (f"{frac:.0%} overlap; {kept:.2f}s survives "
-                           f"(ratio {r:+.1f} dB) [ledger {matched}]")
-
     if r >= config.RATIO_ACCEPT_DB:
         return ACCEPT, f"ratio {r:+.1f} dB"
     if r <= -config.RATIO_ACCEPT_DB:
         return DROP_BLEED, f"ratio {r:+.1f} dB — other wearer's voice"
     return DROP_AMBIGUOUS, f"ratio {r:+.1f} dB — simultaneous or mid-table"
+
+
+def decide(person, own_rms, other_rms, muted, ledger, t0, t1):
+    """Returns (decision, detail-string, keep) — keep is the (t0, t1) of
+    the longest playback-free run for GATE_TRIM, else None. Order matters:
+    mute is absolute, the gate runs before ratio (own-voice leak can be
+    loud AND own-dominant), then the wearer-authenticity ratio test.
+    2026-08-28: GATE_TRIM now carries real geometry from the ledger
+    (the old fraction-estimate 'kept' was never acted on — survivors
+    were silently discarded for the life of stage 3)."""
+    if muted:
+        return DROP_MUTED, "person muted", None
+
+    frac, matched = ledger.overlap_detail(person, t0, t1)
+    if frac >= config.GATE_DISCARD_FRAC:
+        return GATE_DISCARD, (f"{frac:.0%} overlap with playback into own "
+                              f"ear [ledger {matched}]"), None
+    if frac > 0.0:
+        runs = ledger.keep_intervals(person, t0, t1)
+        ka, kb = max(runs, key=lambda r_: r_[1] - r_[0],
+                     default=(t0, t0))
+        if kb - ka < config.GATE_MIN_KEEP:
+            return GATE_DISCARD, (f"{frac:.0%} overlap, longest clean run "
+                                  f"only {kb - ka:.2f}s "
+                                  f"[ledger {matched}]"), None
+        return GATE_TRIM, (f"{frac:.0%} overlap [ledger {matched}]"), (ka, kb)
+
+    dec, why = decide_ratio(own_rms, other_rms)
+    return dec, why, None

@@ -7,8 +7,8 @@
 # Diagnostic history outranks SD wear (high-endurance card, ~0.1–0.3 MB/h
 # of text). Revisit when the read-only-rootfs build lands.
 #
-# WAV dumps stay on tmpfs (/tmp/translator_dumps): they are a recycling
-# 8-turn working set, not history. Promote a keeper into the repo by hand,
+# WAV dumps stay on tmpfs (/tmp/translator_dumps): the first 8 turns of
+# the session, not history. Promote a keeper into the repo by hand,
 # e.g. tools/bench/clips/parakeet_empty_regression.wav.
 
 cd "$(dirname "$0")/.." || exit 1
