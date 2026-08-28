@@ -114,7 +114,17 @@ GROUP_CONTINUE_GAP = 1.0
 GROUP_QUIET_CLOSE = 1.2    # s of real quiet (VAD off, nothing pending) closes it
 
 ASR_THREADS = 3
-MT_THREADS = 3
+MT_THREADS = 3   # legacy serial figure — still used by preserved bench scripts
+
+# MT clause batching (measured 2026-08-27): every sentence of a chunk goes to
+# ONE translate_batch call; 2 workers x 2 threads run the items in parallel.
+# para4->es 12.08 -> 2.96 s (-75%), single short sentence 2.42 -> 1.87 s
+# (-23%); outputs byte-identical to the serial loop (verified es+fr).
+# intra=4 serial measured SLOWER under the live stack (+19%) — a fourth
+# fine-grained thread fights capture/A2DP/UI, but 2x2's two coarse workers
+# do not. Contention numbers vs concurrent ASR: see CLAUDE.md 2026-08-27.
+MT_INTER_THREADS = 2
+MT_INTRA_THREADS = 2
 
 # Stage 3 — audio out (D3 spike 2026-08-26: pw-play --raw stdin, pipe shrunk
 # via F_SETPIPE_SZ 64 KB→16 KB = write-to-sink buffering ~100 ms)
