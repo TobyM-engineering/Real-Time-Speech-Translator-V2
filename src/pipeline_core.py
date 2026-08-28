@@ -60,7 +60,8 @@ class Bridge(QObject):
         self._ready_emitted = False
         self.frontend = AudioFrontend(on_log=self._log,
                                       on_speech=self._on_speech,
-                                      on_segment=self._on_segment)
+                                      on_segment=self._on_segment,
+                                      on_ambiguous=self.overlapHint.emit)
         self.asr = AsrWorker(self.frontend.registry,
                              get_lang=lambda p: self._lang[p],
                              on_log=self._log,
@@ -90,7 +91,7 @@ class Bridge(QObject):
 
     def _make_playback(self):
         return Playback(on_log=self._log, ledger=self.frontend.ledger,
-                        epoch=self.frontend.start_wall,
+                        stream_now=self.frontend.stream_now,
                         on_play_start=self._on_play_start,
                         on_ear_active=self._on_ear_active)
 
@@ -168,7 +169,7 @@ class Bridge(QObject):
         starts reaching the sink (play start), and drops/cancels/merges leave
         the set via their terminal states."""
         states = self._PENDING_STATES if self.downstream else ("captured",)
-        now_s = time.time() - self.frontend.start_wall
+        now_s = self.frontend.stream_now()   # same clock as turn spans
         pend = [t.t1 for t in self.frontend.registry.snapshot()
                 if t.person == p and not t.cancelled and t.state in states]
         return max(0.0, now_s - min(pend)) if pend else 0.0

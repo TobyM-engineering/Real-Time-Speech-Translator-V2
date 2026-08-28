@@ -27,14 +27,19 @@ class _Ear:
 
 
 class Playback(threading.Thread):
-    def __init__(self, on_log, ledger, epoch, on_play_start, on_ear_active):
-        """epoch: wall time of capture start — the ledger speaks capture-stream
-        seconds. on_play_start(turn) fires as a turn's first sample is written;
-        on_ear_active(person, bool) tracks the listener SPEAKING state."""
+    def __init__(self, on_log, ledger, stream_now, on_play_start,
+                 on_ear_active):
+        """stream_now: the CAPTURE stream clock (frontend.stream_now) — the
+        ledger is stamped from it directly, never from wall time (audit
+        2026-08-28: a one-time +9.8 s stream/wall divergence left wall-
+        stamped ledger intervals unable to ever overlap sample-stamped
+        segments — the gate was silently inert). on_play_start(turn) fires
+        as a turn's first sample is written; on_ear_active(person, bool)
+        tracks the listener SPEAKING state."""
         super().__init__(name="playback", daemon=True)
         self.on_log = on_log
         self.ledger = ledger
-        self.epoch = epoch
+        self.stream_now = stream_now
         self.on_play_start = on_play_start
         self.on_ear_active = on_ear_active
         self._lock = threading.Lock()
@@ -208,7 +213,7 @@ class Playback(threading.Thread):
                             idx = np.linspace(0, k - 1, F)
                             src = np.interp(idx, np.arange(k), src)
                         out[:, ch] = src[:F] * config.EAR_GAIN[person]
-                        s = now - self.epoch
+                        s = self.stream_now() + config.GATE_AUDIBLE_LEAD_S
                         self.ledger.add(person, s, s + F / config.OUT_RATE)
                     elif e.active and not e.queue:
                         e.active = False

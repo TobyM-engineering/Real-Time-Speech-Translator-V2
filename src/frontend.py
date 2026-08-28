@@ -22,10 +22,12 @@ from src.turns import TurnRegistry
 
 
 class AudioFrontend:
-    def __init__(self, on_log, on_speech=None, on_segment=None):
+    def __init__(self, on_log, on_speech=None, on_segment=None,
+                 on_ambiguous=None):
         self.on_log = on_log
         self.on_speech = on_speech or (lambda *a: None)
         self.on_segment = on_segment or (lambda *a: None)
+        self.on_ambiguous = on_ambiguous or (lambda: None)
         self.ledger = GateLedger()
         self.registry = TurnRegistry()
         self.energy = []   # (sample_idx, fl_rms, fr_rms) per 32 ms block,
@@ -39,6 +41,7 @@ class AudioFrontend:
         self._blocks = queue.Queue(maxsize=256)
         self._drops = 0            # capture blocks discarded on overflow
         self._drop_logged = 0.0
+        self._last_sample = 0      # capture-stream head, for stream_now()
         self._stop = threading.Event()
         self._cap = None
         self._thread = None
@@ -57,7 +60,7 @@ class AudioFrontend:
         a segment that STRADDLES press or release still counts as held — the
         closing segment of a hold always arrives ~0.7 s AFTER release, when
         the endpoint silence completes."""
-        now_s = (time.time() - self.start_wall) if self.start_wall else 0.0
+        now_s = self.stream_now()   # stream clock, immune to wall divergence
         ivs = self._ptt_ivs[person]
         if active and not self.ptt[person]:
             ivs.append([now_s, None])
@@ -123,7 +126,16 @@ class AudioFrontend:
         if self._cap:
             self._cap.stop()
 
+    def stream_now(self):
+        """Current capture-stream position in seconds — THE clock for the
+        gate ledger, PTT straddle windows, and the D5 lag metric. Audit
+        2026-08-28: stream and wall diverged +9.8 s in one session (upstream
+        burst under I/O load), silently killing every wall-anchored
+        comparison — so nothing timing-critical may mix the two clocks."""
+        return self._last_sample / config.SR
+
     def _on_block(self, block, sample_index):
+        self._last_sample = sample_index + self._sample_base + config.CHUNK
         try:
             self._blocks.put_nowait((block, sample_index + self._sample_base))
         except queue.Full:
@@ -342,3 +354,8 @@ class AudioFrontend:
                         forced_next[person] = False
                         dip_next[person] = False
                         self.on_log(f"{stamp}  -> {dec}: {why}")
+                        if dec == arbitration.DROP_AMBIGUOUS:
+                            # both channels comparable = simultaneous speech:
+                            # BOTH utterances just died — say so on the glass
+                            # (audit 2026-08-28: this was silent double loss)
+                            self.on_ambiguous()

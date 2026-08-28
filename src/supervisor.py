@@ -48,6 +48,8 @@ class Supervisor(threading.Thread):
         self._therm_next = 0.0
         self._bt_poll_next = 0.0
         self._therm_fault = False
+        self._drift_logged = 0.0
+        self._drift_next = 0.0
 
     def stop(self):
         self._stopping.set()
@@ -65,6 +67,25 @@ class Supervisor(threading.Thread):
             self._check_capture(now)
             self._check_bt(now)
             self._check_thermal(now)
+            self._check_drift(now)
+
+    # -- stream-vs-wall drift monitor (audit 2026-08-28: a one-time +9.8 s
+    # surge appeared under background I/O load and was invisible). All
+    # timing-critical paths now run on the stream clock, so this is
+    # telemetry: it makes capture anomalies visible instead of silent.
+    def _check_drift(self, now):
+        if now < self._drift_next:
+            return
+        self._drift_next = now + 10.0
+        fe = self.b.frontend
+        if not fe.start_wall:
+            return
+        drift = fe.stream_now() - (now - fe.start_wall)
+        if abs(drift - self._drift_logged) > 0.5:
+            self.log(f"CLOCK stream-vs-wall drift {drift:+.2f}s "
+                     f"(was {self._drift_logged:+.2f}s) — capture anomaly; "
+                     f"gate/PTT/D5 use the stream clock and are unaffected")
+            self._drift_logged = drift
 
     # -- event-driven disconnect monitor --------------------------------
     # 5 s polling missed a case-close-and-reopen entirely (bench 2026-08-26):

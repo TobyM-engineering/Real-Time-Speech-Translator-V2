@@ -68,6 +68,10 @@ RATIO_ACCEPT_DB = 6.0     # segment's own channel must dominate by this much
 
 # Anti-feedback gate (D6 starting guesses — tune with real bud-leak data)
 GATE_MARGIN = 0.15        # s, slack around playback intervals
+GATE_AUDIBLE_LEAD_S = 0.25  # ledger stamps are made at pipe-write time; the
+                            # sound reaches the ear ~pipe(0.085)+A2DP(~0.15-
+                            # 0.25) later. ESTIMATE, unmeasured — stamps are
+                            # shifted by this so margins keep their real job
 GATE_DISCARD_FRAC = 0.60  # overlap fraction above which the segment dies
 GATE_MIN_KEEP = 0.5       # s of speech that must survive a trim to proceed
 
