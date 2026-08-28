@@ -2,3 +2,9 @@ venv/
 models/
 __pycache__/
 *.pyc
+*.log
+asr_turn*.wav
+*.onnx
+*.npz
+.env
+nohup.out
