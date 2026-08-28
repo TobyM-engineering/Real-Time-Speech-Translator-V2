@@ -400,7 +400,7 @@ class Bridge(QObject):
         audio — make the gap VISIBLE, never speak an unverified guess. The
         listener hears a soft tone and sees the untranslated source; the
         speaker's band strikes the sentence through."""
-        text = getattr(turn, "src_text", "") or ""
+        text = getattr(turn, "src_text", "") or "· · ·"
         self._log(f"GAP  turn#{turn.turn_id} signalled to ear {ear} "
                   f"(untranslated source shown)")
         if self.playback:
@@ -427,6 +427,11 @@ class Bridge(QObject):
             self._recompute()
         if done:
             self._log(f"TURN turn#{turn.turn_id} dropped ({reason})")
+            if reason.startswith("unreadable audio") and self.downstream:
+                # >=1 s of accepted speech no engine could read — never
+                # silent (2026-08-28: parakeet-empty ate 3.5 s of speech
+                # with no tone, notice, or strike-through)
+                self._on_untranslated(turn, _OTHER[turn.person])
         self._arm_close_check(turn.person)
 
     # -- QML slots (main thread) ----------------------------------------

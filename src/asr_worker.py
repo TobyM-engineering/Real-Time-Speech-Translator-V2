@@ -159,14 +159,22 @@ class AsrWorker(threading.Thread):
                         f"{span:.2f}s | mono | engine={entry['asr']} "
                         f"lang={entry['code']}")
         t0 = time.time()
-        self.current_load = (person, len(audio) / config.SR)
+        dur = len(audio) / config.SR
+        self.current_load = (person, dur)
         text = self._decode(entry, audio)
+        if not text and dur >= config.ASR_EMPTY_FALLBACK_MIN_S:
+            text = self._decode_fallback(entry, audio, turn, dur)
         self.current_load = None
         dt = time.time() - t0
         if not text:
             turn.state = "empty"
-            self.on_dropped(turn, f"empty transcript "
-                            f"({len(audio)/config.SR:.1f}s audio)")
+            if dur >= config.ASR_UNREADABLE_GAP_MIN_S:
+                # substantial accepted audio no engine could read — the
+                # bridge turns this reason into the gap tone + notice
+                self.on_dropped(turn, f"unreadable audio ({dur:.1f}s, "
+                                f"all engines empty)")
+            else:
+                self.on_dropped(turn, f"empty transcript ({dur:.1f}s audio)")
             return
         if turn.cancelled:
             self.on_dropped(turn, "cancelled during decode")
@@ -199,6 +207,35 @@ class AsrWorker(threading.Thread):
                         f"for merge ({why})")
         else:
             self._release(turn, text, None)
+
+    def _decode_fallback(self, entry, audio, turn, dur):
+        """The primary engine returned EMPTY on substantial accepted audio
+        (2026-08-28: parakeet deterministic '' on 3.5 s of clean speech).
+        One extra decode by the best other engine, failure-path only."""
+        primary = entry["asr"]
+        try:
+            if primary != "sensevoice" and entry["code"] in (
+                    "en", "zh", "ja", "ko", "yue"):
+                st = self._sense.create_stream()
+                st.accept_waveform(config.SR, audio)
+                self._sense.decode_stream(st)
+                text, eng = st.result.text.strip(), "sensevoice"
+            elif primary != "whisper":
+                segs, _ = self._whisper.transcribe(
+                    audio, language=None, beam_size=1,
+                    condition_on_previous_text=False, without_timestamps=True)
+                text = " ".join(s.text.strip() for s in segs).strip()
+                eng = "whisper"
+            else:
+                return ""
+        except Exception as e:
+            self.on_log(f"ASR  turn#{turn.turn_id} fallback decode failed: {e}")
+            return ""
+        if text:
+            self.on_log(f'ASR  turn#{turn.turn_id} {primary} EMPTY on '
+                        f'{dur:.1f}s accepted audio — rescued by {eng}: '
+                        f'"{text}"')
+        return text
 
     def _nonspeech_reject(self, entry, audio, text, turn):
         """Tier-1 non-speech floor: very short, few-word segments get a free

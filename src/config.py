@@ -179,6 +179,15 @@ GAP_TONE_LEVEL = 0.25
 NONSPEECH_MAX_S = 1.5
 NONSPEECH_MAX_WORDS = 2
 
+# Parakeet empty-decode rescue (2026-08-28): parakeet deterministically
+# returned '' on 3.5 s of clean accepted speech that SenseVoice read
+# perfectly — 8 such drops across the surviving logs, 6 eating >=1 s of
+# real speech. Empty on accepted audio >= FALLBACK_MIN_S gets ONE decode
+# by the best other engine (loudly logged); still empty at >= GAP_MIN_S
+# raises the gap tone + notice instead of dying silently.
+ASR_EMPTY_FALLBACK_MIN_S = 0.5
+ASR_UNREADABLE_GAP_MIN_S = 1.0
+
 # Stage 3 — audio out (D3 spike 2026-08-26: pw-play --raw stdin, pipe shrunk
 # via F_SETPIPE_SZ 64 KB→16 KB = write-to-sink buffering ~100 ms)
 AIRPODS_NODE = "bluez_output.10_B5_88_97_3B_1B.1"
