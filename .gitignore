@@ -8,3 +8,4 @@ asr_turn*.wav
 *.npz
 .env
 nohup.out
+logs/
