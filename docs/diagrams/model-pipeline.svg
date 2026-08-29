@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<style>
+  .bg{fill:#0f1116}
+  .ts{fill:#9aa3b2;font-size:11px}
+  .tt{fill:#e6e8ee;font-size:15px;font-weight:600}
+  .lbl{fill:#e6e8ee;font-size:12px;font-weight:600}
+  .h{fill:#e6e8ee;font-size:13px;font-weight:600}
+  .box{fill:#181b23;stroke:#3a4152;stroke-width:1.5;rx:6}
+  .l{stroke:#5a6478;stroke-width:1.5;fill:none}
+</style>
+<rect class="bg" width="880" height="560"/>
+<text class="tt" x="24" y="30">Model pipeline — which engine runs for which language</text>
+<text class="ts" x="24" y="48">Routed per channel from the language catalog. 51 languages have a complete chain; the count is set by the voices, not the recognition.</text>
+
+<!-- ASR row -->
+<text class="h" x="24" y="86">1 · Speech recognition</text>
+<rect x="24" y="98" width="264" height="98" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
+<text class="lbl" x="40" y="120" fill="#4ea1ff">Parakeet TDT 0.6B int8</text>
+<text class="ts" x="40" y="140">English only — 1 language</text>
+<text class="ts" x="40" y="158">RTF 0.115–0.132 · punctuation + casing</text>
+<text class="ts" x="40" y="180">Cannot be told what language to expect,</text>
+<text class="ts" x="40" y="192">so it is trusted with English alone.</text>
+
+<rect x="304" y="98" width="240" height="98" rx="6" fill="#141e18" stroke="#4caf7d" stroke-width="1.5"/>
+<text class="lbl" x="320" y="120" fill="#4caf7d">SenseVoice-small int8</text>
+<text class="ts" x="320" y="140">zh · ja · ko — 3 languages</text>
+<text class="ts" x="320" y="158">RTF 0.05 — the fastest here</text>
+<text class="ts" x="320" y="180">Also the rescue engine when</text>
+<text class="ts" x="320" y="192">a decode comes back empty.</text>
+
+<rect x="560" y="98" width="296" height="98" rx="6" fill="#2a2013" stroke="#ffb454" stroke-width="1.5"/>
+<text class="lbl" x="576" y="120" fill="#ffb454">faster-whisper base int8</text>
+<text class="ts" x="576" y="140">everything else — 47 languages</text>
+<text class="ts" x="576" y="158">RTF 0.34–0.65 clean · 0.8–1.0 accented</text>
+<text class="ts" x="576" y="180">The only engine that accepts an explicit</text>
+<text class="ts" x="576" y="192">language argument — always pinned.</text>
+
+<path class="l" d="M156 196 L156 226"/><path class="l" d="M424 196 L424 226"/><path class="l" d="M708 196 L708 226"/>
+<path class="l" d="M156 226 L708 226"/><path class="l" d="M440 226 L440 250"/>
+
+<!-- MT row -->
+<text class="h" x="24" y="272">2 · Translation</text>
+<rect x="150" y="284" width="270" height="86" rx="6" fill="#141e18" stroke="#4caf7d" stroke-width="1.5"/>
+<text class="lbl" x="166" y="306" fill="#4caf7d">opus-mt, one model per direction</text>
+<text class="ts" x="166" y="326">45 directed pairs installed</text>
+<text class="ts" x="166" y="344">0.36 s for a two-sentence turn</text>
+<text class="ts" x="166" y="362">loaded at language-picker time</text>
+
+<rect x="460" y="284" width="270" height="86" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
+<text class="lbl" x="476" y="306">NLLB-200-distilled-600M</text>
+<text class="ts" x="476" y="326">universal fallback — any pair</text>
+<text class="ts" x="476" y="344">~2.4 s for the same turn (≈7× slower)</text>
+<text class="ts" x="476" y="362">always resident; every use is logged</text>
+<text class="ts" x="424" y="326" fill="#9aa3b2">else →</text>
+
+<path class="l" d="M285 370 L285 396"/><path class="l" d="M595 370 L595 396"/>
+<path class="l" d="M285 396 L595 396"/><path class="l" d="M440 396 L440 420"/>
+
+<!-- TTS row -->
+<text class="h" x="24" y="442">3 · Speech synthesis</text>
+<rect x="150" y="454" width="270" height="70" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
+<text class="lbl" x="166" y="476" fill="#4ea1ff">Piper medium voices</text>
+<text class="ts" x="166" y="496">49 of the 51 languages</text>
+<text class="ts" x="166" y="514">RTF ~0.13–0.15 · never the bottleneck</text>
+
+<rect x="460" y="454" width="270" height="70" rx="6" fill="#241d33" stroke="#9b7fd4" stroke-width="1.5"/>
+<text class="lbl" x="476" y="476" fill="#9b7fd4">Supertonic-3 int8</text>
+<text class="ts" x="476" y="496">the remaining 2 languages</text>
+<text class="ts" x="476" y="514">infers language from the text itself</text>
+
+<text class="ts" x="24" y="548">Only the two selected languages' voices are resident (~1.9 s to load one cold, paid at the picker, never per turn). Memory stays flat at any catalog size.</text>
+</svg>

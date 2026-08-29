@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<style>
+  .bg{fill:#0f1116}
+  .t{fill:#e6e8ee;font-size:13px}
+  .ts{fill:#9aa3b2;font-size:11px}
+  .tt{fill:#e6e8ee;font-size:15px;font-weight:600}
+  .a{fill:#4ea1ff}.b{fill:#ffb454}
+  .boxA{fill:#132133;stroke:#4ea1ff;stroke-width:1.5;rx:6}
+  .boxB{fill:#2a2013;stroke:#ffb454;stroke-width:1.5;rx:6}
+  .boxN{fill:#181b23;stroke:#3a4152;stroke-width:1.5;rx:6}
+  .boxK{fill:#141e18;stroke:#4caf7d;stroke-width:1.5;rx:6}
+  .lA{stroke:#4ea1ff;stroke-width:2;fill:none}
+  .lB{stroke:#ffb454;stroke-width:2;fill:none}
+  .lN{stroke:#5a6478;stroke-width:1.5;fill:none;stroke-dasharray:4 3}
+  .lbl{fill:#e6e8ee;font-size:12px;font-weight:600}
+</style>
+<rect class="bg" width="880" height="560"/>
+<text class="tt" x="24" y="30">Signal path — microphone to earbud</text>
+<text class="ts" x="24" y="48">Each person's voice crosses to the OTHER person's ear. Blue = Person A, amber = Person B.</text>
+
+<!-- transmitters -->
+<rect class="boxA" x="24" y="70" width="180" height="52"/>
+<text class="lbl" x="36" y="90">TX1 · black windscreen</text>
+<text class="ts" x="36" y="108">Person A speaks</text>
+
+<rect class="boxB" x="676" y="70" width="180" height="52"/>
+<text class="lbl" x="688" y="90">TX2 · grey windscreen</text>
+<text class="ts" x="688" y="108">Person B speaks</text>
+
+<!-- receiver -->
+<rect class="boxN" x="290" y="150" width="300" height="60"/>
+<text class="lbl" x="310" y="174">DJI USB receiver — one device</text>
+<text class="ts" x="310" y="194">stereo, sample-synchronised · 16 kHz after PipeWire</text>
+<path class="lA" d="M114 122 L114 138 Q114 150 130 150 L300 150"/>
+<path class="lB" d="M766 122 L766 138 Q766 150 750 150 L580 150"/>
+<text class="a" x="196" y="144" font-size="11">FL channel</text>
+<text class="b" x="600" y="144" font-size="11">FR channel</text>
+
+<!-- per channel VAD -->
+<rect class="boxA" x="150" y="238" width="240" height="46"/>
+<text class="lbl" x="164" y="258">Silero VAD · channel FL</text>
+<text class="ts" x="164" y="275">endpoint 0.7 s · chunk cap 4.0 s</text>
+<rect class="boxB" x="490" y="238" width="240" height="46"/>
+<text class="lbl" x="504" y="258">Silero VAD · channel FR</text>
+<text class="ts" x="504" y="275">endpoint 0.7 s · chunk cap 4.0 s</text>
+<path class="lA" d="M380 210 L380 226 Q380 238 366 238 L270 238"/>
+<path class="lB" d="M500 210 L500 226 Q500 238 514 238 L610 238"/>
+
+<!-- arbitration + gate -->
+<rect class="boxK" x="150" y="312" width="580" height="58"/>
+<text class="lbl" x="170" y="334">Speaker arbitration (cross-channel ratio)  →  anti-feedback gate</text>
+<text class="ts" x="170" y="353">Decided here, BEFORE any compute is spent. Both channels compared at the same instant.</text>
+<path class="lA" d="M270 284 L270 312"/>
+<path class="lB" d="M610 284 L610 312"/>
+
+<!-- per-channel processing -->
+<rect class="boxA" x="150" y="398" width="240" height="60"/>
+<text class="lbl" x="164" y="418">A's speech</text>
+<text class="ts" x="164" y="435">recognise → translate → speak</text>
+<text class="ts" x="164" y="450">in B's language</text>
+<rect class="boxB" x="490" y="398" width="240" height="60"/>
+<text class="lbl" x="504" y="418">B's speech</text>
+<text class="ts" x="504" y="435">recognise → translate → speak</text>
+<text class="ts" x="504" y="450">in A's language</text>
+<path class="lA" d="M270 370 L270 398"/>
+<path class="lB" d="M610 370 L610 398"/>
+
+<!-- crossover -->
+<path class="lA" d="M390 428 L440 428 Q460 428 460 448 L460 486 Q460 500 476 500 L560 500"/>
+<path class="lB" d="M490 428 L440 428 Q420 428 420 448 L420 486 Q420 500 404 500 L320 500"/>
+<text class="ts" x="352" y="478" fill="#9aa3b2">voices cross over</text>
+
+<!-- earbuds -->
+<rect class="boxB" x="180" y="478" width="140" height="46"/>
+<text class="lbl" x="194" y="498">LEFT bud</text>
+<text class="ts" x="194" y="515">Person A hears B</text>
+<rect class="boxA" x="560" y="478" width="140" height="46"/>
+<text class="lbl" x="574" y="498">RIGHT bud</text>
+<text class="ts" x="574" y="515">Person B hears A</text>
+
+<text class="ts" x="24" y="548">One A2DP sink, hard-panned — a single Bluetooth connection carries both languages. Playback also writes the gate ledger (dashed) so the device never re-translates itself.</text>
+<path class="lN" d="M700 500 Q790 500 790 420 Q790 341 730 341"/>
+</svg>

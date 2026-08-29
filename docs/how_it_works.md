@@ -8,6 +8,8 @@ The design decisions behind the device, and the measurements that forced them. M
 
 One USB receiver delivers both microphones as a synchronised stereo pair. Everything downstream depends on that: two separate USB devices would drift apart, and the whole speaker-identification scheme would collapse.
 
+<img src="diagrams/signal-path.svg" alt="Signal path from the two microphones through arbitration and the model stack to the two earbuds" width="100%">
+
 ```
 capture (stereo, 16 kHz)
    → per-channel voice activity detection
@@ -28,6 +30,8 @@ Seven threads: UI, capture/VAD/arbitration, recognition, translation, synthesis,
 ## Who is speaking
 
 **Never use absolute loudness.** Use the cross-channel energy ratio per utterance.
+
+<img src="diagrams/speaker-separation.svg" alt="The accept, ambiguous and bleed bands of the cross-channel ratio, with measured ranges" width="100%">
 
 A chest microphone hears its wearer 10–17 dB louder than the other person's microphone does, regardless of how loudly either talks. Measured on this build: wearers land at +10 to +18 dB, bleed at −15 to −17 dB. So:
 
@@ -71,6 +75,8 @@ Mixing them produced failures that looked like everything except a clock problem
 ## The three recognition engines, and which language gets which
 
 There is no single best speech recognition model here, so the pipeline routes per channel from the language catalog.
+
+<img src="diagrams/model-pipeline.svg" alt="Which recognition, translation and synthesis engine runs for which language" width="100%">
 
 | Language | Engine | Measured speed (RTF) | Why this one |
 |---|---|---|---|
@@ -125,6 +131,8 @@ Measured, end of speech to audio in the other ear: **~2.5 s** for a short Englis
 The remaining floor is roughly 2.0–2.2 s, and it is **mostly deliberate**:
 
 A real English dialogue turn, measured stage by stage on the live device:
+
+<img src="diagrams/latency-breakdown.svg" alt="Stacked breakdown of one 2.48 second turn, showing 0.34 s of computation" width="100%">
 
 | Stage | Measured | Movable? |
 |---|---|---|

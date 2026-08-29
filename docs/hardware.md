@@ -4,6 +4,8 @@ Every part in the build, with a link and the reason **that specific part** was c
 
 Roughly **$400** all in, dominated by the Pi, the display and the DJI kit.
 
+<img src="diagrams/physical-stack.svg" alt="The assembled stack layer by layer with the power path" width="100%">
+
 ---
 
 ## Compute

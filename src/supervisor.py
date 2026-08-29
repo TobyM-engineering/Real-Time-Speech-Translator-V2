@@ -24,7 +24,7 @@ import time
 
 from src import battery, config
 
-_MAC = config.AIRPODS_MAC   # per-device, from device.json
+_MAC = config.AIRPODS_MAC   # per-device, from config/device.json
 
 
 def _run(cmd, timeout=15):

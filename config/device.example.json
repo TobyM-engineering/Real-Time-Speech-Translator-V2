@@ -1,5 +1,5 @@
 {
-  "_comment": "Copy to device.json and fill in YOUR hardware. device.json is gitignored so no serials or MACs are ever committed. See docs/setup.md step 4.",
+  "_comment": "Copy to config/device.json and fill in YOUR hardware. It is gitignored so no serials or MACs are ever committed. See docs/setup.md step 4.",
 
   "_dji_node_help": "Plug in the DJI receiver and run: pw-cli ls Node | grep -i Rx    (copy the full node.name)",
   "dji_node": "alsa_input.usb-DJI_Technology_Co.__Ltd._Wireless_Mic_Rx_XXXXXXXXXXXX-01.analog-stereo",

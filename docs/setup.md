@@ -84,7 +84,7 @@ That is ~4 GB for 45 directed pairs among the nine strongest languages. Any pair
 ## 5. Device settings
 
 ```bash
-cp device.example.json device.json
+cp config/device.example.json config/device.json
 ```
 
 Fill in two values.
@@ -103,7 +103,7 @@ Copy the full `node.name`, which looks like `alsa_input.usb-DJI_Technology_Co.__
 bluetoothctl devices
 ```
 
-> ⚠️ `device.json` is gitignored. It holds identifiers specific to your hardware — keep it that way.
+> ⚠️ `config/device.json` is gitignored. It holds identifiers specific to your hardware — keep it that way.
 
 ---
 

@@ -18,6 +18,8 @@ mains
 
 Once the HAT is fitted, **the Pi's own USB-C jack goes unused.** Everything arrives through the HAT, which is what allows the device to be unplugged mid-conversation and keep running.
 
+<img src="diagrams/physical-stack.svg" alt="The assembled stack layer by layer with the power path" width="100%">
+
 ### Why 5.1 V / 5 A specifically
 
 In the normal path the HAT does two jobs at once: carry the entire system load *and* charge a 4-cell pack. Measured draw under sustained inference is **16–19 W with peaks past 21 W**, so a typical 15–18 W phone charger leaves nothing for charging — it stalls, or the rail sags under load. The 27 W supply covers both.

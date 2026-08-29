@@ -9,5 +9,5 @@ asr_turn*.wav
 .env
 nohup.out
 logs/
-device.json
+config/device.json
 CLAUDE.md

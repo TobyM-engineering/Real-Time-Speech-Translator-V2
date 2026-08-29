@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<style>
+  .bg{fill:#0f1116}
+  .ts{fill:#9aa3b2;font-size:11px}
+  .tt{fill:#e6e8ee;font-size:15px;font-weight:600}
+  .lbl{fill:#e6e8ee;font-size:12px;font-weight:600}
+  .h{fill:#e6e8ee;font-size:13px;font-weight:600}
+  .pw{stroke:#e05561;stroke-width:2.5;fill:none}
+  .sig{stroke:#4ea1ff;stroke-width:2;fill:none}
+</style>
+<rect class="bg" width="880" height="500"/>
+<text class="tt" x="24" y="30">Physical stack and the power path</text>
+<text class="ts" x="24" y="48">Layers as assembled, bottom to top. Red = power, blue = the audio device.</text>
+
+<!-- layers -->
+<rect x="150" y="86"  width="420" height="52" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
+<text class="lbl" x="168" y="108">Touch Display 2 · 5″ 720×1280</text>
+<text class="ts" x="168" y="126">portrait, split into two 180°-opposed halves</text>
+
+<rect x="150" y="158" width="420" height="66" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
+<text class="lbl" x="168" y="180">Active Cooler</text>
+<text class="ts" x="168" y="198">thermal pads only, no paste — mandatory</text>
+<text class="ts" x="168" y="214">throttle at 85 °C costs 37% of every stage</text>
+
+<rect x="150" y="244" width="420" height="76" rx="6" fill="#141e18" stroke="#4caf7d" stroke-width="1.5"/>
+<text class="lbl" x="168" y="266">Raspberry Pi 5 · 8 GB</text>
+<text class="ts" x="168" y="284">4 × Cortex-A76 — the real budget in this project</text>
+<text class="ts" x="168" y="300">~2.0 GB resident with every model loaded and warm</text>
+<text class="ts" x="168" y="314">its own USB-C jack goes UNUSED once the HAT is fitted</text>
+
+<rect x="150" y="340" width="420" height="76" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
+<text class="lbl" x="168" y="362">Waveshare UPS HAT (E)</text>
+<text class="ts" x="168" y="380">4 × 21700 cells in series — 16.49 V charged (≈4.12 V/cell)</text>
+<text class="ts" x="168" y="396">I²C fuel gauge at 0x2d — per-cell voltages, polled every 10 s</text>
+<text class="ts" x="168" y="412">low-battery fault when ANY cell drops below 3150 mV</text>
+
+<!-- mains -->
+<rect x="600" y="340" width="256" height="76" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
+<text class="lbl" x="616" y="362">RasTech 27 W GaN PD</text>
+<text class="ts" x="616" y="380">5.1 V / 5 A — mains enters HERE</text>
+<text class="ts" x="616" y="396">charges the pack AND carries the</text>
+<text class="ts" x="616" y="412">system load at the same time</text>
+<path class="pw" d="M600 378 L570 378"/>
+
+<!-- power up the stack -->
+<path class="pw" d="M110 378 L110 282 L150 282"/>
+<path class="pw" d="M150 378 L110 378"/>
+<text class="ts" x="34" y="330" fill="#e05561">power up</text>
+<text class="ts" x="34" y="344" fill="#e05561">through HAT</text>
+
+<!-- display power -->
+<path class="pw" d="M580 282 L620 282 L620 112 L570 112"/>
+<text class="ts" x="592" y="200" fill="#e05561">5 V pin 2</text>
+<text class="ts" x="592" y="214" fill="#e05561">GND pin 6</text>
+
+<!-- display ribbon -->
+<path class="sig" d="M150 112 L100 112 L100 258 L150 258"/>
+<text class="ts" x="22" y="180" fill="#4ea1ff">DSI ribbon</text>
+<text class="ts" x="22" y="194" fill="#4ea1ff">CAM/DISP 0</text>
+<text class="ts" x="22" y="208" fill="#4ea1ff">(not PCIe)</text>
+
+<!-- receiver -->
+<rect x="600" y="244" width="256" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
+<text class="lbl" x="616" y="266">DJI receiver + 90° adapter</text>
+<text class="ts" x="616" y="284">black USB 2.0 port — never the blue USB 3.0</text>
+<text class="ts" x="616" y="300">pair (it radiates in the 2.4 GHz Bluetooth band)</text>
+<path class="sig" d="M600 274 L570 274"/>
+
+<text class="ts" x="24" y="452">The mains supply feeds the HAT's USB-C input, not the Pi's — which is what lets the device be unplugged mid-conversation and keep running.</text>
+<text class="ts" x="24" y="470">Measured under sustained inference: 16–19 W, peaks past 21 W, 48–53 °C idle with the cooler fitted, and a clean 5 V rail on battery (throttled=0x0).</text>
+<text class="ts" x="24" y="488">Not shown because it is not fitted in this build: the RTC battery on the BAT header, needed for timekeeping once the device is genuinely offline.</text>
+</svg>

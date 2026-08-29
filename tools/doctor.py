@@ -19,8 +19,8 @@ from src import levels as _levels
 
 os.environ.setdefault("XDG_RUNTIME_DIR", "/run/user/1000")
 from src import config as _config
-DJI = _config.DJI_NODE      # per-device, from device.json
-MAC = _config.AIRPODS_MAC   # per-device, from device.json
+DJI = _config.DJI_NODE      # per-device, from config/device.json
+MAC = _config.AIRPODS_MAC   # per-device, from config/device.json
 GOOD, BAD, WARN = "  [ OK ]", "  [PROBLEM]", "  [ ?? ]"
 problems = []
 

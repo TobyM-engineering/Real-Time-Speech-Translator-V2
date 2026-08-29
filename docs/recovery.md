@@ -2,6 +2,8 @@
 
 The governing principle: **a failure the user cannot see is worse than a failure they can.** Every layer here exists because something failed silently first.
 
+<img src="diagrams/fault-recovery.svg" alt="What is watched, how often, and how failures escalate" width="100%">
+
 ---
 
 ## The layers
