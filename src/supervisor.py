@@ -76,6 +76,16 @@ class Supervisor(threading.Thread):
             self._check_drift(now)
             self._check_battery(now)
             self._check_workers(now)
+            self._check_stall(now)
+
+    def _check_stall(self, now):
+        """D5 declared the pipeline wedged (HARD backlog, no drain, no
+        fault explaining it) — the alive-but-hung case the thread
+        watchdog cannot see."""
+        if getattr(self.b, "stall_escalate", False):
+            self.b.stall_escalate = False
+            self._pipeline_restart("D5 stalled — backlog undrained with "
+                                   "every stage claiming healthy")
 
     # -- worker-thread liveness (2026-08-28: the ASR thread died on an
     # IndexError and the device sat "translating…" forever — a silent

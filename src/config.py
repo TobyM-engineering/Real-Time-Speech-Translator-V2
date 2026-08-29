@@ -229,6 +229,12 @@ NONSPEECH_MAX_WORDS = 2
 # A worker that dies twice within this window has a persistent cause —
 # stop rebuilding it and restart the whole pipeline (2026-08-28 watchdog).
 WORKER_RESTART_WINDOW_S = 300.0
+# HARD backlog held this long with no drain and NO device fault to
+# explain it = an invisibly wedged stage (alive but hung); the pause
+# warning must not latch forever, so the supervisor restarts the
+# pipeline. Genuine speech backlogs never hold HARD this long — the
+# worst measured session peaked ~30 s before draining.
+D5_STUCK_S = 120.0
 
 ASR_EMPTY_FALLBACK_MIN_S = 0.5
 ASR_UNREADABLE_GAP_MIN_S = 1.0

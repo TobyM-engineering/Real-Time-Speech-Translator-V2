@@ -74,6 +74,9 @@ class Bridge(QObject):
         self._backlog_level = {config.PERSON_A: 0, config.PERSON_B: 0}
         self._meter = {config.PERSON_A: 0.0, config.PERSON_B: 0.0}
         self._meter_low_since = {config.PERSON_A: None, config.PERSON_B: None}
+        self._d5_suppressed = {}     # p -> pause hidden, fault pill governs
+        self._d5_hard_since = {}     # p -> when unexplained HARD began
+        self.stall_escalate = False  # supervisor: pipeline-restart request
         self._lvl_timer = None   # mic level panel poll, runs only while open
         self.mt = self.tts = self.playback = None
         if downstream:
@@ -267,8 +270,43 @@ class Bridge(QObject):
             if self._groups[p] is not None and (t is None or not t.is_alive()):
                 self._arm_close_check(p)
             s = self._lag_for(p)
-            lvl = (2 if s >= config.BACKLOG_HARD_S
+            raw = (2 if s >= config.BACKLOG_HARD_S
                    else 1 if s >= config.BACKLOG_SOFT_S else 0)
+            # D5 honesty (2026-08-28): when a device fault explains the
+            # backlog (dead stage, earbuds gone, mic lost), telling the
+            # users to pause is a lie — the fault pill carries the real
+            # cause and the pause-request is suppressed until it clears.
+            fault = getattr(self, "_fault", "") or ""
+            lvl = 0 if (raw and fault) else raw
+            if raw and fault and not self._d5_suppressed.get(p):
+                self._d5_suppressed[p] = True
+                self._log(f'D5   {p} pause-request suppressed — device '
+                          f'fault explains the backlog ("{fault}")')
+            elif self._d5_suppressed.get(p) and not (raw and fault):
+                self._d5_suppressed[p] = False
+                if raw:
+                    self._log(f"D5   {p} fault cleared — pause-request "
+                              f"resumes (lag {s:.0f}s)")
+            # stall watchdog: HARD continuously with NO fault explaining
+            # it means the pipeline is wedged invisibly (alive-but-hung
+            # stage — the liveness watchdog only sees dead threads). No
+            # amount of pausing clears it; escalate. Deliberately inert
+            # while a fault IS active: restarting because the earbuds sit
+            # in their case would exec-loop forever.
+            if raw == 2 and not fault:
+                since = self._d5_hard_since.get(p)
+                if since is None:
+                    self._d5_hard_since[p] = time.time()
+                elif (time.time() - since >= config.D5_STUCK_S
+                        and not self.stall_escalate):
+                    self.stall_escalate = True
+                    self._log(f"FAULT D5 stuck: {p} backlog {s:.0f}s has "
+                              f"not drained in {config.D5_STUCK_S:.0f}s "
+                              f"with every stage claiming healthy — "
+                              f"translation stalled")
+                    self.set_fault("Translation stalled — restarting…")
+            else:
+                self._d5_hard_since[p] = None
             with self._lock:
                 if lvl != self._backlog_level[p]:
                     self._backlog_level[p] = lvl
