@@ -2,9 +2,9 @@
 
 The narrative record of this build: what we built, what broke, what we
 wrongly believed and why, and how each thing was actually resolved.
-`CLAUDE.md` holds the *current state* — decisions, constraints, standing
-rules. This file holds the *story*, because the wrong theories are where the
-lessons live.
+`docs/how_it_works.md` holds the *current state* — the design and the
+reasoning behind it. This file holds the *story*, because the wrong theories
+are where the lessons live.
 
 **Convention (standing, 2026-08-27):** every stage sign-off appends a dated
 section here — built / broke / wrongly believed / resolved. Newest at the
@@ -114,7 +114,7 @@ to have changed mid-session. **Wrong theory #1:** Toby had hardened it.
 *never had* passwordless sudo — RPi OS stopped shipping it in late 2025; the
 directory mtime was dpkg conffile bookkeeping during the day's upgrade, and
 the early session's password-free sudo rode a shared auth ticket from Toby's
-own interactive command. Both wrong attributions are retracted in CLAUDE.md.
+own interactive command. Both wrong attributions are retracted in the project's current-state notes.
 
 ### Eight languages become fifty-one
 
@@ -392,7 +392,7 @@ capture gain back at 0, and the armed supervisor. Cold boot to READY is
 manually with `venv/bin/python -m src.stage3_main`.
 
 Preserved out of the RAM-backed scratchpad before shutdown (it does not
-survive power-off): the five measurement scripts CLAUDE.md cites, the eight
+survive power-off): the five measurement scripts cited above, the eight
 ground-truth bench clips with their reference texts, and
 `piper_voices.json` — the catalog generator's required input — now all under
 `tools/`. Everything is committed; the working tree is clean.
@@ -492,3 +492,13 @@ The identifier sweep found the AirPods MAC, the DJI receiver's serial (inside th
 What could not be fixed in the working tree is history. Every one of those strings, plus a personal email in the commit metadata, requires `git filter-repo` and a force-push before the repository is public. That is a destructive rewrite, so it is documented and left for a decision rather than run. The full-history secret scan came back clean — the only matches were the build log describing which token shapes had been scanned for.
 
 The documentation follows v1's structure because that structure worked: a README that leads with why the thing exists, a parts table with real links and honest notes about which choices are load-bearing, the measured numbers rather than the hoped-for ones, and the limitations list copied in unedited. Two supporting documents carry the detail — a setup guide that includes the traps (the receiver's stereo toggle, the `a2dp_source` role name that means the opposite of what it looks like, the rule that a collapsed microphone level means power-cycling the transmitters before touching software) and an architecture document that includes the approaches that were tried and rejected, so nobody re-derives them.
+
+## 2026-08-28 — history rewrite and the public split
+
+The working tree had been scrubbed of hardware identifiers a commit earlier, but history had not: the earbuds MAC, the receiver serial, the hostname, the username and the home path were in 59 of 61 commits, and a personal email address sat in the commit metadata of the same 59. A backup mirror went to disk first, then `git filter-repo` replaced all five strings with placeholders and rewrote authorship through a mailmap. Every commit SHA changed; nothing else did.
+
+Verification was deliberately paranoid, because "I grepped and it looked fine" is how the identifiers survived the first pass. Rather than grepping the checked-out tree, every blob in the object database was streamed through the scanner — 251 of them — plus all commit messages and all author/committer records. One apparent survivor turned out to be a false positive worth keeping: two HTTP User-Agent strings read `TranslatorV2-opus-fetcher`, which is the project's name, not the machine's hostname. Case-sensitive matching separated them.
+
+`CLAUDE.md` came out of the public repository at the same time — it is a working notebook written to an assistant, not documentation, and it duplicated what the docs now say properly. It stays on disk and gitignored. Six code comments and three lines of this log pointed at it; all now point at the public docs instead, so the published repository contains no dangling references. It remains readable in history, which is a separate decision from removing it going forward.
+
+Finally, v1's README was fetched and compared side by side. Two of its habits were better for someone meeting the project cold and were adopted: a demo-and-photos block above the fold, and a "Notable Engineering Problems" section — short war stories in plain language, which is what makes a build log worth reading at all.

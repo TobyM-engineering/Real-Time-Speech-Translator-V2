@@ -10,3 +10,4 @@ asr_turn*.wav
 nohup.out
 logs/
 device.json
+CLAUDE.md

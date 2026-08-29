@@ -1,6 +1,6 @@
 """Curated interjection table: short conversational utterances bypass NLLB
 entirely — measured, every one-word input draws the model's subtitle-dialog
-prior (see CLAUDE.md 2026-08-27). Deterministic table in, deterministic
+prior (see docs/build_log.md, 2026-08-27). Deterministic table in, deterministic
 speech out.
 
 The data lives in interjections_data.json, built by

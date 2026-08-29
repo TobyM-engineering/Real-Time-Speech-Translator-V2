@@ -369,7 +369,7 @@ class Supervisor(threading.Thread):
                             "restart", "bluetooth"], timeout=20)
             if rc != 0:
                 self.log("LEVEL-2 NOT ARMED: sudo -n denied — install "
-                         "/etc/sudoers.d/011_translator-bt (see CLAUDE.md)")
+                         "/etc/sudoers.d/011_translator-bt (see docs/setup.md)")
                 self.b.set_fault("Earbuds lost — restart Bluetooth manually")
             else:
                 self._wait_for_controller()

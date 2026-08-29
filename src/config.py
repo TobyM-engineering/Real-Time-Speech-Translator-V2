@@ -149,7 +149,7 @@ LIVE_ONSET_HOLD_S = 0.30   # don't light either half until the ratio window has
 SELFCHECK_CORR = 0.95     # L/R correlation above this at speech energy = suspect
 SELFCHECK_RMS = 0.01      # full-scale RMS above this counts as "has signal"
 
-# Fragment merge window (measured policy; see CLAUDE.md fragment section)
+# Fragment merge window (measured policy; see docs/how_it_works.md)
 MERGE_SHORT_SEG = 1.5      # s: segments shorter than this are held for merge
 MERGE_SHORT_WORDS = 4      # or with fewer ASR words than this
 MERGE_HOLD = 0.8           # s to wait for a continuation
@@ -198,7 +198,7 @@ MT_THREADS = 3   # legacy serial figure — still used by preserved bench script
 # (-23%); outputs byte-identical to the serial loop (verified es+fr).
 # intra=4 serial measured SLOWER under the live stack (+19%) — a fourth
 # fine-grained thread fights capture/A2DP/UI, but 2x2's two coarse workers
-# do not. Contention numbers vs concurrent ASR: see CLAUDE.md 2026-08-27.
+# do not. Contention numbers vs concurrent ASR: see docs/build_log.md.
 MT_INTER_THREADS = 2
 MT_INTRA_THREADS = 2
 

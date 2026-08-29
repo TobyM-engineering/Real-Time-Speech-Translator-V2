@@ -11,6 +11,26 @@ No phone, no app, no internet, no API key.
 
 ---
 
+# 🎥 Demo
+
+<!-- TODO (Toby): drop a short clip in media/ and link it here, as v1 does.
+     Suggested shot: both people wearing a mic and one earbud, one speaks
+     Spanish, the other's earbud answers in English a couple of seconds later,
+     with the screen visible showing both halves. -->
+
+*Demo video to be added.*
+
+---
+
+# 📸 System Photos
+
+<!-- TODO (Toby): add photos to media/ and embed them here, e.g.
+     <img src="media/board_stack.jpg" width="280">  -->
+
+*Build photos to be added — the stacked layout (UPS HAT, Pi 5, display) and the two transmitters in wearing position.*
+
+---
+
 # 🌍 Project Background
 
 [Version 1](https://github.com/TobyM-engineering/Real-Time-Speech-Translator) was one-directional and cloud-based: a Pi Zero 2 W listened to a room, streamed audio to OpenAI's realtime API, and played English into one ear. It worked, cost about $65 in parts, and about $10 per 30 minutes of API usage.
@@ -139,6 +159,28 @@ The unedited list, from the project's own hardening audit.
 **Not yet built or verified, and it matters.** No read-only root filesystem: a battery hard-cut can corrupt the SD card, and this device is a battery appliance — this is the top standing risk. EEPROM power flags unset (the DJI receiver runs inside the 600 mA USB cap — works, thin headroom). No RTC battery fitted, so fully-offline mode has no clock source. WiFi is still on. The UPS soak test under sustained ML load has not been run. The kiosk boot path was designed but not built (a desktop session hosts the UI). Unknown AirPods behaviours: one bud dying, true battery life. Known and tolerated bugs: the merge-hold deadline expires early, and the turn registry never prunes within a session.
 
 **Two things the hardware cannot tell you.** A transmitter that is switched off is indistinguishable from a person who is not speaking — the on-screen level check is the manual test. And the language picker is a contract: speech in a language other than the one selected decodes as confident phonetic nonsense in the selected language.
+
+---
+
+# 🧠 Notable Engineering Problems
+
+### Three clocks, and only one of them was right
+Wall-clock time, the capture stream's sample counter, and the voice-activity library's *internal* counter all disagreed — the last drifted 38 seconds from the capture head over a nine-hour run. Mixing them produced failures that looked like anything but a timing bug: an anti-feedback gate silently comparing timestamps from different number lines and never matching, and a backlog meter claiming the pipeline was 40 seconds behind while audio arrived a second later. Everything timing-critical now uses the capture sample clock, converted at exactly one point.
+
+### A dead thread that looked like a slow one
+A punctuation-only transcript (`"."`, from a 0.4-second cough) hit a guard that tested one string and indexed another. The recognition thread died on the exception; every other thread kept running, so the screen showed "translating" indefinitely while twenty turns queued into a dead consumer. Every worker thread is now polled every five seconds — a dead one raises a named on-screen fault, is rebuilt in place with its queue migrated, and a second death within five minutes restarts the whole pipeline.
+
+### Code that read as working for months
+When someone's reply partly overlapped the device's own playback, the gate computed how much of the audio would survive trimming, logged the number, and then discarded the whole segment anyway — the "keep the rest" branch was never written. It looked correct in every log line it printed. Three barge-in replies were lost to it in a single session before the geometry was checked against the ledger by hand.
+
+### A speech model that would not be told what language to expect
+Parakeet runs its own internal language identification and the library exposes no way to pin it. On short or accented Spanish it flipped to English phonetics — "bien" became "B N.", "¿cuánto cuestan?" became "Conto question." — and the nonsense was then faithfully translated and spoken. Native-speaker test clips never showed it; only a real non-native speaker at the second microphone exposed it. It now handles English only, and every other language uses an engine that accepts an explicit language argument.
+
+### A retry ladder nobody asked for
+The recognition library silently retries at five temperatures with sampling whenever its own quality check fails — which accented audio triggers constantly. Measured: a 2.8× multiplier, up to 26 decoder passes for one short sentence, and combined with thread oversubscription it turned 1.6-second decodes into 18-second ones. Disabling it produced *better* text on every clip tested.
+
+### The transmitter that lied
+Worn microphone levels collapsed to −45 dBFS and transcripts turned to garbage. A day went into audio-path debugging on the assumption it was software, and a digital gain compensation was added. The real cause was a transient hardware state in the transmitters, cleared by power-cycling them — after which the added gain was actively harmful, pushing speech into clipping. The standing rule now: **if levels collapse, power-cycle the transmitters before touching anything in software.**
 
 ---
 
