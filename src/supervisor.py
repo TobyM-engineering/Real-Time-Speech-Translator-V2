@@ -65,6 +65,7 @@ class Supervisor(threading.Thread):
 
     # ------------------------------------------------------------------
     def run(self):
+        self._check_display()
         self._wait_for_controller()
         self._start_bt_monitor()
         while not self._stopping.is_set():
@@ -77,6 +78,42 @@ class Supervisor(threading.Thread):
             self._check_battery(now)
             self._check_workers(now)
             self._check_stall(now)
+            self._check_disk(now)
+
+    def _check_display(self, drm_glob="/sys/class/drm/card*-DSI-*"):
+        """Startup, once: the 2026-08-28 black screen was the DSI panel
+        silently failing to probe — the UI ran invisibly for hours. A pill
+        can't be seen on a dead panel, but the log line makes the next
+        diagnosis instant and the pill shows on any HDMI monitor."""
+        import glob
+        if not glob.glob(drm_glob):
+            self.log("FAULT no DSI connector this boot — the panel never "
+                     "probed (reseat the ribbon at CAM/DISP 0 and the 5V "
+                     "jumpers on pins 2/6); UI is running invisibly")
+            self.b.set_fault("Display not detected — check the ribbon")
+
+    def _check_disk(self, now):
+        """SD full = logs silently stop being history (2026-08-28
+        hardening audit). Pill under 500 MB, clears above 1 GB."""
+        if now < getattr(self, "_disk_next", 0.0):
+            return
+        self._disk_next = now + 60.0
+        try:
+            import os
+            st = os.statvfs("/home")
+            free_mb = st.f_bavail * st.f_frsize / 1e6
+        except Exception:
+            return
+        if free_mb < 500 and not getattr(self, "_disk_fault", False):
+            self._disk_fault = True
+            self.log(f"FAULT SD nearly full: {free_mb:.0f} MB free — "
+                     f"session logs at risk")
+            self.b.set_fault("Storage almost full")
+        elif free_mb > 1000 and getattr(self, "_disk_fault", False):
+            self._disk_fault = False
+            self.log(f"disk space recovered: {free_mb:.0f} MB free")
+            if getattr(self.b, "_fault", "") == "Storage almost full":
+                self.b.set_fault("")
 
     def _check_stall(self, now):
         """D5 declared the pipeline wedged (HARD backlog, no drain, no

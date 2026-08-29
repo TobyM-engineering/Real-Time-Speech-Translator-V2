@@ -126,7 +126,12 @@ class Bridge(QObject):
     def worker_threads(self):
         """name -> Thread, live refs, for the supervisor's watchdog —
         a restarted worker is monitored, never its corpse."""
-        w = {"asr": self.asr}
+        w = {"asr": self.asr,
+             # monitor-only: no in-place rebuild exists for the frontend
+             # (capture/VAD state), so restart_worker returns False and a
+             # dead frontend escalates straight to a pipeline restart —
+             # deafness must not be silent (2026-08-28 hardening audit)
+             "frontend": getattr(self.frontend, "_thread", None)}
         if self.downstream:
             w.update(mt=self.mt, tts=self.tts, playback=self.playback)
         return w
@@ -262,6 +267,16 @@ class Bridge(QObject):
         return max(0.0, now_s - min(pend)) if pend else 0.0
 
     def _poll_backlog(self):
+        # the watchdog watches the workers; SOMETHING must watch the
+        # watchdog (2026-08-28 hardening audit): a dead supervisor means
+        # every recovery ladder is offline — say so once, visibly
+        sup = getattr(self, "supervisor", None)
+        if (sup is not None and not sup.is_alive()
+                and not getattr(self, "_sup_dead_logged", False)):
+            self._sup_dead_logged = True
+            self._log("FAULT supervisor thread is DEAD — BT/capture/worker "
+                      "recovery all offline; power-cycle the device")
+            self.set_fault("Translator monitor failed — restart the device")
         for p in (config.PERSON_A, config.PERSON_B):
             # safety net: a turn that dies without a bridge callback
             # (mt_dropped / tts_failed) lowers _inflight with no event, so

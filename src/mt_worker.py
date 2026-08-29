@@ -203,6 +203,13 @@ class MtWorker(threading.Thread):
         rs = tr.translate_batch(toks, beam_size=1, return_scores=True)
         out = []
         for tk, r in zip(toks, rs):
+            if not r.hypotheses:
+                # engine returned no hypothesis (never seen live; guarded
+                # 2026-08-28 hardening audit) — flag so the detector
+                # discards loudly instead of the MT thread dying
+                self.on_log("MT   engine returned EMPTY hypothesis — flagged")
+                out.append(("", 99.0, -99.0))
+                continue
             hyp = r.hypotheses[0]
             text = sp_out.decode(hyp).strip()
             ratio = len(hyp) / max(1, len(tk))
@@ -219,6 +226,13 @@ class MtWorker(threading.Thread):
             beam_size=1, return_scores=True)
         out = []
         for tk, r in zip(toks, rs):
+            if not r.hypotheses:
+                # engine returned no hypothesis (never seen live; guarded
+                # 2026-08-28 hardening audit) — flag so the detector
+                # discards loudly instead of the MT thread dying
+                self.on_log("MT   engine returned EMPTY hypothesis — flagged")
+                out.append(("", 99.0, -99.0))
+                continue
             hyp = r.hypotheses[0][1:]
             text = self._tok.decode(self._tok.convert_tokens_to_ids(hyp),
                                     skip_special_tokens=True).strip()
@@ -228,6 +242,8 @@ class MtWorker(threading.Thread):
         return out
 
     def _score(self, sent, toks, r):
+        if not r.hypotheses:
+            return "", 99.0, -99.0, True   # flagged; detector discards
         hyp = r.hypotheses[0][1:]
         out = self._tok.decode(self._tok.convert_tokens_to_ids(hyp),
                                skip_special_tokens=True).strip()
