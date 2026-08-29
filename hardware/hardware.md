@@ -18,7 +18,7 @@ The 8 GB model is therefore not strictly required, but the headroom costs little
 
 ### [Official Active Cooler](https://www.raspberrypi.com/products/active-cooler/)
 
-**Not optional, and it uses thermal pads only — no paste.** The Pi 5 soft-caps at 80 °C and throttles at 85 °C, dropping 2.4 GHz to 1.5 GHz. That is a 37% clock cut applied to every stage of the pipeline, and it arrives exactly when the device is working hardest. Under sustained inference this build measures 16–19 W with peaks past 21 W; passive cooling does not hold that.
+**Not optional, and it uses thermal pads only — no paste.** The Pi 5 soft-caps at 80 °C and throttles at 85 °C, dropping 2.4 GHz to 1.5 GHz. That is a 37% clock cut applied to every stage of the pipeline, and it arrives exactly when the device is working hardest. Under sustained inference **16–19 W with peaks past 21 W is an expected figure, not a measured one** — the UPS soak test that would establish it has not been run (see [Known-unfinished power work](power_and_thermal.md#known-unfinished-power-work)); passive cooling is not expected to hold that.
 
 Measured at idle with the cooler fitted: 48–53 °C.
 

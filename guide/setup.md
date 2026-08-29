@@ -77,7 +77,9 @@ For the fast translation path, also fetch the opus-mt pairs for the languages yo
 venv/bin/python software/tools/fetch_opus_pairs.py --solid9
 ```
 
-That is ~4 GB for 45 directed pairs among the nine strongest languages. Any pair without an opus model falls back to NLLB automatically — slower, but it always works, and the fallback is logged rather than silent.
+That is ~4 GB for 45 directed pairs among the nine strongest languages.
+
+> **Licences.** These models are not part of this repository and each carries its own terms — see [Models and licences](../README.md#models-and-licences) in the README. NLLB-200 in particular is CC-BY-NC 4.0, so the device as configured is not for commercial use. Any pair without an opus model falls back to NLLB automatically — slower, but it always works, and the fallback is logged rather than silent.
 
 ---
 

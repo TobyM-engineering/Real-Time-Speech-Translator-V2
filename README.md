@@ -218,6 +218,21 @@ Then `venv/bin/python software/tools/doctor.py` gives a plain-language health ch
 
 ---
 
-# 📄 License
+# 📄 Licence
 
-MIT — see [LICENSE](LICENSE).
+The code in this repository is MIT — see [LICENSE](LICENSE).
+
+## Models and licences
+
+The models are **not** in this repository. `software/tools/fetch_models.sh` downloads them from their own sources, each under its own terms:
+
+| Model | Role | Licence |
+|---|---|---|
+| [NLLB-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M) | Translation fallback | **CC-BY-NC 4.0 — non-commercial** |
+| [Helsinki-NLP opus-mt](https://huggingface.co/Helsinki-NLP) | Fast translation pairs | CC-BY 4.0 |
+| [Whisper](https://github.com/openai/whisper) (via [faster-whisper](https://github.com/SYSTRAN/faster-whisper)) | Speech recognition, European languages | MIT |
+| [NVIDIA Parakeet TDT](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3) | Speech recognition, English | CC-BY 4.0 |
+| [SenseVoice Small](https://huggingface.co/FunAudioLLM/SenseVoiceSmall) | Speech recognition, Chinese / Japanese / Korean | FunASR model licence (weights) — see the model card |
+| [Piper voices](https://huggingface.co/rhasspy/piper-voices) | Speech synthesis | Varies per voice — check each voice's `MODEL_CARD` |
+
+This repository's MIT licence covers my code only; the models are downloaded separately under their own terms, and NLLB's non-commercial licence means the device as configured is not for commercial use.

@@ -22,7 +22,7 @@ Once the HAT is fitted, **the Pi's own USB-C jack goes unused.** Everything arri
 
 ### Why 5.1 V / 5 A specifically
 
-In the normal path the HAT does two jobs at once: carry the entire system load *and* charge a 4-cell pack. Measured draw under sustained inference is **16–19 W with peaks past 21 W**, so a typical 15–18 W phone charger leaves nothing for charging — it stalls, or the rail sags under load. The 27 W supply covers both.
+In the normal path the HAT does two jobs at once: carry the entire system load *and* charge a 4-cell pack. **16–19 W with peaks past 21 W is an expected figure, not a measured one** — the UPS soak test that would establish it has not been run (see [Known-unfinished power work](#known-unfinished-power-work)). On that expectation a typical 15–18 W phone charger would leave nothing for charging — it would stall, or the rail would sag under load — so the 27 W supply was chosen to cover both.
 
 Before the HAT and cells were installed, the same adapter powered the Pi directly through its USB-C jack, and it still works that way for bench use without the battery.
 
