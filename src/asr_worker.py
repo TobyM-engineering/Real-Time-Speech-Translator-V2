@@ -30,6 +30,17 @@ def _normtokens(text, cjk):
     return list(t.replace(" ", "")) if cjk else t.split()
 
 
+def _last_content_word(text):
+    """Last word once trailing punctuation is stripped; '' when nothing
+    remains. 2026-08-28 crash: the old inline form guarded on
+    text.split() but indexed the STRIPPED split — a punctuation-only
+    transcript ('.' from whisper-fr on a 0.4 s blip) passed the guard,
+    indexed an empty list, and the IndexError killed the whole ASR
+    thread. Guard and index the SAME list."""
+    words = text.rstrip(".,;: …").split()
+    return words[-1].lower() if words else ""
+
+
 class AsrWorker(threading.Thread):
     def __init__(self, registry, get_lang, on_log, on_transcript, on_ready,
                  on_dropped):
@@ -186,7 +197,7 @@ class AsrWorker(threading.Thread):
         dur = len(audio) / config.SR
         n_units = len(text) if entry["code"] in _CJK else len(text.split())
         short = dur < config.MERGE_SHORT_SEG or n_units < config.MERGE_SHORT_WORDS
-        last = text.rstrip(".,;: …").split()[-1].lower() if text.split() else ""
+        last = _last_content_word(text)
         dangling = entry["code"] not in _CJK and last in config.DANGLING_WORDS
         seam = turn.forced_split
         if dur >= config.MERGE_MAX_TOTAL:
