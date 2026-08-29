@@ -68,19 +68,76 @@ Mixing them produced failures that looked like everything except a clock problem
 
 ---
 
+## The three recognition engines, and which language gets which
+
+There is no single best speech recognition model here, so the pipeline routes per channel from the language catalog.
+
+| Language | Engine | Measured speed (RTF) | Why this one |
+|---|---|---|---|
+| English | Parakeet TDT 0.6B v3 int8 | **0.115–0.132** | Fastest accurate option, and full punctuation and casing — which the sentence splitter downstream depends on |
+| Chinese, Japanese, Korean | SenseVoice-small int8 | **0.05** | Far faster than anything else on these, and already resident |
+| Everything else (~47) | faster-whisper `base` int8, **language pinned** | 0.34–0.65 clean, **0.8–1.0 real accented speech** | The only engine that accepts an explicit language argument |
+
+**Why Parakeet is English-only** is the most important accuracy decision in the build, and it was a reversal. Parakeet covers 25 European languages and benchmarked at roughly a third of whisper's error rate on clean native clips, so it was originally routed for all of them. Then a real non-native Spanish speaker used the device, and it turned out Parakeet runs its own internal language identification with **no way to pin it** through the library — on short or accented Spanish it flips to English phonetics:
+
+| Spoken | Decoded |
+|---|---|
+| "bien" | "B N." |
+| "¿cuánto cuestan?" | "Conto question." |
+| "es un abrigo más…" | "Assume El Premier Abreigo Mass." |
+
+That nonsense was then faithfully translated and spoken aloud. Native-speaker test clips never showed it — the accent was the confound that hid the fault. Whisper costs a measured **+1.40 to +1.94 seconds per turn** and is *less* accurate on clean native speech, and it is still the right trade, because it cannot leave the configured language.
+
+The consequence, stated plainly: **the language picker is a contract.** Speech in a language other than the selected one decodes as confident phonetic nonsense in the selected one. A foreign word mid-sentence gets anglicised — a live session turned a spoken "sí" into "C".
+
+If recognition returns nothing at all on ≥0.5 s of accepted audio, a second engine gets one attempt before the turn is declared unreadable. That exists because one engine was caught returning empty transcripts *deterministically* on clean speech — eight times across five sessions before it was noticed.
+
+---
+
+## Translation: two engines, one fallback
+
+| Engine | Measured | Coverage |
+|---|---|---|
+| opus-mt per-pair int8 | **0.36 s** for a two-sentence turn; 6 sentences batched in 1.08 s | 45 directed pairs installed among the nine strongest languages |
+| NLLB-200-distilled-600M int8 | ~2.4 s for the same two-sentence turn; 8.19 s for the same six | Any language to any other |
+
+Opus is **~7× faster on identical input at parity quality**, so the active pair's two directions load at language-picker time (~0.2 s warm) and NLLB stays resident as the universal fallback. Every fallback is logged rather than silent, because the asymmetry is audible: if one direction has an opus model and the other does not, one person waits noticeably longer than the other for the whole conversation.
+
+Two safeguards sit around translation, both built from measurements:
+
+- **Short fragments are not translated blind.** NLLB hallucinates on content-starved input — "5" became "5 El", a bare list of numbers gained "¿Qué es eso?" — because a decoder given almost nothing falls back on its training prior. Digits pass through untranslated, common interjections resolve through a table of 52 concepts across 38 languages (every entry cited, none from memory), and everything else is checked afterwards.
+- **A detector checks every output**: token ratio, per-token log probability, and digits appearing in the output that were not in the input. Thresholds are calibrated per engine on real sentences (180 for NLLB, 66 for opus) rather than chosen. Flagged output on a short input is discarded and the gap is signalled; nothing unverified is ever spoken.
+
+Multi-sentence input is always split and translated per sentence. Greedy decoding was measured silently dropping the second sentence of a two-sentence input; splitting fixes it for free and matches how audio is streamed out.
+
+---
+
+## Speech synthesis
+
+Piper medium voices, measured at **RTF ~0.13–0.15** — synthesis is never the bottleneck. Supertonic-3 covers a few languages Piper does not.
+
+The cost that matters is loading, not synthesising: **1.9 s to load a cold voice plus 0.14 s for the first synthesis.** That is paid once, at the language picker, not per turn — both selected languages' voices are preloaded before the device reports ready, and the eviction policy will never evict a currently selected voice. All 49 catalog voices live on disk (3.1 GB); only the two active ones are resident, which is why memory stays flat at any catalog size.
+
 ## Latency, and why the floor is where it is
 
 Measured, end of speech to audio in the other ear: **~2.5 s** for a short English turn on a fast translation pair, **~3–4 s** with whisper recognition, **3.5–5 s per sentence** when falling back to NLLB.
 
 The remaining floor is roughly 2.0–2.2 s, and it is **mostly deliberate**:
 
-| Component | Cost | Movable? |
+A real English dialogue turn, measured stage by stage on the live device:
+
+| Stage | Measured | Movable? |
 |---|---|---|
-| Endpoint silence | 0.7 s | No — you cannot know a sentence ended until it has |
-| Recognition | ~0.2–2 s | Engine-dependent |
-| Cancel window | ≥1.0 s | Only by giving up cancellation |
-| Translation | 0.3 s (opus) / 2–3 s (NLLB) | Model choice |
-| Synthesis + output | ~0.4 s | Mostly fixed |
+| Endpoint silence (waiting to be sure you stopped) | **0.62 s** | No — information-theoretic. 0.7 s is the configured minimum |
+| Speech recognition | **0.20 s** | Engine-dependent: 0.20 s here, +1.4–1.9 s on a whisper channel |
+| Merge hold (waiting for a possible continuation) | **0.50 s** | Policy — buys back split sentences |
+| Translation | **0.07 s** | Opus pair. NLLB fallback: 2–3 s per sentence |
+| Speech synthesis | **0.07 s** | No — already 0.13 RTF |
+| Cancel window wait | **0.92 s** | Policy — the ≥1.0 s rule, deliberate |
+| Pipe to sink | **0.06 s** | No |
+| **Total** | **≈2.48 s** | |
+
+Read that column again: **compute is 0.34 seconds of it.** The rest is deliberate policy — waiting to be certain the sentence ended, waiting for a continuation, and holding audio long enough that a mis-hear can be cancelled before the other person hears it. Lowering the floor further means trading those rules away, not optimising code.
 
 Three things bought most of the improvement:
 

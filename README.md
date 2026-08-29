@@ -56,7 +56,7 @@ What it costs, honestly: roughly $400 in parts instead of $65, and about **2.5�
 | [Raspberry Pi 5, 8 GB](https://www.raspberrypi.com/products/raspberry-pi-5/) | aarch64, four Cortex-A76 cores. **Compute, not RAM, is the binding constraint** — the whole model stack is ~2 GB resident. |
 | [Official Active Cooler](https://www.raspberrypi.com/products/active-cooler/) | Thermal **pads only**, no paste. Mandatory: at 85 °C the Pi throttles 2.4 GHz → 1.5 GHz, a 37% cut that lands directly on translation latency. |
 | [Raspberry Pi Touch Display 2, 5″](https://www.raspberrypi.com/products/touch-display-2/) | 720×1280 IPS, portrait-native, 5-point capacitive touch. Runs rotated, split into two 180°-opposed halves. |
-| 64 GB high-endurance microSD | A battery device that gets hard-cut will destroy ordinary cards. |
+| [SanDisk 64 GB High Endurance microSDXC (SDSQQNR-064G-GN6IA)](https://www.amazon.com/dp/B07P3D6Y5B) | Boot device and model storage. **High-endurance specifically**, not a general-purpose card: this is a battery device that can lose power hard, and an ordinary card's flash translation layer degrades under repeated unclean shutdowns — the endurance line is built for continuous-write video recorders and survives it. |
 | [Waveshare UPS HAT (E)](https://www.amazon.com/dp/B0DBLMFX57) | 4× 21700 cells. I²C fuel gauge at `0x2d` is read by the supervisor for the on-screen battery indicator and the low-battery fault. |
 | [4× 21700 cells](https://www.amazon.com/dp/B0HDZ2MTGX) | For the UPS HAT. *Cell brand and model unverified — these are what is in this build, not a recommendation.* |
 | [DJI Mic Mini kit](https://www.dji.com/mic-mini) | 2 clip-on transmitters + 1 USB receiver. Class-compliant USB audio — no DJI software involved. **TX1 (black windscreen) = left/FL = Person A. TX2 (grey) = right/FR = Person B.** |
@@ -64,7 +64,7 @@ What it costs, honestly: roughly $400 in parts instead of $65, and about **2.5�
 | [Longer official Pi 5 DSI FPC ribbon](https://www.amazon.com/dp/B0D12N6TLW) | Replaces the stock 200 mm ribbon so the screen reaches in the stacked layout. *Length unmeasured.* |
 | [XYGStudy Pi 5 RTC battery (RTC-Bat-B)](https://www.amazon.com/dp/B0CR76SM52) | 64 mAh rechargeable, 2-pin JST. **On hand but NOT yet fitted** — an offline device has no NTP, so fit this before relying on offline mode. |
 | AirPods Pro | Used as **one** stereo sink, hard-panned: left bud to one person, right bud to the other. Any A2DP stereo earbuds should work. |
-| Official 27 W USB-C supply | Mains bench use; the battery path is the UPS HAT. |
+| [RasTech 27 W GaN PD USB-C supply, 5.1 V / 5 A](https://www.amazon.com/dp/B0CLV6WB4L) | The only mains supply in the build, and it feeds the **UPS HAT's USB-C input**, not the Pi's — the HAT charges the 4×21700 pack and powers the Pi at the same time, which is the normal operating path (the Pi's own USB-C jack goes unused once the HAT is fitted). **The 5.1 V / 5 A rating is the reason for this part:** in that path the HAT has to carry the full system load *and* charge the pack simultaneously, so a typical 15–18 W phone charger would leave it choosing between the two. It also powers the Pi directly through its USB-C jack for bench work without the battery, which is how the build ran before the HAT and cells were fitted. |
 
 Roughly **$400** all-in, dominated by the Pi, the display, and the DJI kit.
 
@@ -305,11 +305,27 @@ Real-Time-Speech-Translator-V2/
 ├── ui/                      QML interface + the language catalog
 ├── tools/                   setup, fetch, health check, benchmarks
 ├── tests/                   regression tests
-└── docs/
-    ├── setup.md             the full build
-    ├── how_it_works.md      architecture and design decisions
-    └── build_log.md         the narrative: what broke and why
+├── docs/
+│   ├── hardware.md          every part, a link, and why that part
+│   ├── setup.md             the full build, start to finish
+│   ├── how_it_works.md      signal path, models, measured latency
+│   ├── recovery.md          fault detection and recovery layers
+│   ├── power_and_thermal.md power path, battery, thermal limits
+│   └── build_log.md         the narrative: what broke and why
+├── hardware/                wiring diagrams
+└── media/                   photos and demo video
 ```
+
+## Documentation
+
+| Document | What is in it |
+|---|---|
+| **[hardware.md](docs/hardware.md)** | Every part with a link and the reason it was chosen — including the three choices that are load-bearing |
+| **[setup.md](docs/setup.md)** | Build guide from bare parts to autostart, with the traps that cost time |
+| **[how_it_works.md](docs/how_it_works.md)** | Signal path, speaker separation, all three recognition engines, translation, per-stage measured latency |
+| **[recovery.md](docs/recovery.md)** | What the device does when hardware or software fails, and what it cannot detect |
+| **[power_and_thermal.md](docs/power_and_thermal.md)** | The power path, the battery gauge, thermal limits, and unfinished power work |
+| **[build_log.md](docs/build_log.md)** | The narrative: what broke, what was wrongly believed, how it was resolved |
 
 ---
 

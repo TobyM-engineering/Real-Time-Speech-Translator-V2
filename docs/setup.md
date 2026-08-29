@@ -11,16 +11,16 @@ The full build, start to finish. The README has a condensed version — this one
 | Raspberry Pi 5, 8 GB | Four Cortex-A76 cores. The 8 GB model is not strictly required (~2 GB resident) but leaves headroom. |
 | Official Active Cooler | **Not optional.** Thermal pads only, no paste. Throttling at 85 °C costs 37% of your translation speed. |
 | Raspberry Pi Touch Display 2, 5″ | 720×1280, portrait-native, capacitive touch. |
-| 64 GB high-endurance microSD | Endurance-rated. A battery device gets hard-cut, and ordinary cards do not survive that for long. |
+| SanDisk 64 GB High Endurance microSDXC | Endurance-rated, not general-purpose. A battery device gets hard-cut, and ordinary cards degrade under that. |
 | Waveshare UPS HAT (E) + 4× 21700 cells | I²C fuel gauge at `0x2d`. |
 | DJI Mic Mini kit | Two transmitters, one USB receiver. Class-compliant — no vendor software. |
 | NFHK 90° **down-angled** USB-A → USB-C adapter | The angle matters; other adapters foul the display stack. |
 | Longer official Pi 5 DSI FPC ribbon | The stock 200 mm ribbon does not reach in a stacked layout. |
 | Pi 5 RTC battery | For offline timekeeping. |
 | AirPods Pro (or any A2DP stereo earbuds) | Used as one stereo sink, hard-panned. |
-| Official 27 W USB-C supply | For bench work. |
+| RasTech 27 W GaN PD USB-C supply, 5.1 V / 5 A | Feeds the UPS HAT's USB-C input. 5 A because the HAT charges the pack and carries the system load at once. |
 
-Roughly $400 total.
+Roughly $400 total. **[`hardware.md`](hardware.md) has a link and a reason for every part** — read it before substituting anything, because three of these choices are load-bearing (the down-angled adapter, the high-endurance card, and the 5 A supply).
 
 ---
 
@@ -31,6 +31,9 @@ Roughly $400 total.
 3. **Fan → the 4-pin `FAN` header.**
 4. **DJI receiver → a black USB 2.0 port** via the 90° adapter. Never the blue USB 3.0 pair.
 5. **RTC battery → the `BAT` JST connector.**
+6. **Mains → the UPS HAT's USB-C input**, not the Pi's. Once the HAT is fitted it powers the Pi and charges the pack together, and the Pi's own jack goes unused.
+
+Order matters slightly: fit the cooler before the HAT, and seat the display ribbon before stacking, because both connectors become hard to reach afterwards.
 
 Two things to verify with your hands before software:
 
@@ -174,7 +177,26 @@ Two failure modes it exists to catch:
 
 ---
 
-## 8. Autostart
+## 8. Verify it end to end
+
+Before trusting it in a conversation, confirm each stage in order. Every one of these is a real failure mode that has happened at least once here.
+
+| Check | How | Expected |
+|---|---|---|
+| Both channels carry separate signal | `venv/bin/python tools/doctor.py` | "channels distinct", not "SUSPECT MONO MODE" |
+| Worn microphone level | doctor, speaking in wearing position | speech around −21 to −26 dBFS, ≥10 dB over the room |
+| Speaker separation | speak into TX1 only, watch the log | `SEG ch=A … ratio +10` or better, and `ch=B … DROP_BLEED` |
+| Recognition | speak a full sentence | `ASR turn#N` with your actual words |
+| Translation | same turn | `MT turn#N ->` with the other language |
+| Audio routing | same turn | `PLAY ear=B` for a turn spoken by A — **never `ear=A`** |
+| Anti-feedback | speak while a translation is playing into your own ear | `GATE_TRIM` or `GATE_DISCARD`, not a re-translation loop |
+| Battery gauge | `SUP BATT` lines in the log | a percentage and per-cell millivolts |
+
+If the ear routing is ever backwards, stop and check the windscreen convention: **TX1 black = left = Person A**, TX2 grey = right = Person B.
+
+---
+
+## 9. Autostart
 
 ```bash
 cp tools/translator.service ~/.config/systemd/user/
@@ -197,7 +219,7 @@ tools/run_pipeline.sh
 
 ---
 
-## 9. If it does not come up
+## 10. If it does not come up
 
 | Symptom | Check |
 |---|---|
