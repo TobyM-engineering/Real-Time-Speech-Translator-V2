@@ -1,5 +1,5 @@
 """Translator V2 pipeline configuration. Every number traces to the design doc
-or a bench measurement — see docs/how_it_works.md before changing any."""
+or a bench measurement — see software/how_it_works.md before changing any."""
 import json as _json
 import os as _os
 
@@ -151,7 +151,7 @@ LIVE_ONSET_HOLD_S = 0.30   # don't light either half until the ratio window has
 SELFCHECK_CORR = 0.95     # L/R correlation above this at speech energy = suspect
 SELFCHECK_RMS = 0.01      # full-scale RMS above this counts as "has signal"
 
-# Fragment merge window (measured policy; see docs/how_it_works.md)
+# Fragment merge window (measured policy; see software/how_it_works.md)
 MERGE_SHORT_SEG = 1.5      # s: segments shorter than this are held for merge
 MERGE_SHORT_WORDS = 4      # or with fewer ASR words than this
 MERGE_HOLD = 0.8           # s to wait for a continuation

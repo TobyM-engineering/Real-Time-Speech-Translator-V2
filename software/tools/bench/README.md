@@ -5,7 +5,7 @@ Measurement scripts and reference audio from the benchmarking sessions. Every pe
 Run them from the repository root, with the virtual environment's Python:
 
 ```bash
-venv/bin/python tools/bench/bench_parakeet.py
+venv/bin/python software/tools/bench/bench_parakeet.py
 ```
 
 ## Harnesses

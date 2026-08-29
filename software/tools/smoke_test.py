@@ -4,7 +4,7 @@
 Usage: venv/bin/python tools/smoke_test.py <input_stereo_48k.wav> <out_dir>
 The input should be a Test-A-style recording (left channel = TX1, English speech).
 Each stage is independent: a failure is reported and the rest still run.
-Models are loaded with 3 threads (leave one core for PipeWire/UI — see docs/how_it_works.md).
+Models are loaded with 3 threads (leave one core for PipeWire/UI — see software/how_it_works.md).
 """
 import os
 import gc

@@ -9,5 +9,6 @@ asr_turn*.wav
 .env
 nohup.out
 logs/
-src/device.json
+# per-device identifiers (MAC, receiver serial) — never commit, any location
+device.json
 CLAUDE.md
