@@ -466,3 +466,9 @@ The evening two-person session ended with the UI stuck on a hard "please pause" 
 3. **D5 honesty**: pause-requests are suppressed while a fault pill explains the backlog (no more "please pause" beside "earbuds not connected"), and an unexplained HARD that never drains for 120 s declares the pipeline wedged and restarts it — with the earbuds-in-case case deliberately excluded so it cannot exec-loop.
 
 Wrongly believed along the way: that the backlog warning itself was the fault (it was arithmetically perfect — one clock, exact ages); and, briefly, that the earbuds disconnect caused the stall (it happened 115 s after the crash).
+
+## 2026-08-28 (night) — the screen went black and the device grew an autostart
+
+The panel came up dead after a 21:10 power cycle: no DSI connector in DRM, no backlight device, zero panel lines in the kernel journal — never probed. First guesses (labwc blanking — the 08-26 ghost — or a dead UI process) were both disproved in one sweep: no swayidle anywhere, blanking off at every layer, and the pipeline demonstrably READY and running its BT ladder underneath the black glass. Config.txt predates the day's working sessions unchanged, so software is exonerated end to end; the longer stacked-layout DSI ribbon (or the pin-2/6 display power jumpers) is the suspect, and only hands can fix it.
+
+Same session, the launch story ended: a systemd user service (translator.service, lingering on) now runs run_pipeline.sh in a new --foreground mode — same timestamped SD log, systemd tracking the real python PID (execv pipeline-restarts keep it), Restart=on-failure as both crash recovery AND boot ordering (retry until the compositor socket exists). Service-start verified READY in 13.4 s; the true power-on measurement rides the same power cycle as the ribbon reseat.

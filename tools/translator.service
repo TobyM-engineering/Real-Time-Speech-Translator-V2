@@ -1,0 +1,19 @@
+[Unit]
+Description=Translator V2 — offline speech translator pipeline + UI
+# Order after audio and the compositor when those units exist; the real
+# guarantee is Restart below — Qt exits nonzero until the labwc wayland
+# socket is up, and systemd retries until it is.
+After=graphical-session.target pipewire.service wireplumber.service
+Wants=pipewire.service wireplumber.service
+# appliance: never give up (a boot-time compositor race needs a few tries)
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+WorkingDirectory=<REPO-ROOT>
+ExecStart=<REPO-ROOT>/tools/run_pipeline.sh --foreground
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

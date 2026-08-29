@@ -23,6 +23,14 @@ export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 export TXV2_DUMP_DIR="${TXV2_DUMP_DIR:-/tmp/translator_dumps}"
 
 LOG="logs/run_$(date +%Y%m%d_%H%M%S).log"
+if [ "$1" = "--foreground" ]; then
+    # systemd service mode (2026-08-28 autostart): stay attached so
+    # Restart=on-failure sees crashes; same log path either way. The
+    # supervisor's execv escalation keeps the PID, so systemd keeps
+    # tracking across an in-place pipeline restart.
+    echo "started (foreground) — logging to $LOG"
+    exec venv/bin/python -m src.stage3_main >> "$LOG" 2>&1 < /dev/null
+fi
 setsid -f venv/bin/python -m src.stage3_main >> "$LOG" 2>&1 < /dev/null
 echo "started — logging to $LOG"
 echo "watch with: tail -f $LOG"
