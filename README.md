@@ -11,25 +11,36 @@ No phone, no app, no internet, no API key.
 
 ---
 
+<!-- ═══ MEDIA SLOT 1 of 2 — Demo + System Photos ══════════════════════
+     Drop the files into media/ using the names below, then delete this
+     comment's opening and closing markers to publish the block.
+     Naming convention: media/README.md
+════════════════════════════════════════════════════════════════════════
+
 # 🎥 Demo
 
-<!-- TODO (Toby): drop a short clip in media/ and link it here, as v1 does.
-     Suggested shot: both people wearing a mic and one earbud, one speaks
-     Spanish, the other's earbud answers a couple of seconds later, with the
-     screen visible showing both halves. -->
-
-*Demo video to be added.*
+**[Watch the demo](media/translator-demo.mp4)** — the translator running live: one person speaks, and the other's earbud answers in their own language a couple of seconds later.
 
 ---
 
 # 📸 System Photos
 
-<!-- TODO (Toby): add photos to media/ and embed them here in the v1 style
-     (an img tag pointing at the file, width around 280). -->
+### **The stack**
+<img src="media/board_stack.jpg" width="280">
 
-*Build photos to be added — the stacked layout, and the two transmitters in wearing position.*
+The three boards laid flat — the UPS HAT carrying the four cells on the bottom, the Pi 5 in the middle, and the touchscreen on top.
 
----
+### **Worn**
+<img src="media/worn.jpg" width="280">
+
+Both transmitters clipped on, one earbud each. Black windscreen is Person A, grey is Person B — the convention the whole channel mapping depends on.
+
+### **Mid-conversation**
+<img src="media/screen.jpg" width="280">
+
+The screen between the two speakers, each half rotated to face its own reader and showing that person's language.
+
+═══ END MEDIA SLOT 1 ═════════════════════════════════════════════════ -->
 
 # 🌍 Project Background
 
@@ -57,7 +68,7 @@ What it costs, honestly: roughly **$400** in parts instead of $65, and **2.5–4
 | [SanDisk 64 GB High Endurance microSDXC](https://www.amazon.com/dp/B07P3D6Y5B) | Endurance-rated: a battery device gets hard-cut, and ordinary cards degrade |
 | [Waveshare UPS HAT (E)](https://www.amazon.com/dp/B0DBLMFX57) + [4× 21700 cells](https://www.amazon.com/dp/B0HDZ2MTGX) | Portable, with an I²C fuel gauge so low battery is *known*, not guessed |
 | [RasTech 27 W GaN PD, 5.1 V / 5 A](https://www.amazon.com/dp/B0CLV6WB4L) | Feeds the HAT's USB-C input — 5 A because it charges the pack *and* runs the system |
-| [DJI Mic Mini kit](https://www.dji.com/mic-mini) | **Both mics through one USB device, sample-synchronised** — the whole design rests on this |
+| [DJI Mic Mini kit](https://www.dji.com/mic-mini) | **Both microphones through one USB device, sample-synchronised** — the whole design rests on this |
 | [NFHK 90° down-angled adapter](https://www.amazon.com/dp/B0C7GLCWKC) | The down-angle is load-bearing; other adapters foul the stack |
 | [Longer Pi 5 DSI FPC ribbon](https://www.amazon.com/dp/B0D12N6TLW) | The stock 200 mm ribbon does not reach in a stacked layout |
 | [XYGStudy Pi 5 RTC battery](https://www.amazon.com/dp/B0CR76SM52) | For offline timekeeping — **on hand, not yet fitted** |
@@ -186,7 +197,8 @@ Then `venv/bin/python tools/doctor.py` gives a plain-language health check, and 
 # 📂 Repository Structure
 
 ```
-├── src/          the pipeline: capture → arbitration → ASR → MT → TTS → playback
+├── src/          the pipeline: capture → arbitration → recognition
+│                 → translation → speech synthesis → playback
 ├── ui/           QML interface and the language catalog
 ├── tools/        setup, fetch, health check, benchmarks
 ├── tests/        regression tests

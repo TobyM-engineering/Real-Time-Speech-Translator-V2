@@ -136,5 +136,14 @@ It matters more than it looks: a genuinely offline device has no NTP, so with no
 - **RTC battery → the `BAT` JST connector** (not fitted in this build)
 - **Mains → the UPS HAT's USB-C input** (not the Pi's, once the HAT is fitted)
 
-<!-- TODO (Toby): a wiring diagram in hardware/ would carry this better than the list,
-     matching the Player-Piano repo's hardware/ folder. -->
+<!-- ═══ MEDIA SLOT 2 of 2 — wiring diagram ════════════════════════════
+     Drop hardware/wiring_diagram.png in, then delete this comment's
+     opening and closing markers to publish the block.
+     Naming convention: ../hardware/README.md
+════════════════════════════════════════════════════════════════════════
+
+<img src="../hardware/wiring_diagram.png" alt="Full wiring diagram of the build" width="100%">
+
+Every connection above, drawn: the display ribbon at `CAM/DISP 0`, display power on GPIO pins 2 and 6, the fan header, the receiver on a black USB 2.0 port, and mains entering at the UPS HAT rather than the Pi.
+
+═══ END MEDIA SLOT 2 ═════════════════════════════════════════════════ -->

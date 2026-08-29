@@ -21,7 +21,7 @@ capture (stereo, 16 kHz)
    → hard-panned stereo mixer → earbuds
 ```
 
-Seven threads: UI, capture/VAD/arbitration, recognition, translation, synthesis, playback, and a supervisor. Queues between them are bounded except the recognition queue, which is deliberately unbounded — the design rule is *never drop captured speech*; bound the backlog socially instead by asking the speaker to slow down.
+Seven threads: interface, capture and voice-activity detection, recognition, translation, synthesis, playback, and a supervisor. Queues between them are bounded except the recognition queue, which is deliberately unbounded — the design rule is *never drop captured speech*; bound the backlog socially instead by asking the speaker to slow down.
 
 **Decisions are made before compute is spent.** Arbitration and the anti-feedback gate both run at segment-accept, not after recognition. A decision made after audio has already played is useless, and a decision made after a 2-second decode has wasted a core.
 
@@ -49,7 +49,7 @@ Two refinements were forced by real sessions:
 
 ---
 
-## Not translating our own output
+## Not translating its own output
 
 Each person's earbud sits inches from their own chest microphone. Synthesised speech leaks back in at roughly speaking volume and would be re-translated in an endless loop.
 
@@ -64,7 +64,7 @@ The fix is cheap because the system knows exactly when it is playing: the playba
 
 This caused more wasted debugging than any other single issue, so it deserves its own section.
 
-There were three clocks in the system: wall-clock time, the capture stream's sample counter, and the VAD library's *internal* sample counter. They diverge — the VAD's counter drifted 38 seconds from the capture head over a 9-hour run, and the capture stream itself runs +5 to +66 seconds ahead of wall clock under I/O load, for reasons still not understood.
+There were three clocks in the system: wall-clock time, the capture stream's sample counter, and the voice-activity library's *internal* sample counter. They diverge — the VAD's counter drifted 38 seconds from the capture head over a 9-hour run, and the capture stream itself runs +5 to +66 seconds ahead of wall clock under I/O load, for reasons still not understood.
 
 Mixing them produced failures that looked like everything except a clock problem: the anti-feedback gate silently comparing timestamps from different number lines and never matching; a backlog meter reporting the pipeline was 40 seconds behind when audio was arriving a second later.
 
@@ -78,7 +78,7 @@ There is no single best speech recognition model here, so the pipeline routes pe
 
 <img src="diagrams/model-pipeline.svg" alt="Which recognition, translation and synthesis engine runs for which language" width="100%">
 
-| Language | Engine | Measured speed (RTF) | Why this one |
+| Language | Engine | Speed (RTF — seconds of compute per second of audio, so lower is faster) | Why this one |
 |---|---|---|---|
 | English | Parakeet TDT 0.6B v3 int8 | **0.115–0.132** | Fastest accurate option, and full punctuation and casing — which the sentence splitter downstream depends on |
 | Chinese, Japanese, Korean | SenseVoice-small int8 | **0.05** | Far faster than anything else on these, and already resident |
