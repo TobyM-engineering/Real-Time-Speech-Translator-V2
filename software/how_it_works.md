@@ -1,6 +1,6 @@
 # How It Works
 
-The design decisions behind the device, and the measurements that forced them. Most of these were arrived at the hard way — the narrative version, including the wrong theories, is in [build_log.md](build_log.md).
+The design decisions behind the device, and the measurements that forced them. Most of these were arrived at the hard way — the narrative version, including the wrong theories, is in [the build log](../guide/build_log.md).
 
 ---
 

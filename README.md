@@ -74,7 +74,7 @@ What it costs, honestly: roughly **$400** in parts instead of $65, and **2.5–4
 | [XYGStudy Pi 5 RTC battery](https://www.amazon.com/dp/B0CR76SM52) | For offline timekeeping — **on hand, not yet fitted** |
 | AirPods Pro | One stereo sink, hard-panned: left bud to one person, right to the other |
 
-**[→ docs/hardware.md](docs/hardware.md)** gives the full reasoning for every part, including which substitutions will break the build.
+**[→ hardware/hardware.md](hardware/hardware.md)** gives the full reasoning for every part, including which substitutions will break the build.
 
 ## Wiring
 
@@ -86,7 +86,7 @@ What it costs, honestly: roughly **$400** in parts instead of $65, and **2.5–4
 
 # 🧩 How It Works
 
-<img src="docs/diagrams/signal-path.svg" alt="Signal path from the two microphones through arbitration and the model stack to the two earbuds" width="100%">
+<img src="software/diagrams/signal-path.svg" alt="Signal path from the two microphones through arbitration and the model stack to the two earbuds" width="100%">
 
 Both microphones arrive sample-synchronised through one receiver, which is what makes the design work. **Speaker identity comes from the cross-channel energy ratio, never from loudness:** a chest microphone hears its wearer 10–17 dB louder than the other person's does, no matter how loudly either talks.
 
@@ -94,13 +94,13 @@ Recognition is routed per language — Parakeet for English, SenseVoice for Chin
 
 The screen is split in two, one half rotated 180°, each showing a state colour, the live transcript and a mute control. **The transcript is also a cancel button** — text appears well before audio does, so a mis-hear can be killed before the other person hears it.
 
-**[→ docs/how_it_works.md](docs/how_it_works.md)** — the signal path, speaker separation, all three recognition engines and why each was chosen.
+**[→ software/how_it_works.md](software/how_it_works.md)** — the signal path, speaker separation, all three recognition engines and why each was chosen.
 
 ---
 
 # 📊 Performance — the honest numbers
 
-<img src="docs/diagrams/latency-breakdown.svg" alt="Stacked breakdown of one 2.48 second turn, showing that only 0.34 s of it is computation" width="100%">
+<img src="software/diagrams/latency-breakdown.svg" alt="Stacked breakdown of one 2.48 second turn, showing that only 0.34 s of it is computation" width="100%">
 
 | Path | Measured |
 |---|---|
@@ -152,7 +152,7 @@ Microphone levels collapsed and transcripts turned to garbage. A day went into a
 
 # 🚀 Getting Started
 
-Full detail, including the traps, is in **[docs/setup.md](docs/setup.md)**.
+Full detail, including the traps, is in **[guide/setup.md](guide/setup.md)**.
 
 ```bash
 git clone https://github.com/TobyM-engineering/Real-Time-Speech-Translator-V2.git
@@ -161,18 +161,18 @@ python3 -m venv venv
 venv/bin/pip install sherpa-onnx faster-whisper ctranslate2 piper-tts sentencepiece \
                      transformers numpy soundfile huggingface_hub smbus2 PySide6
 
-tools/fetch_models.sh                              # ~5 GB of models
+software/tools/fetch_models.sh                              # ~5 GB of models
 sudo raspi-config nonint do_i2c 0                  # battery gauge
-cp src/device.example.json src/device.json   # then fill in YOUR hardware
-tools/run_pipeline.sh                              # READY in ~30 s cold
+cp software/src/device.example.json software/src/device.json   # then fill in YOUR hardware
+software/tools/run_pipeline.sh                              # READY in ~30 s cold
 ```
 
 Two things that are easy to get wrong and expensive to debug:
 
-- **Find your own hardware identifiers.** `pw-cli ls Node | grep -i Rx` for the receiver, `bluetoothctl devices` for the earbuds. `src/device.json` is gitignored — never commit it.
-- **Never let anything open the earbuds' microphone.** Bluetooth drops to the headset profile and audio collapses to 8 kHz mono for both people. The WirePlumber configuration in [setup.md](docs/setup.md) removes that profile entirely.
+- **Find your own hardware identifiers.** `pw-cli ls Node | grep -i Rx` for the receiver, `bluetoothctl devices` for the earbuds. `software/src/device.json` is gitignored — never commit it.
+- **Never let anything open the earbuds' microphone.** Bluetooth drops to the headset profile and audio collapses to 8 kHz mono for both people. The WirePlumber configuration in [setup.md](guide/setup.md) removes that profile entirely.
 
-Then `venv/bin/python tools/doctor.py` gives a plain-language health check, and `systemctl --user enable translator.service` makes it boot straight into the interface.
+Then `venv/bin/python software/tools/doctor.py` gives a plain-language health check, and `systemctl --user enable translator.service` makes it boot straight into the interface.
 
 ---
 
@@ -197,13 +197,10 @@ Then `venv/bin/python tools/doctor.py` gives a plain-language health check, and 
 # 📂 Repository Structure
 
 ```
-├── src/          the pipeline: capture → arbitration → recognition
-│                 → translation → speech synthesis → playback
-│              ui/ — QML interface and the language catalog
-│              device.example.json — your hardware identifiers
-├── tools/        setup, fetch, health check, benchmarks
-├── tests/        regression tests
-├── docs/         documentation and diagrams
+├── hardware/     the physical build — parts, wiring, stack, power, diagrams
+├── software/     the pipeline (src/), tools/, tests/, and how it works
+├── ui/           the interface — QML source and every screen state, documented
+├── guide/        the build guide and the build log
 └── media/        photos, video and wiring diagrams
 ```
 
@@ -211,12 +208,13 @@ Then `venv/bin/python tools/doctor.py` gives a plain-language health check, and 
 
 | Document | What is in it |
 |---|---|
-| **[hardware.md](docs/hardware.md)** | Every part, a link, and why *that* part — including the load-bearing choices |
-| **[setup.md](docs/setup.md)** | Build guide from bare parts to autostart, with the traps that cost time |
-| **[how_it_works.md](docs/how_it_works.md)** | Signal path, speaker separation, the three engines, per-stage measured latency |
-| **[recovery.md](docs/recovery.md)** | What the device does when things fail, and what it cannot detect |
-| **[power_and_thermal.md](docs/power_and_thermal.md)** | Power path, battery gauge, thermal limits, unfinished power work |
-| **[build_log.md](docs/build_log.md)** | The narrative: what broke, what was wrongly believed, how it was resolved |
+| **[guide/setup.md](guide/setup.md)** | Build guide from bare parts to autostart, with the traps that cost time |
+| **[hardware/hardware.md](hardware/hardware.md)** | Every part, a link, and why *that* part — including the load-bearing choices |
+| **[hardware/power_and_thermal.md](hardware/power_and_thermal.md)** | Power path, battery gauge, thermal limits, unfinished power work |
+| **[software/how_it_works.md](software/how_it_works.md)** | Signal path, speaker separation, the three engines, per-stage measured latency |
+| **[software/recovery.md](software/recovery.md)** | What the device does when things fail, and what it cannot detect |
+| **[ui/screen-states.md](ui/screen-states.md)** | Every state the screen can be in, drawn, with what triggers it |
+| **[guide/build_log.md](guide/build_log.md)** | The narrative: what broke, what was wrongly believed, how it was resolved |
 
 ---
 

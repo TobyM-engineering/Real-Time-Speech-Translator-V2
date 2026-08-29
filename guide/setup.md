@@ -20,7 +20,7 @@ The full build, start to finish. The README has a condensed version — this one
 | AirPods Pro (or any A2DP stereo earbuds) | Used as one stereo sink, hard-panned. |
 | RasTech 27 W GaN PD USB-C supply, 5.1 V / 5 A | Feeds the UPS HAT's USB-C input. 5 A because the HAT charges the pack and carries the system load at once. |
 
-Roughly $400 total. **[`hardware.md`](hardware.md) has a link and a reason for every part** — read it before substituting anything, because three of these choices are load-bearing (the down-angled adapter, the high-endurance card, and the 5 A supply).
+Roughly $400 total. **[`../hardware/hardware.md`](../hardware/hardware.md) has a link and a reason for every part** — read it before substituting anything, because three of these choices are load-bearing (the down-angled adapter, the high-endurance card, and the 5 A supply).
 
 ---
 
@@ -66,7 +66,7 @@ The Noto fonts matter: without them the language picker renders Chinese, Japanes
 ## 4. Models
 
 ```bash
-tools/fetch_models.sh
+software/tools/fetch_models.sh
 ```
 
 Idempotent — safe to re-run, and it resumes. Fetches about 5 GB: Silero VAD, SenseVoice, Parakeet TDT v3, whisper base, NLLB-200-distilled-600M, and the Piper voices.
@@ -74,7 +74,7 @@ Idempotent — safe to re-run, and it resumes. Fetches about 5 GB: Silero VAD, S
 For the fast translation path, also fetch the opus-mt pairs for the languages you actually use:
 
 ```bash
-venv/bin/python tools/fetch_opus_pairs.py --solid9
+venv/bin/python software/tools/fetch_opus_pairs.py --solid9
 ```
 
 That is ~4 GB for 45 directed pairs among the nine strongest languages. Any pair without an opus model falls back to NLLB automatically — slower, but it always works, and the fallback is logged rather than silent.
@@ -84,7 +84,7 @@ That is ~4 GB for 45 directed pairs among the nine strongest languages. Any pair
 ## 5. Device settings
 
 ```bash
-cp src/device.example.json src/device.json
+cp software/src/device.example.json software/src/device.json
 ```
 
 Fill in two values.
@@ -103,7 +103,7 @@ Copy the full `node.name`, which looks like `alsa_input.usb-DJI_Technology_Co.__
 bluetoothctl devices
 ```
 
-> ⚠️ `src/device.json` is gitignored. It holds identifiers specific to your hardware — keep it that way.
+> ⚠️ `software/src/device.json` is gitignored. It holds identifiers specific to your hardware — keep it that way.
 
 ---
 
@@ -157,7 +157,7 @@ Exactly that one command, nothing broader. Without it the ladder still runs its 
 ## 7. First run
 
 ```bash
-tools/run_pipeline.sh
+software/tools/run_pipeline.sh
 ```
 
 Watch `logs/run_<timestamp>.log`. You want `READY pipeline ready` — about 30 s cold, 13 s warm. The launcher refuses to start a second instance.
@@ -165,7 +165,7 @@ Watch `logs/run_<timestamp>.log`. You want `READY pipeline ready` — about 30 s
 Then check the hardware:
 
 ```bash
-venv/bin/python tools/doctor.py
+venv/bin/python software/tools/doctor.py
 ```
 
 It speaks plain language: microphone levels, whether the two channels really carry separate signals, earbud state, temperature, memory. **Run this before believing anything is broken in software.**
@@ -183,7 +183,7 @@ Before trusting it in a conversation, confirm each stage in order. Every one of 
 
 | Check | How | Expected |
 |---|---|---|
-| Both channels carry separate signal | `venv/bin/python tools/doctor.py` | "channels distinct", not "SUSPECT MONO MODE" |
+| Both channels carry separate signal | `venv/bin/python software/tools/doctor.py` | "channels distinct", not "SUSPECT MONO MODE" |
 | Worn microphone level | doctor, speaking in wearing position | speech around −21 to −26 dBFS, ≥10 dB over the room |
 | Speaker separation | speak into TX1 only, watch the log | `SEG ch=A … ratio +10` or better, and `ch=B … DROP_BLEED` |
 | Recognition | speak a full sentence | `ASR turn#N` with your actual words |
@@ -199,7 +199,7 @@ If the ear routing is ever backwards, stop and check the windscreen convention: 
 ## 9. Autostart
 
 ```bash
-cp tools/translator.service ~/.config/systemd/user/
+cp software/tools/translator.service ~/.config/systemd/user/
 # edit WorkingDirectory and ExecStart for your username
 systemctl --user daemon-reload
 systemctl --user enable translator.service
@@ -214,17 +214,29 @@ For development, stop it and run by hand:
 
 ```bash
 systemctl --user stop translator.service
-tools/run_pipeline.sh
+software/tools/run_pipeline.sh
 ```
 
 ---
 
-## 10. If it does not come up
+## 10. Running the tests
+
+The tests live inside `software/`, so discovery needs to be told where the package root is:
+
+```bash
+venv/bin/python -m unittest discover -s software/tests -t software
+```
+
+Twelve tests, under a second, no models required — they cover the guards where model output is indexed and the honesty rules in the backlog meter.
+
+---
+
+## 11. If it does not come up
 
 | Symptom | Check |
 |---|---|
 | Nothing on screen, Pi is running | `ls /sys/class/drm \| grep DSI`. Nothing? The panel did not probe — reseat the ribbon at both ends and the 5 V/GND jumpers, power off. The log says so too. |
 | Service keeps restarting | `systemctl --user status translator.service` and the run log. Qt errors mean the compositor is not up; check `pgrep labwc`. |
 | Ready, but no audio in the earbuds | The on-screen fault pill will say if they are disconnected. Otherwise `bluetoothctl info <MAC>`. |
-| No transcripts | `venv/bin/python tools/doctor.py`. Usually a transmitter that is off, in mono mode, or out of range. |
+| No transcripts | `venv/bin/python software/tools/doctor.py`. Usually a transmitter that is off, in mono mode, or out of range. |
 | Nonsense transcripts | Check the language picker — speech in a language other than the one selected decodes as confident nonsense in the selected language. |

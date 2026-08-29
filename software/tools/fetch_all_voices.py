@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download every Piper voice named in src/ui/languages.json that isn't already on
+"""Download every Piper voice named in ui/languages.json that isn't already on
 disk (or is size-mismatched). Idempotent. Paths and sizes come from the
 piper-voices repo index.
 
@@ -13,7 +13,7 @@ import sys
 
 M = pathlib.Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/models/piper")
 M.mkdir(parents=True, exist_ok=True)
-catalog = json.load(open(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/src/src/ui/languages.json"))
+catalog = json.load(open(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + "/ui/languages.json"))
 index = json.load(open(sys.argv[1]))
 
 need = [e["ttsVoice"] for e in catalog if e["tts"] == "piper"]

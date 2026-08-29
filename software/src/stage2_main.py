@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Stage 3: the full offline loop — capture → arbitration → gate → ASR →
-NLLB → TTS → the AirPods, with the Signal UI live. First real audio out.
+"""Stage 2: live pipeline (capture → arbitration → gate → ASR) driving the
+Signal UI with real states and transcripts. No MT/TTS yet (stage 3).
 
-Run on the panel:  venv/bin/python -m src.stage3_main
+Run on the panel:  venv/bin/python -m src.stage2_main
+Terminal log mirrors every pipeline decision.
 """
 import json
 import os
@@ -17,21 +18,21 @@ from PySide6.QtQml import QQmlApplicationEngine
 
 from src.pipeline_core import Bridge
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def main():
     app = QGuiApplication(sys.argv)
-    with open(f"{ROOT}/src/ui/languages.json") as f:
+    with open(f"{ROOT}/ui/languages.json") as f:
         catalog = json.load(f)
-    bridge = Bridge(catalog, downstream=True)
+    bridge = Bridge(catalog)
     bridge.logMsg.connect(lambda m: print(m, flush=True))
 
     engine = QQmlApplicationEngine()
     ctx = engine.rootContext()
     ctx.setContextProperty("bridge", bridge)
     ctx.setContextProperty("langCatalog", catalog)
-    engine.load(f"{ROOT}/src/ui/signal_live.qml")
+    engine.load(f"{ROOT}/ui/signal_live.qml")
     if not engine.rootObjects():
         sys.exit("QML failed to load")
     bridge.start()

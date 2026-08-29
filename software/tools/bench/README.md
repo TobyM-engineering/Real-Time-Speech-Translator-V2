@@ -27,6 +27,6 @@ The harnesses stream real audio through the real pipeline classes with a fake ca
 
 `clips/` holds eight ground-truth recordings in Spanish, French, German and Portuguese, plus one regression specimen. `clips/bench_meta.json` maps every clip to its exact spoken text, its language and its duration.
 
-`clips/parakeet_empty_regression.wav` is a live microphone recording that Parakeet decodes as an empty string, deterministically, while SenseVoice reads it correctly. It is the specimen behind the empty-decode fallback in `src/asr_worker.py` — keep it even if a future model version decodes it, because it still exercises that path.
+`clips/parakeet_empty_regression.wav` is a live microphone recording that Parakeet decodes as an empty string, deterministically, while SenseVoice reads it correctly. It is the specimen behind the empty-decode fallback in `../../src/asr_worker.py` — keep it even if a future model version decodes it, because it still exercises that path.
 
 `../piper_voices.json` is the input `../build_language_catalog.py` needs to generate the language catalog.

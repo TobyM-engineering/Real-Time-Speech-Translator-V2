@@ -2,7 +2,7 @@
 # Translator V2 — fetch all offline models + convert NLLB to CTranslate2 int8.
 # Idempotent: safe to re-run; skips files that already exist where cheap to check.
 # Everything lands under models/, full log at models/download.log.
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 VENV=$ROOT/venv
 M=$ROOT/models
 TMP=$M/tmp

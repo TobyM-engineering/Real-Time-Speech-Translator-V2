@@ -7,14 +7,17 @@
 # Diagnostic history outranks SD wear (high-endurance card, ~0.1–0.3 MB/h
 # of text). Revisit when the read-only-rootfs build lands.
 #
+# Run from the repository root with software/ on PYTHONPATH, so the
+# package stays "src" and no import inside the pipeline has to change.
+#
 # WAV dumps stay on tmpfs (/tmp/translator_dumps): the first 8 turns of
 # the session, not history. Promote a keeper into the repo by hand,
 # e.g. tools/bench/clips/parakeet_empty_regression.wav.
 
-cd "$(dirname "$0")/.." || exit 1
+cd "$(dirname "$0")/../.." || exit 1   # repository root
 
-if pgrep -f "python.*src\.stage3_main" > /dev/null; then
-    echo "pipeline already running (PID $(pgrep -f 'python.*src\.stage3_main' | head -1)) — not starting a second one"
+if pgrep -f "python.*stage3_main" > /dev/null; then
+    echo "pipeline already running (PID $(pgrep -f 'python.*stage3_main' | head -1)) — not starting a second one"
     exit 1
 fi
 
@@ -29,8 +32,8 @@ if [ "$1" = "--foreground" ]; then
     # supervisor's execv escalation keeps the PID, so systemd keeps
     # tracking across an in-place pipeline restart.
     echo "started (foreground) — logging to $LOG"
-    exec venv/bin/python -m src.stage3_main >> "$LOG" 2>&1 < /dev/null
+    PYTHONPATH="$PWD/software" exec venv/bin/python -m src.stage3_main >> "$LOG" 2>&1 < /dev/null
 fi
-setsid -f venv/bin/python -m src.stage3_main >> "$LOG" 2>&1 < /dev/null
+PYTHONPATH="$PWD/software" setsid -f venv/bin/python -m src.stage3_main >> "$LOG" 2>&1 < /dev/null
 echo "started — logging to $LOG"
 echo "watch with: tail -f $LOG"

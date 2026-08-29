@@ -1,6 +1,6 @@
 # Media
 
-Photographs, video and wiring diagrams of the build, referenced from the root [`README.md`](../README.md) and from [`../docs/hardware.md`](../docs/hardware.md).
+Photographs, video and wiring diagrams of the build, referenced from the root [`README.md`](../README.md) and from [`../hardware/hardware.md`](../hardware/hardware.md).
 
 ## Naming convention
 
@@ -16,4 +16,4 @@ Drop files in with these exact names and they appear in the places already prepa
 
 Anything else is free-form. JPEG for photographs, PNG for diagrams, MP4 for video.
 
-The SVG figures used throughout the documentation are generated, not photographed, and live in [`../docs/diagrams/`](../docs/diagrams/).
+The SVG figures used throughout the documentation are generated, not photographed, and live in [`../software/diagrams/`](../software/diagrams/) and [`../hardware/diagrams/`](../hardware/diagrams/).

@@ -13,7 +13,7 @@ StartLimitIntervalSec=0
 [Service]
 Type=simple
 WorkingDirectory=/home/YOUR_USER/translator
-ExecStart=/home/YOUR_USER/translator/tools/run_pipeline.sh --foreground
+ExecStart=/home/YOUR_USER/translator/software/tools/run_pipeline.sh --foreground
 Restart=on-failure
 RestartSec=5
 

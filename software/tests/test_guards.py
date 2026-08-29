@@ -13,6 +13,7 @@ import unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
+REPO = os.path.dirname(ROOT)          # repository root, above software/
 from src.mt_worker import MtWorker
 from src.pipeline_core import Bridge
 
@@ -24,7 +25,7 @@ class _R:
 
 
 def make_bridge():
-    with open(f"{ROOT}/src/ui/languages.json") as f:
+    with open(f"{REPO}/ui/languages.json") as f:
         catalog = json.load(f)
     b = Bridge(catalog, downstream=False)
     b.logs = []

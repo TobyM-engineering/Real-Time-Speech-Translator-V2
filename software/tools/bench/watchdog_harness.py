@@ -54,7 +54,7 @@ from PySide6.QtCore import QCoreApplication
 from src.pipeline_core import Bridge
 
 app = QCoreApplication(sys.argv)
-catalog = json.load(open("src/ui/languages.json"))
+catalog = json.load(open(ROOT + "/../ui/languages.json"))
 logs = []
 
 

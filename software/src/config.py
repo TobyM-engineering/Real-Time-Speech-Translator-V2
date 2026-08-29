@@ -3,11 +3,13 @@ or a bench measurement — see docs/how_it_works.md before changing any."""
 import json as _json
 import os as _os
 
-ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+_HERE = _os.path.dirname(_os.path.abspath(__file__))          # software/src
+ROOT = _os.path.dirname(_os.path.dirname(_HERE))              # repository root
 
 # Per-device identifiers — YOUR receiver's serial and YOUR earbuds' MAC.
-# They live in src/device.json (gitignored; copy src/device.example.json and
-# fill it in — see docs/setup.md) so the repository carries no hardware
+# They live in software/src/device.json (gitignored; copy
+# software/src/device.example.json and fill it in — see guide/setup.md) so
+# the repository carries no hardware
 # identifiers. The defaults below are placeholders and match no real
 # device: with them, capture and the Bluetooth ladder both fail loudly.
 _DEVICE_DEFAULTS = {
@@ -16,7 +18,7 @@ _DEVICE_DEFAULTS = {
     "airpods_mac": "XX:XX:XX:XX:XX:XX",
 }
 try:
-    with open(f"{ROOT}/src/device.json") as _f:
+    with open(f"{_HERE}/device.json") as _f:
         _DEVICE = {**_DEVICE_DEFAULTS, **_json.load(_f)}
 except (OSError, ValueError):
     _DEVICE = dict(_DEVICE_DEFAULTS)
