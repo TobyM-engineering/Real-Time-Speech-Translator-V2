@@ -23,7 +23,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     app = QGuiApplication(sys.argv)
-    with open(f"{ROOT}/ui/languages.json") as f:
+    with open(f"{ROOT}/src/ui/languages.json") as f:
         catalog = json.load(f)
     bridge = Bridge(catalog)
     bridge.logMsg.connect(lambda m: print(m, flush=True))
@@ -32,7 +32,7 @@ def main():
     ctx = engine.rootContext()
     ctx.setContextProperty("bridge", bridge)
     ctx.setContextProperty("langCatalog", catalog)
-    engine.load(f"{ROOT}/ui/signal_live.qml")
+    engine.load(f"{ROOT}/src/ui/signal_live.qml")
     if not engine.rootObjects():
         sys.exit("QML failed to load")
     bridge.start()

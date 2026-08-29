@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build ui/languages.json — every language with all three stages available
+"""Build src/ui/languages.json — every language with all three stages available
 (ASR + NLLB + a TTS voice), ordered: the 8 bench-verified first, then the
 extended set by descending estimated accuracy.
 

@@ -24,7 +24,7 @@ class _R:
 
 
 def make_bridge():
-    with open(f"{ROOT}/ui/languages.json") as f:
+    with open(f"{ROOT}/src/ui/languages.json") as f:
         catalog = json.load(f)
     b = Bridge(catalog, downstream=False)
     b.logs = []

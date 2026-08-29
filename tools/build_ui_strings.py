@@ -2,7 +2,7 @@
 """Pre-translate the device's UI phrases into every catalog language, at build
 time, using the on-device NLLB — the runtime never translates UI strings (D5).
 
-Writes each language's strings into ui/languages.json under "ui", plus a
+Writes each language's strings into src/ui/languages.json under "ui", plus a
 "ui_flags" list naming any output the fragment-style hallucination detector
 found suspect (looser thresholds than the pipeline's: short UI strings expand
 legitimately). Flagged strings are for human review, not automatic rejection.
@@ -30,7 +30,7 @@ STRINGS = {
     "loading_voice": "Loading voice...",
 }
 M = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/models"
-CAT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/ui/languages.json"
+CAT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/src/src/ui/languages.json"
 
 tok = transformers.AutoTokenizer.from_pretrained(M + "/nllb-tokenizer",
                                                  src_lang="eng_Latn")

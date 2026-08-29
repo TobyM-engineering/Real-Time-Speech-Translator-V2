@@ -8,7 +8,7 @@ UNSURE marks languages where these are best-effort conventions that should get
 a native-speaker glance before shipping; they are stored with
 status_confidence = "curated_unverified".
 
-Merges into ui/languages.json. Usage: venv/bin/python tools/curated_status_words.py
+Merges into src/ui/languages.json. Usage: venv/bin/python tools/curated_status_words.py
 """
 import os
 import json
@@ -72,7 +72,7 @@ STATUS = {
 # Best-effort conventions — get a native-speaker glance before shipping these.
 UNSURE = {"sq", "is", "cy", "eu", "ka", "hy", "te", "mr", "ne", "lb", "ml", "lv"}
 
-CAT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/ui/languages.json"
+CAT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/src/src/ui/languages.json"
 catalog = json.load(open(CAT))
 missing = [e["code"] for e in catalog if e["code"] not in STATUS]
 assert not missing, f"catalog languages without curated words: {missing}"

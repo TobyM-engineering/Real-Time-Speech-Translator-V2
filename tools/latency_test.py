@@ -24,7 +24,7 @@ import numpy as np
 
 ROOT = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 M = ROOT / "models"
-DJI_NODE = config.DJI_NODE   # per-device, from config/device.json
+DJI_NODE = config.DJI_NODE   # per-device, from src/device.json
 SR = 16000
 CHUNK = 512  # samples per VAD feed
 os.environ.setdefault("XDG_RUNTIME_DIR", "/run/user/1000")

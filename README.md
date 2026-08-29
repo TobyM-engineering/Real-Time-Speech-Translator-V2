@@ -163,13 +163,13 @@ venv/bin/pip install sherpa-onnx faster-whisper ctranslate2 piper-tts sentencepi
 
 tools/fetch_models.sh                              # ~5 GB of models
 sudo raspi-config nonint do_i2c 0                  # battery gauge
-cp config/device.example.json config/device.json   # then fill in YOUR hardware
+cp src/device.example.json src/device.json   # then fill in YOUR hardware
 tools/run_pipeline.sh                              # READY in ~30 s cold
 ```
 
 Two things that are easy to get wrong and expensive to debug:
 
-- **Find your own hardware identifiers.** `pw-cli ls Node | grep -i Rx` for the receiver, `bluetoothctl devices` for the earbuds. `config/device.json` is gitignored — never commit it.
+- **Find your own hardware identifiers.** `pw-cli ls Node | grep -i Rx` for the receiver, `bluetoothctl devices` for the earbuds. `src/device.json` is gitignored — never commit it.
 - **Never let anything open the earbuds' microphone.** Bluetooth drops to the headset profile and audio collapses to 8 kHz mono for both people. The WirePlumber configuration in [setup.md](docs/setup.md) removes that profile entirely.
 
 Then `venv/bin/python tools/doctor.py` gives a plain-language health check, and `systemctl --user enable translator.service` makes it boot straight into the interface.
@@ -199,13 +199,12 @@ Then `venv/bin/python tools/doctor.py` gives a plain-language health check, and 
 ```
 ├── src/          the pipeline: capture → arbitration → recognition
 │                 → translation → speech synthesis → playback
-├── ui/           QML interface and the language catalog
+│              ui/ — QML interface and the language catalog
+│              device.example.json — your hardware identifiers
 ├── tools/        setup, fetch, health check, benchmarks
 ├── tests/        regression tests
-├── config/       device.example.json — your hardware identifiers
 ├── docs/         documentation and diagrams
-├── hardware/     wiring diagrams
-└── media/        photos and demo video
+└── media/        photos, video and wiring diagrams
 ```
 
 ## Documentation
