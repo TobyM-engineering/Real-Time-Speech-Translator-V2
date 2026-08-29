@@ -8,6 +8,7 @@ append into ONE band per person — no LISTENING/TRANSLATING churn mid-paragraph
 are untouched. Cancel means "stop everything not yet playing"; in stage 2
 nothing plays, so cancel kills the whole group."""
 import json
+import queue
 import threading
 import time
 from html import escape
@@ -114,6 +115,82 @@ class Bridge(QObject):
         self.playback = self._make_playback()
         self.playback.adopt_items(items)
         self.playback.start()
+
+    # -- worker liveness (2026-08-28: a punctuation-only transcript killed
+    # the ASR thread and 21 turns queued into the corpse while the UI
+    # showed a pause-request forever — a silent dead thread is the worst
+    # failure mode this device has) --------------------------------------
+    def worker_threads(self):
+        """name -> Thread, live refs, for the supervisor's watchdog —
+        a restarted worker is monitored, never its corpse."""
+        w = {"asr": self.asr}
+        if self.downstream:
+            w.update(mt=self.mt, tts=self.tts, playback=self.playback)
+        return w
+
+    @staticmethod
+    def _migrate_queue(old, new):
+        """Move the dead worker's pending items to its replacement —
+        queued turns survive the restart instead of vanishing."""
+        n = 0
+        try:
+            while True:
+                new.q.put_nowait(old.q.get_nowait())
+                n += 1
+        except (queue.Empty, AttributeError):
+            pass
+        return n
+
+    def restart_worker(self, name):
+        """Rebuild ONE dead worker in place: fresh thread, same wiring,
+        queue migrated, models reload. Returns True when the replacement
+        thread is alive."""
+        try:
+            if name == "asr":
+                old, self.asr = self.asr, AsrWorker(
+                    self.frontend.registry,
+                    get_lang=lambda p: self._lang[p],
+                    on_log=self._log,
+                    on_transcript=self._on_transcript,
+                    on_ready=self._on_asr_ready,
+                    on_dropped=self._on_dropped)
+                n = self._migrate_queue(old, self.asr)
+                self.asr.start()
+            elif name == "mt" and self.mt:
+                old, self.mt = self.mt, MtWorker(
+                    on_log=self._log,
+                    on_translated=self._on_translated,
+                    on_untranslated=self._on_untranslated)
+                n = self._migrate_queue(old, self.mt)
+                self.mt.start()
+                self.mt.preload_pair(self._lang[config.PERSON_A],
+                                     self._lang[config.PERSON_B])
+            elif name == "tts" and self.tts:
+                old, self.tts = self.tts, TtsWorker(
+                    on_log=self._log, on_synth=self._on_synth,
+                    on_failed=self._on_untranslated,
+                    preload_codes=list(dict.fromkeys(
+                        [self._lang[config.PERSON_A]["code"],
+                         self._lang[config.PERSON_B]["code"]])),
+                    by_code=self._by_code,
+                    on_ready=self._on_tts_ready,
+                    active_codes=lambda: {
+                        self._lang[config.PERSON_A]["code"],
+                        self._lang[config.PERSON_B]["code"]})
+                n = self._migrate_queue(old, self.tts)
+                self.tts.start()
+            elif name == "playback" and self.downstream:
+                self.restart_playback()
+                n = 0
+            else:
+                return False
+            self._log(f"SUP  worker '{name}' rebuilt "
+                      f"({n} queued item(s) migrated)")
+            w = self.worker_threads().get(name)
+            return bool(w is not None and w.is_alive())
+        except Exception as e:
+            self._log(f"FAULT worker restart ({name}) failed: {e!r}")
+            return False
 
     def _on_asr_ready(self):
         self._ready_asr = True

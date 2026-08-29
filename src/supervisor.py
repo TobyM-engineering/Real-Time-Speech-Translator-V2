@@ -53,6 +53,9 @@ class Supervisor(threading.Thread):
         self._batt_next = 0.0
         self._batt_last = None
         self._batt_fault = False
+        self._workers_next = 0.0
+        self._worker_restarting = set()
+        self._worker_last_restart = {}
 
     def stop(self):
         self._stopping.set()
@@ -72,6 +75,67 @@ class Supervisor(threading.Thread):
             self._check_thermal(now)
             self._check_drift(now)
             self._check_battery(now)
+            self._check_workers(now)
+
+    # -- worker-thread liveness (2026-08-28: the ASR thread died on an
+    # IndexError and the device sat "translating…" forever — a silent
+    # dead thread is the worst failure mode this device has) -------------
+    def _check_workers(self, now):
+        if now < self._workers_next:
+            return
+        self._workers_next = now + 5.0
+        for name, w in self.b.worker_threads().items():
+            if w is None or w.is_alive() or name in self._worker_restarting:
+                continue
+            self.log(f"FAULT worker thread '{name}' is DEAD")
+            last = self._worker_last_restart.get(name, -1e9)
+            if now - last < config.WORKER_RESTART_WINDOW_S:
+                self._pipeline_restart(
+                    f"worker '{name}' died again {now - last:.0f}s "
+                    f"after its restart")
+                return
+            self._worker_last_restart[name] = now
+            self._worker_restarting.add(name)
+            self.b.set_fault(f"Translator fault ({name}) — recovering…")
+            threading.Thread(target=self._restart_worker, args=(name,),
+                             name=f"restart-{name}", daemon=True).start()
+
+    def _restart_worker(self, name):
+        ok = False
+        try:
+            ok = self.b.restart_worker(name)
+        except Exception as e:
+            self.log(f"worker restart ({name}) raised: {e!r}")
+        finally:
+            self._worker_restarting.discard(name)
+        if ok:
+            self.log(f"worker '{name}' RESTARTED and alive")
+            if getattr(self.b, "_fault", "").startswith("Translator fault"):
+                self.b.set_fault("")
+        else:
+            self._pipeline_restart(f"worker '{name}' restart failed")
+
+    def _pipeline_restart(self, reason):
+        """Last rung: replace the whole process in place. exec preserves
+        the PID, the launcher's log redirect, and the environment; the
+        capture child and output pipe are stopped first so the new
+        process doesn't fight orphans for the devices."""
+        self.log(f"FAULT escalating to PIPELINE RESTART: {reason}")
+        self.b.set_fault("Restarting translator…")
+        for closer in (lambda: self.b.frontend.stop(),
+                       lambda: self.b.playback and self.b.playback.stop()):
+            try:
+                closer()
+            except Exception:
+                pass
+        time.sleep(0.5)
+        self._exec_restart()
+
+    def _exec_restart(self):
+        import os
+        import sys
+        os.chdir("<REPO-ROOT>")
+        os.execv(sys.executable, [sys.executable, "-m", "src.stage3_main"])
 
     # -- UPS HAT (E) fuel gauge (verified live 2026-08-28) ---------------
     def _check_battery(self, now):

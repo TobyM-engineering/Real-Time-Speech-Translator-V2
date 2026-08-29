@@ -226,6 +226,10 @@ NONSPEECH_MAX_WORDS = 2
 # real speech. Empty on accepted audio >= FALLBACK_MIN_S gets ONE decode
 # by the best other engine (loudly logged); still empty at >= GAP_MIN_S
 # raises the gap tone + notice instead of dying silently.
+# A worker that dies twice within this window has a persistent cause —
+# stop rebuilding it and restart the whole pipeline (2026-08-28 watchdog).
+WORKER_RESTART_WINDOW_S = 300.0
+
 ASR_EMPTY_FALLBACK_MIN_S = 0.5
 ASR_UNREADABLE_GAP_MIN_S = 1.0
 
