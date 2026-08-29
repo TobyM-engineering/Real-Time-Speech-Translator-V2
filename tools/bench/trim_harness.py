@@ -4,6 +4,7 @@ and verify the completed GATE_TRIM path (2026-08-28): the playback-free
 remainder is sliced, re-ratio-tested, accepted, and decodes to the expected
 words. Prints full-clip decode vs kept decode so the trimmed-away text is
 visible. Usage: trim_harness.py <wav> <cover_from_s> <cover_to_s>"""
+import os
 import sys
 import threading
 import time
@@ -11,7 +12,8 @@ import wave
 
 import numpy as np
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 import src.frontend as F
 from src import config
 

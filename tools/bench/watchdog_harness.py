@@ -5,6 +5,7 @@ the worker (queue migrated), clears the fault, and decodes again. Then
 kill it a second time inside WORKER_RESTART_WINDOW_S and verify the
 escalation to pipeline restart fires (exec intercepted, not executed).
 BT recovery is stubbed out so the ladder doesn't fight the test."""
+import os
 import sys
 import threading
 import time
@@ -12,7 +13,8 @@ import wave
 
 import numpy as np
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 import src.frontend as F
 from src import config
 

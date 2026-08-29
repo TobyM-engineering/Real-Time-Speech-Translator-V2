@@ -1,8 +1,28 @@
 """Translator V2 pipeline configuration. Every number traces to the design doc
-or a bench measurement — see CLAUDE.md before changing any of them."""
+or a bench measurement — see docs/how_it_works.md before changing any."""
+import json as _json
+import os as _os
 
-DJI_NODE = ("alsa_input.usb-DJI_Technology_Co.__Ltd._Wireless_Mic_Rx_"
-            "<RECEIVER-SERIAL>-01.analog-stereo")
+ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+
+# Per-device identifiers — YOUR receiver's serial and YOUR earbuds' MAC.
+# They live in device.json (gitignored; copy device.example.json and fill
+# it in — see docs/setup.md) so the repository carries no hardware
+# identifiers. The defaults below are placeholders and match no real
+# device: with them, capture and the Bluetooth ladder both fail loudly.
+_DEVICE_DEFAULTS = {
+    "dji_node": ("alsa_input.usb-DJI_Technology_Co.__Ltd._Wireless_Mic_Rx_"
+                 "XXXXXXXXXXXX-01.analog-stereo"),
+    "airpods_mac": "XX:XX:XX:XX:XX:XX",
+}
+try:
+    with open(f"{ROOT}/device.json") as _f:
+        _DEVICE = {**_DEVICE_DEFAULTS, **_json.load(_f)}
+except (OSError, ValueError):
+    _DEVICE = dict(_DEVICE_DEFAULTS)
+
+DJI_NODE = _DEVICE["dji_node"]
+AIRPODS_MAC = _DEVICE["airpods_mac"]
 
 SR = 16000            # capture rate (PipeWire resamples the DJI's 48 k)
 CHUNK = 512           # samples per block = 32 ms; Silero's native chunk
@@ -199,7 +219,7 @@ MT_RATIO_FLAG = 1.9
 # translations (en<->es): ratio max 2.00, score min -0.26 -> opus ratio
 # flag 2.2 (NLLB keeps 1.9), shared score floor -0.40 keeps margin.
 MT_RATIO_FLAG_OPUS = 2.2
-OPUS_DIR = "<REPO-ROOT>/models/opus"
+OPUS_DIR = f"{ROOT}/models/opus"
 
 # Fall-through gap signal (2026-08-27): when a turn yields NO audio (all
 # sentences discarded / nothing translatable / TTS failure), the listener
@@ -270,5 +290,5 @@ BACKLOG_SOFT_S = 15.0
 BACKLOG_HARD_S = 30.0
 BACKLOG_POLL_MS = 500
 
-MODELS = "<REPO-ROOT>/models"
+MODELS = f"{ROOT}/models"
 

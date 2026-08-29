@@ -10,6 +10,7 @@ legitimately). Flagged strings are for human review, not automatic rejection.
 Quality over speed: beam_size=4 — this runs once per build, latency irrelevant.
 Usage: venv/bin/python tools/build_ui_strings.py
 """
+import os
 import json
 import time
 
@@ -28,8 +29,8 @@ STRINGS = {
     "one_at_a_time": "One at a time, please.",
     "loading_voice": "Loading voice...",
 }
-M = "<REPO-ROOT>/models"
-CAT = "<REPO-ROOT>/ui/languages.json"
+M = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/models"
+CAT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/ui/languages.json"
 
 tok = transformers.AutoTokenizer.from_pretrained(M + "/nllb-tokenizer",
                                                  src_lang="eng_Latn")

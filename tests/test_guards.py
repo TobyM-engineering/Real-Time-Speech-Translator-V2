@@ -4,13 +4,15 @@ their own failure modes.
 
 Run:  venv/bin/python -m unittest tests.test_guards
 """
+import os
 import json
 import sys
 import time
 import types
 import unittest
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 from src.mt_worker import MtWorker
 from src.pipeline_core import Bridge
 
@@ -22,7 +24,7 @@ class _R:
 
 
 def make_bridge():
-    with open("<REPO-ROOT>/ui/languages.json") as f:
+    with open(f"{ROOT}/ui/languages.json") as f:
         catalog = json.load(f)
     b = Bridge(catalog, downstream=False)
     b.logs = []

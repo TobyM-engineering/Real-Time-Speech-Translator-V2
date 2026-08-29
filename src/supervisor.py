@@ -24,7 +24,7 @@ import time
 
 from src import battery, config
 
-_MAC = "<EARBUDS-MAC>"
+_MAC = config.AIRPODS_MAC   # per-device, from device.json
 
 
 def _run(cmd, timeout=15):
@@ -181,7 +181,7 @@ class Supervisor(threading.Thread):
     def _exec_restart(self):
         import os
         import sys
-        os.chdir("<REPO-ROOT>")
+        os.chdir(config.ROOT)
         os.execv(sys.executable, [sys.executable, "-m", "src.stage3_main"])
 
     # -- UPS HAT (E) fuel gauge (verified live 2026-08-28) ---------------

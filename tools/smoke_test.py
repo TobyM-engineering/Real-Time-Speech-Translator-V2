@@ -6,6 +6,7 @@ The input should be a Test-A-style recording (left channel = TX1, English speech
 Each stage is independent: a failure is reported and the rest still run.
 Models are loaded with 3 threads (leave one core for PipeWire/UI, per CLAUDE.md).
 """
+import os
 import gc
 import subprocess
 import sys
@@ -16,7 +17,7 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path("<REPO-ROOT>")
+ROOT = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 M = ROOT / "models"
 IN_WAV = Path(sys.argv[1])
 OUT = Path(sys.argv[2])

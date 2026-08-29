@@ -22,10 +22,9 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path("<REPO-ROOT>")
+ROOT = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 M = ROOT / "models"
-DJI_NODE = ("alsa_input.usb-DJI_Technology_Co.__Ltd._Wireless_Mic_Rx_"
-            "<RECEIVER-SERIAL>-01.analog-stereo")
+DJI_NODE = config.DJI_NODE   # per-device, from device.json
 SR = 16000
 CHUNK = 512  # samples per VAD feed
 os.environ.setdefault("XDG_RUNTIME_DIR", "/run/user/1000")

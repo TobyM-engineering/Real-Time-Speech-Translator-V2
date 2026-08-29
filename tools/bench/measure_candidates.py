@@ -2,17 +2,18 @@
 1. SenseVoice vs whisper base on the SAME English mic audio (tonight's dumps)
 2. NLLB intra_threads 4 vs the pipeline's 3 (same texts as profile_es_fr)
 No pipeline code touched."""
+import os
 import sys
 import time
 import wave
 
 import numpy as np
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 from src import config
 
-D = ("/tmp/claude-1000/-home-<USER>-translator/"
-     "234eaa0c-1c91-4b1d-a0df-178bfc6efcd6/scratchpad")
+D = "/tmp/translator_dumps"
 WAVS = ["asr_turn1.wav", "asr_turn3.wav", "asr_turn4.wav"]  # 1.2s, 1.4s, 10.3s
 
 

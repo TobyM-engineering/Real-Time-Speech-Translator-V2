@@ -5,18 +5,20 @@ Run:  venv/bin/python -m unittest tests.test_d5_honesty
 Logic-level: Bridge without start() (no models, no threads, no Qt loop),
 _lag_for stubbed, _poll_backlog driven by hand.
 """
+import os
 import json
 import sys
 import time
 import unittest
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 from src import config
 from src.pipeline_core import Bridge
 
 
 def make_bridge():
-    with open("<REPO-ROOT>/ui/languages.json") as f:
+    with open(f"{ROOT}/ui/languages.json") as f:
         catalog = json.load(f)
     b = Bridge(catalog, downstream=False)
     b._lag_for = lambda p: b.test_lag

@@ -1,6 +1,7 @@
 """A/B: whisper base vs SenseVoice on English, all current dump clips.
 Times, transcripts, punctuation presence, and the full en-path compute
 ratio (ASR+MT+TTS per second of speech) on the longest clips."""
+import os
 import re
 import sys
 import time
@@ -8,11 +9,11 @@ import wave
 
 import numpy as np
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 from src import config
 
-D = ("/tmp/claude-1000/-home-<USER>-translator/"
-     "234eaa0c-1c91-4b1d-a0df-178bfc6efcd6/scratchpad")
+D = "/tmp/translator_dumps"
 CLIPS = [f"asr_turn{i}.wav" for i in range(1, 9)]
 _SPLIT = re.compile(r"(?<=[.!?。！？…])\s+")
 

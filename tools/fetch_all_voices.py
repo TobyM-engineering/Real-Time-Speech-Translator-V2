@@ -5,14 +5,15 @@ piper-voices repo index.
 
 Usage: venv/bin/python tools/fetch_all_voices.py <piper_voices.json>
 """
+import os
 import json
 import pathlib
 import subprocess
 import sys
 
-M = pathlib.Path("<REPO-ROOT>/models/piper")
+M = pathlib.Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/models/piper")
 M.mkdir(parents=True, exist_ok=True)
-catalog = json.load(open("<REPO-ROOT>/ui/languages.json"))
+catalog = json.load(open(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/ui/languages.json"))
 index = json.load(open(sys.argv[1]))
 
 need = [e["ttsVoice"] for e in catalog if e["tts"] == "piper"]

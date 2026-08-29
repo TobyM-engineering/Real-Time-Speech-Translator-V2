@@ -2,10 +2,12 @@
 
 Run:  venv/bin/python -m unittest tests.test_asr_worker
 """
+import os
 import sys
 import unittest
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
 from src.asr_worker import _last_content_word
 
 

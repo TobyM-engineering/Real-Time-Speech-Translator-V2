@@ -1,5 +1,6 @@
 """Parakeet TDT 0.6B v3 int8 (sherpa-onnx) vs whisper base int8:
 load time, resident RAM, RTF per clip, WER vs known ground truth."""
+import os
 import json
 import re
 import sys
@@ -8,12 +9,12 @@ import wave
 
 import numpy as np
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 from src import config
 
-S = ("/tmp/claude-1000/-home-<USER>-translator/"
-     "234eaa0c-1c91-4b1d-a0df-178bfc6efcd6/scratchpad")
-P = "<REPO-ROOT>/models/parakeet-tdt-v3-int8"
+S = "/tmp/translator_dumps"
+P = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + "/models/parakeet-tdt-v3-int8"
 meta = json.load(open(f"{S}/bench_meta.json"))
 
 

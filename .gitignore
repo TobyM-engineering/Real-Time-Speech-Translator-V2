@@ -9,3 +9,4 @@ asr_turn*.wav
 .env
 nohup.out
 logs/
+device.json

@@ -4,6 +4,7 @@ simultaneous talk is deferred, waits for the dominant speaker, releases as a
 [deferred-overlap] turn, and decodes. Scenario 2 verifies the depth cap.
 Voices: real clips (A = live dump English, B = bench Spanish), cross-mixed so
 the weak side lands in the ambiguous band."""
+import os
 import sys
 import threading
 import time
@@ -11,7 +12,8 @@ import wave
 
 import numpy as np
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 import src.frontend as F
 from src import config
 

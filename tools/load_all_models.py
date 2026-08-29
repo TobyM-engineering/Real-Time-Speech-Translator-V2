@@ -6,10 +6,11 @@ sleeps forever (kill to release).
 
 Usage: venv/bin/python tools/load_all_models.py <flag_file>
 """
+import os
 import sys
 import time
 
-M = "<REPO-ROOT>/models"
+M = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/models"
 
 
 def rss_mb():

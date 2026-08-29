@@ -20,7 +20,7 @@ import sys
 import tempfile
 import time
 
-ROOT = "<REPO-ROOT>"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = f"{ROOT}/models/opus"
 UA = "TranslatorV2-opus-fetcher/1.0 (offline translator bench device)"
 SOLID9 = ["en", "zh", "ja", "es", "ko", "pt", "it", "de", "fr", "ru"]

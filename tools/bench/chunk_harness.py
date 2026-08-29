@@ -1,6 +1,7 @@
 """Offline harness: stream real dump WAVs through the REAL AudioFrontend
 (fake capture) and report where the mid-speech chunk closer cuts, then
 whisper-decode every chunk to judge cut quality. No live audio involved."""
+import os
 import sys
 import threading
 import time
@@ -8,12 +9,12 @@ import wave
 
 import numpy as np
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 import src.frontend as F
 from src import config
 
-D = ("/tmp/claude-1000/-home-<USER>-translator/"
-     "234eaa0c-1c91-4b1d-a0df-178bfc6efcd6/scratchpad")
+D = "/tmp/translator_dumps"
 
 
 class FakeCap:

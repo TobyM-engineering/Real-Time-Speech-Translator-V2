@@ -1,9 +1,11 @@
 """One-off: profile MT and TTS for es vs fr on identical English input,
 using exactly the pipeline's invocations (mt_worker/tts_worker)."""
+import os
 import sys
 import time
 
-sys.path.insert(0, "<REPO-ROOT>")
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, ROOT)
 import numpy as np
 import re
 

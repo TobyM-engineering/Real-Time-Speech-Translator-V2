@@ -13,6 +13,7 @@ Modes:
 Usage: venv/bin/python tools/make_testb_wav.py <mode> <out.wav>
 Play:  pw-play --target <airpods sink id> <out.wav>
 """
+import os
 import sys
 import wave
 
@@ -20,7 +21,7 @@ import numpy as np
 
 from piper import PiperVoice
 
-M = "<REPO-ROOT>/models"
+M = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/models"
 EN = ("Left ear. This is the English channel. You should hear only English in "
       "this ear. If you can hear Spanish, the channels are leaking. "
       "Counting: one, two, three, four, five.")
