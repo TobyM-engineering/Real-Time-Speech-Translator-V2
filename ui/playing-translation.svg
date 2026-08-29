@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" width="720" height="1280" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<title>A translation is playing in this ear</title>
+<rect width="720" height="1280" fill="black"/>
+<g transform="rotate(180 360 317)"><rect x="0" y="0" width="720" height="634" fill="#101216"/>
+<rect x="20" y="20" width="233" height="80" rx="16" fill="#26FFFFFF"/>
+<text x="48" y="72" font-size="32" font-weight="700" fill="white">🇪🇸  Español</text>
+<rect x="584" y="16" width="120" height="120" rx="60" fill="#26FFFFFF"/>
+<text x="644" y="96" font-size="52" text-anchor="middle">🔇</text>
+<circle cx="360" cy="232" r="69.5" fill="none" stroke="#3A3D42" stroke-width="11" opacity="0.25"/>
+<text x="360" y="463" font-size="92" font-weight="700" fill="white" text-anchor="middle" opacity="0.4">Listo</text></g>
+<rect x="0" y="634" width="720" height="12" fill="black"/>
+<circle cx="360" cy="640" r="7" fill="#2EE6A8"/>
+<circle cx="264" cy="640" r="6" fill="#2EE6A8"/>
+<circle cx="456" cy="640" r="6" fill="#2EE6A8"/>
+<g transform="translate(0,646)"><rect x="0" y="0" width="720" height="634" fill="#0E2F52"/>
+<rect x="20" y="20" width="233" height="80" rx="16" fill="#26FFFFFF"/>
+<text x="48" y="72" font-size="32" font-weight="700" fill="white">🇬🇧  English</text>
+<rect x="584" y="16" width="120" height="120" rx="60" fill="#26FFFFFF"/>
+<text x="644" y="96" font-size="52" text-anchor="middle">🔇</text>
+<circle cx="360" cy="232" r="69.5" fill="none" stroke="#5AB0FF" stroke-width="11" opacity="0.95"/>
+<text x="360" y="463" font-size="92" font-weight="700" fill="white" text-anchor="middle" opacity="1.0">Speaking</text></g>
+</svg>

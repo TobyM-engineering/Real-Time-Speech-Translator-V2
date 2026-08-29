@@ -19,7 +19,7 @@ from src.pipeline_core import Bridge
 
 
 def make_bridge():
-    with open(f"{REPO}/ui/languages.json") as f:
+    with open(f"{REPO}/software/ui/languages.json") as f:
         catalog = json.load(f)
     b = Bridge(catalog, downstream=False)
     b._lag_for = lambda p: b.test_lag

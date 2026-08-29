@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" width="720" height="1280" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<title>Microphone check panel</title>
+<rect width="720" height="1280" fill="black"/>
+<rect x="0" y="0" width="720" height="634" fill="#101216"/>
+<rect x="0" y="646" width="720" height="634" fill="#101216"/>
+<rect x="0" y="634" width="720" height="12" fill="black"/>
+<circle cx="360" cy="640" r="7" fill="#2EE6A8"/>
+<rect x="28" y="278" width="664" height="724" rx="20" fill="#0D0F13" stroke="#48FFFFFF" stroke-width="2"/>
+<text x="56" y="334" font-size="28" font-weight="700" fill="white">MIC CHECK</text>
+<text x="664" y="334" font-size="24" fill="#99FFFFFF" text-anchor="end">tap anywhere to close  ✕</text>
+<text x="56" y="400" font-size="24" font-weight="700" fill="#C7CBD1">TX1 · black · A</text>
+<text x="664" y="400" font-size="24" fill="white" text-anchor="end">speech -22.4 dBFS</text>
+<rect x="56" y="416" width="608" height="48" rx="8" fill="#1A1D22" stroke="#2A2E34"/>
+<rect x="56" y="416" width="383" height="48" rx="8" fill="#8CFFFFFF"/>
+<rect x="439" y="410" width="3" height="60" fill="#F5C542"/>
+<text x="56" y="494" font-size="20" fill="#6A7078">-60</text>
+<text x="256" y="494" font-size="20" fill="#6A7078">-40</text>
+<text x="457" y="494" font-size="20" fill="#6A7078">-20</text>
+<text x="664" y="494" font-size="20" fill="#6A7078" text-anchor="end">0 dBFS</text>
+<text x="56" y="522" font-size="22" fill="#9AA3B2">background -46.0 · gap 23.6 dB</text>
+<text x="56" y="610" font-size="24" font-weight="700" fill="#C7CBD1">TX2 · grey · B</text>
+<text x="664" y="610" font-size="24" fill="white" text-anchor="end">speech -24.1 dBFS</text>
+<rect x="56" y="626" width="608" height="48" rx="8" fill="#1A1D22" stroke="#2A2E34"/>
+<rect x="56" y="626" width="364" height="48" rx="8" fill="#8CFFFFFF"/>
+<rect x="420" y="620" width="3" height="60" fill="#F5C542"/>
+<text x="56" y="704" font-size="20" fill="#6A7078">-60</text>
+<text x="256" y="704" font-size="20" fill="#6A7078">-40</text>
+<text x="457" y="704" font-size="20" fill="#6A7078">-20</text>
+<text x="664" y="704" font-size="20" fill="#6A7078" text-anchor="end">0 dBFS</text>
+<text x="56" y="732" font-size="22" fill="#9AA3B2">background -45.2 · gap 21.1 dB</text>
+<rect x="56" y="806" width="608" height="2" fill="#22262C"/>
+<text x="56" y="852" font-size="24" font-weight="700" fill="#C7CBD1">Battery</text>
+<text x="664" y="852" font-size="24" fill="#2EE6A8" text-anchor="end">100%  ·  charging</text>
+<text x="56" y="890" font-size="22" fill="#9AA3B2">pack 16.49 V  ·  lowest cell 4090 mV</text>
+<text x="56" y="946" font-size="22" fill="#2EE6A8">Both microphones are in the verified band.</text>
+</svg>

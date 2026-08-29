@@ -72,7 +72,7 @@ STATUS = {
 # Best-effort conventions — get a native-speaker glance before shipping these.
 UNSURE = {"sq", "is", "cy", "eu", "ka", "hy", "te", "mr", "ne", "lb", "ml", "lv"}
 
-CAT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + "/ui/languages.json"
+CAT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + "/software/ui/languages.json"
 catalog = json.load(open(CAT))
 missing = [e["code"] for e in catalog if e["code"] not in STATUS]
 assert not missing, f"catalog languages without curated words: {missing}"

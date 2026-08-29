@@ -30,7 +30,7 @@ STRINGS = {
     "loading_voice": "Loading voice...",
 }
 M = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/models"
-CAT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + "/ui/languages.json"
+CAT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) + "/software/ui/languages.json"
 
 tok = transformers.AutoTokenizer.from_pretrained(M + "/nllb-tokenizer",
                                                  src_lang="eng_Latn")
