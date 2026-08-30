@@ -69,7 +69,7 @@ The Noto fonts matter: without them the language picker renders Chinese, Japanes
 software/tools/fetch_models.sh
 ```
 
-Idempotent — safe to re-run, and it resumes. Fetches about 5 GB: Silero VAD, SenseVoice, Parakeet TDT v3, whisper base, NLLB-200-distilled-600M, and the Piper voices.
+Idempotent — safe to re-run, and it resumes. Fetches **about 6 GB**: Silero VAD, SenseVoice, Parakeet TDT v3, whisper base, NLLB-200-distilled-600M, and the Piper voices.
 
 For the fast translation path, also fetch the opus-mt pairs for the languages you actually use:
 
@@ -77,7 +77,9 @@ For the fast translation path, also fetch the opus-mt pairs for the languages yo
 venv/bin/python software/tools/fetch_opus_pairs.py --solid9
 ```
 
-That is ~4 GB for 45 directed pairs among the nine strongest languages.
+That is **about 4 GB** for 45 directed pairs among the ten languages it covers, bringing the models directory to **about 10 GB in total**.
+
+**Sizing the card:** models are about 10 GB and the virtual environment about 1 GB. Measured on the build this repository documents, the whole card — operating system, models, environment, repository and accumulated session logs — uses **about 20 GB of a 64 GB card**. Skipping the opus pairs saves 4 GB, at the cost of slower translation on every pair.
 
 > **Licences.** These models are not part of this repository and each carries its own terms — see [Models and licences](../README.md#models-and-licences) in the README. NLLB-200 in particular is CC-BY-NC 4.0, so the device as configured is not for commercial use. Any pair without an opus model falls back to NLLB automatically — slower, but it always works, and the fallback is logged rather than silent.
 
