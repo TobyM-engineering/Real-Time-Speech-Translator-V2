@@ -101,6 +101,8 @@ Recognition is routed per language — Parakeet for English, SenseVoice for Chin
 
 The split is the point. **The three recognition engines all stay resident whatever languages you pick**, because each covers a different part of the catalogue and switching mid-conversation has to be instant. **Translation and speech load only what the chosen pair needs** — 2 of 45 opus models, 2 of 51 voices — which is why adding languages to the picker costs disk but not memory, and why the loaded count is nine rather than three.
 
+Two of those 51 voices — `en_US-lessac-medium` and `pt_BR-faber-medium`, 63 MB each — are the originals chosen by hand before the language catalogue was generated; the catalogue later picked `en_US-sam` and `pt_BR-cadu` instead, so they sit on the card unreferenced and never load.
+
 Figures measured on the running device: `du` for the card, resident set size for the memory.
 
 The screen is split in two, one half rotated 180°, each showing a state colour, the live transcript and a mute control. **The transcript is also a cancel button** — text appears well before audio does, so a mis-hear can be killed before the other person hears it.
