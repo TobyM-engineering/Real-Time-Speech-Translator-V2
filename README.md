@@ -23,7 +23,7 @@ No phone, no app, no internet, no API key.
 
 **[English to Spanish, spoken live](media/demo_translation.mp4)** — one person speaks English, the transcript and the Spanish translation appear on screen, and the translation reaches the other earbud a couple of seconds later.
 
-*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
+*Audio here is what the earbud heard — added to the recording, since the camera could not.*
 
 # 🌍 Project Background
 

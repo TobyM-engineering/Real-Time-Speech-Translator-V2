@@ -78,7 +78,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 **[Watch: starting a turn and cancelling it before it plays](../media/demo_cancel.mp4)** — the transcript appearing, the band tapped, and nothing reaching the other ear.
 
-*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
+*Audio here is what the earbud heard — added to the recording, since the camera could not.*
 
 ---
 
@@ -154,7 +154,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 **[Watch: changing the language pair, then speaking English to French](../media/demo_language_change.mp4)** — the picker opening, a new language chosen on the touchscreen, and the next turn coming back in that language.
 
-*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
+*Audio here is what the earbud heard — added to the recording, since the camera could not.*
 
 > **Known gap:** the grid scrolls but draws **no scrollbar** — the source has none, so nothing on screen tells you the list continues past the cut edge. The partial row is the only clue. Worth adding.
 

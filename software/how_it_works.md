@@ -111,7 +111,7 @@ Opus is **~7× faster on identical input at parity quality**, so the active pair
 
 **[Watch: an English to French turn](../media/demo_french.mp4)** — a second language pair running the same path.
 
-*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
+*Audio here is what the earbud heard — added to the recording, since the camera could not.*
 
 Two safeguards sit around translation, both built from measurements:
 

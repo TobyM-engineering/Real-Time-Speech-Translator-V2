@@ -140,6 +140,6 @@ It matters more than it looks: a genuinely offline device has no NTP, so with no
 - **RTC battery → the `BAT` JST connector** (not fitted in this build)
 - **Mains → the UPS HAT's USB-C input** (not the Pi's, once the HAT is fitted)
 
-<img src="../media/wiring_diagram.png" alt="Full wiring diagram of the build" width="100%">
+<img src="diagrams/wiring-diagram.svg" alt="Connection diagram showing every physical link between components and what each carries" width="100%">
 
-Every connection above, drawn: the display ribbon at `CAM/DISP 0`, display power on GPIO pins 2 and 6, the fan header, the receiver on a black USB 2.0 port, and mains entering at the UPS HAT rather than the Pi.
+Every connection above, drawn — and colour-coded by what it carries. Most of it was confirmed against the running device; the footnotes say which parts come from the build record instead, and which two details are deliberately left generic because nothing records them.

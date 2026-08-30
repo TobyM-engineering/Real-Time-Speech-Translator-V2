@@ -23,7 +23,7 @@ All of them surface through the same on-screen fault pill, and every transition 
 
 **[Watch: the centre button, battery percentage and live microphone levels](../media/demo_levels_battery.mp4)** — the panel that answers "is the hardware actually working?" before any log is opened.
 
-*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
+*Audio here is what the earbud heard — added to the recording, since the camera could not.*
 
 ---
 
