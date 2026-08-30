@@ -68,7 +68,7 @@ What it costs, honestly: roughly **$400** in parts instead of $65, and 2.5–4 s
 - **Fan → the 4-pin `FAN` header** · **DJI receiver → a black USB 2.0 port**, via the 90° adapter
 - **Mains → the UPS HAT's USB-C input**, not the Pi's
 
-<img src="hardware/diagrams/wiring-diagram.svg" alt="Connection diagram showing every physical link between components and what each carries" width="430">
+<img src="hardware/diagrams/wiring-diagram.svg" alt="Connection diagram showing every physical link between components and what each carries" width="680">
 
 Every physical link and what it carries — **[full size, with notes on what was verified](hardware/diagrams/wiring-diagram.svg)**.
 
