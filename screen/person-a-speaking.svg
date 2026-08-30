@@ -3,7 +3,7 @@
 <rect width="720" height="1280" fill="black"/>
 <g transform="rotate(180 360 317)"><rect x="0" y="0" width="720" height="634" fill="#101216"/>
 <rect x="20" y="20" width="233" height="80" rx="16" fill="#26FFFFFF"/>
-<text x="48" y="72" font-size="32" font-weight="700" fill="white">🇪🇸  Español</text>
+<defs><clipPath id="flagclip84958"><rect x="48" y="42" width="42" height="30" rx="2"/></clipPath></defs><g clip-path="url(#flagclip84958)"><rect x="48" y="42" width="42" height="30" fill="#AA151B"/><rect x="48" y="49.5" width="42" height="15" fill="#F1BF00"/><rect x="48" y="42" width="42" height="30" rx="2" fill="none" stroke="#00000055"/></g><text x="104" y="72" font-size="32" font-weight="700" fill="white">Español</text>
 <rect x="584" y="16" width="120" height="120" rx="60" fill="#26FFFFFF"/>
 <text x="644" y="96" font-size="52" text-anchor="middle">🔇</text>
 <circle cx="360" cy="232" r="69.5" fill="none" stroke="#3A3D42" stroke-width="11" opacity="0.25"/>
@@ -14,7 +14,7 @@
 <circle cx="456" cy="640" r="6" fill="#2EE6A8"/>
 <g transform="translate(0,646)"><rect x="0" y="0" width="720" height="634" fill="#0B4030"/>
 <rect x="20" y="20" width="233" height="80" rx="16" fill="#26FFFFFF"/>
-<text x="48" y="72" font-size="32" font-weight="700" fill="white">🇬🇧  English</text>
+<defs><clipPath id="flagclip37394"><rect x="48" y="42" width="42" height="30" rx="2"/></clipPath></defs><g clip-path="url(#flagclip37394)"><rect x="48" y="42" width="42" height="30" fill="#012169"/><path d="M48 42 L90 72 M90 42 L48 72" stroke="#fff" stroke-width="9"/><path d="M48 42 L90 72 M90 42 L48 72" stroke="#C8102E" stroke-width="4.5"/><rect x="48" y="51.9" width="42" height="10.2" fill="#fff"/><rect x="63.9" y="42" width="10.2" height="30" fill="#fff"/><rect x="48" y="54" width="42" height="6" fill="#C8102E"/><rect x="66" y="42" width="6" height="30" fill="#C8102E"/><rect x="48" y="42" width="42" height="30" rx="2" fill="none" stroke="#00000055"/></g><text x="104" y="72" font-size="32" font-weight="700" fill="white">English</text>
 <rect x="584" y="16" width="120" height="120" rx="60" fill="#26FFFFFF"/>
 <text x="644" y="96" font-size="52" text-anchor="middle">🔇</text>
 <circle cx="360" cy="232" r="69.5" fill="none" stroke="#2EE6A8" stroke-width="11" opacity="0.95"/>

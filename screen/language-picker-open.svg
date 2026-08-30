@@ -3,7 +3,7 @@
 <rect width="720" height="1280" fill="black"/>
 <g transform="rotate(180 360 317)"><rect x="0" y="0" width="720" height="634" fill="#101216"/>
 <rect x="20" y="20" width="233" height="80" rx="16" fill="#26FFFFFF"/>
-<text x="48" y="72" font-size="32" font-weight="700" fill="white">🇪🇸  Español</text>
+<defs><clipPath id="flagclip84958"><rect x="48" y="42" width="42" height="30" rx="2"/></clipPath></defs><g clip-path="url(#flagclip84958)"><rect x="48" y="42" width="42" height="30" fill="#AA151B"/><rect x="48" y="49.5" width="42" height="15" fill="#F1BF00"/><rect x="48" y="42" width="42" height="30" rx="2" fill="none" stroke="#00000055"/></g><text x="104" y="72" font-size="32" font-weight="700" fill="white">Español</text>
 <rect x="584" y="16" width="120" height="120" rx="60" fill="#26FFFFFF"/>
 <text x="644" y="96" font-size="52" text-anchor="middle">🔇</text>
 <circle cx="360" cy="232" r="69.5" fill="none" stroke="#3A3D42" stroke-width="11" opacity="0.25"/>
@@ -16,59 +16,59 @@
 <rect x="0" y="0" width="720" height="634" fill="#101216"/>
 <rect x="0" y="0" width="720" height="634" fill="#0E1013"/>
 <rect x="15" y="15" width="340" height="112" rx="12" fill="#0F6B5C" stroke="#15866F" stroke-width="2"/>
-<text x="31" y="61" font-size="30">🇬🇧</text>
+<defs><clipPath id="flagclip57142"><rect x="31" y="35" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip57142)"><rect x="31" y="35" width="34" height="24" fill="#012169"/><path d="M31 35 L65 59 M65 35 L31 59" stroke="#fff" stroke-width="7.2"/><path d="M31 35 L65 59 M65 35 L31 59" stroke="#C8102E" stroke-width="3.6"/><rect x="31" y="42.92" width="34" height="8.16" fill="#fff"/><rect x="43.92" y="35" width="8.16" height="24" fill="#fff"/><rect x="31" y="44.6" width="34" height="4.8" fill="#C8102E"/><rect x="45.6" y="35" width="4.8" height="24" fill="#C8102E"/><rect x="31" y="35" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="71" y="61" font-size="26" font-weight="700" fill="white">English</text>
 <text x="295" y="59" font-size="20" fill="#2EE6A8">✓</text>
 <text x="341" y="119" font-size="22" fill="#2EE6A8" text-anchor="end">~6%</text>
 <rect x="365" y="15" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="381" y="61" font-size="30">🇨🇳</text>
+<defs><clipPath id="flagclip44098"><rect x="381" y="35" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip44098)"><rect x="381" y="35" width="34" height="24" fill="#EE1C25"/><circle cx="388.48" cy="42.2" r="3.6" fill="#FFFF00"/><circle cx="393.92" cy="38.36" r="1.32" fill="#FFFF00"/><circle cx="396.64" cy="41.72" r="1.32" fill="#FFFF00"/><circle cx="396.64" cy="46.04" r="1.32" fill="#FFFF00"/><circle cx="393.92" cy="49.4" r="1.32" fill="#FFFF00"/><rect x="381" y="35" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="421" y="61" font-size="26" font-weight="700" fill="white">中文</text>
 <text x="645" y="59" font-size="20" fill="#2EE6A8">✓</text>
 <text x="691" y="119" font-size="22" fill="#2EE6A8" text-anchor="end">~6%</text>
 <rect x="15" y="137" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="31" y="183" font-size="30">🇯🇵</text>
+<defs><clipPath id="flagclip24188"><rect x="31" y="157" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip24188)"><rect x="31" y="157" width="34" height="24" fill="#fff"/><circle cx="48" cy="169" r="7.2" fill="#BC002D"/><rect x="31" y="157" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="71" y="183" font-size="26" font-weight="700" fill="white">日本語</text>
 <text x="295" y="181" font-size="20" fill="#2EE6A8">✓</text>
 <text x="341" y="241" font-size="22" fill="#2EE6A8" text-anchor="end">~6%</text>
 <rect x="365" y="137" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="381" y="183" font-size="30">🇪🇸</text>
+<defs><clipPath id="flagclip80689"><rect x="381" y="157" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip80689)"><rect x="381" y="157" width="34" height="24" fill="#AA151B"/><rect x="381" y="163" width="34" height="12" fill="#F1BF00"/><rect x="381" y="157" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="421" y="183" font-size="26" font-weight="700" fill="white">Español</text>
 <text x="645" y="181" font-size="20" fill="#2EE6A8">✓</text>
 <text x="691" y="241" font-size="22" fill="#2EE6A8" text-anchor="end">~7%</text>
 <rect x="15" y="259" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="31" y="305" font-size="30">🇰🇷</text>
+<defs><clipPath id="flagclip41923"><rect x="31" y="279" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip41923)"><rect x="31" y="279" width="34" height="24" fill="#fff"/><path d="M42.72 291 a 5.28 5.28 0 0 1 10.56 0 Z" fill="#CD2E3A"/><path d="M42.72 291 a 5.28 5.28 0 0 0 10.56 0 Z" fill="#0047A0"/><rect x="31" y="279" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="71" y="305" font-size="26" font-weight="700" fill="white">한국어</text>
 <text x="341" y="363" font-size="22" fill="#2EE6A8" text-anchor="end">~8%</text>
 <rect x="365" y="259" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="381" y="305" font-size="30">🇵🇹</text>
+<defs><clipPath id="flagclip90201"><rect x="381" y="279" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip90201)"><rect x="381" y="279" width="34" height="24" fill="#DA291C"/><rect x="381" y="279" width="13.6" height="24" fill="#046A38"/><circle cx="394.6" cy="291" r="4.8" fill="#FFE900" stroke="#046A38" stroke-width="1"/><rect x="381" y="279" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="421" y="305" font-size="26" font-weight="700" fill="white">Português</text>
 <text x="645" y="303" font-size="20" fill="#2EE6A8">✓</text>
 <text x="691" y="363" font-size="22" fill="#2EE6A8" text-anchor="end">~9%</text>
 <rect x="15" y="381" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="31" y="427" font-size="30">🇮🇹</text>
+<defs><clipPath id="flagclip8201"><rect x="31" y="401" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip8201)"><rect x="31" y="401" width="11.9333" height="24" fill="#008C45"/><rect x="42.3333" y="401" width="11.9333" height="24" fill="#F4F5F0"/><rect x="53.6667" y="401" width="11.9333" height="24" fill="#CD212A"/><rect x="31" y="401" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="71" y="427" font-size="26" font-weight="700" fill="white">Italiano</text>
 <text x="341" y="485" font-size="22" fill="#2EE6A8" text-anchor="end">~9%</text>
 <rect x="365" y="381" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="381" y="427" font-size="30">🇩🇪</text>
+<defs><clipPath id="flagclip6542"><rect x="381" y="401" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip6542)"><rect x="381" y="401" width="34" height="8.6" fill="#000"/><rect x="381" y="409" width="34" height="8.6" fill="#DD0000"/><rect x="381" y="417" width="34" height="8.6" fill="#FFCE00"/><rect x="381" y="401" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="421" y="427" font-size="26" font-weight="700" fill="white">Deutsch</text>
 <text x="645" y="425" font-size="20" fill="#2EE6A8">✓</text>
 <text x="691" y="485" font-size="22" fill="#2EE6A8" text-anchor="end">~11%</text>
 <rect x="15" y="503" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="31" y="549" font-size="30">🇦🇩</text>
+<defs><clipPath id="flagclip31738"><rect x="31" y="523" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip31738)"><rect x="31" y="523" width="11.9333" height="24" fill="#10069F"/><rect x="42.3333" y="523" width="11.9333" height="24" fill="#FEDD00"/><rect x="53.6667" y="523" width="11.9333" height="24" fill="#D50032"/><rect x="31" y="523" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="71" y="549" font-size="26" font-weight="700" fill="white">Català</text>
 <text x="341" y="607" font-size="22" fill="#2EE6A8" text-anchor="end">~12%</text>
 <rect x="365" y="503" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="381" y="549" font-size="30">🇫🇷</text>
+<defs><clipPath id="flagclip21902"><rect x="381" y="523" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip21902)"><rect x="381" y="523" width="11.9333" height="24" fill="#002395"/><rect x="392.333" y="523" width="11.9333" height="24" fill="#fff"/><rect x="403.667" y="523" width="11.9333" height="24" fill="#ED2939"/><rect x="381" y="523" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="421" y="549" font-size="26" font-weight="700" fill="white">Français</text>
 <text x="645" y="547" font-size="20" fill="#2EE6A8">✓</text>
 <text x="691" y="607" font-size="22" fill="#F5C542" text-anchor="end">~13%</text>
 <rect x="15" y="625" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="31" y="671" font-size="30">🇷🇺</text>
+<defs><clipPath id="flagclip33378"><rect x="31" y="645" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip33378)"><rect x="31" y="645" width="34" height="8.6" fill="#fff"/><rect x="31" y="653" width="34" height="8.6" fill="#0039A6"/><rect x="31" y="661" width="34" height="8.6" fill="#D52B1E"/><rect x="31" y="645" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="71" y="671" font-size="26" font-weight="700" fill="white">Русский</text>
 <text x="295" y="669" font-size="20" fill="#2EE6A8">✓</text>
 <text x="341" y="729" font-size="22" fill="#F5C542" text-anchor="end">~13%</text>
 <rect x="365" y="625" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
-<text x="381" y="671" font-size="30">🇮🇩</text>
+<defs><clipPath id="flagclip23757"><rect x="381" y="645" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip23757)"><rect x="381" y="645" width="34" height="12.6" fill="#CE1126"/><rect x="381" y="657" width="34" height="12.6" fill="#fff"/><rect x="381" y="645" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
 <text x="421" y="671" font-size="26" font-weight="700" fill="white">Indonesia</text>
 <text x="691" y="729" font-size="22" fill="#F5C542" text-anchor="end">~14%</text></g>
 </svg>
