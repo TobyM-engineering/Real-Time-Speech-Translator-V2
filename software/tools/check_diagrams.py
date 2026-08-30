@@ -2,7 +2,9 @@
 """Audit every repo SVG for text legibility and overlap at its rendered size."""
 import re, sys, pathlib, subprocess, math
 
-ROOT = pathlib.Path("/home/translator2/translator")
+# repository root, derived from this file's location (software/tools/),
+# so the tool works from any clone rather than one machine
+ROOT = pathlib.Path(__file__).resolve().parents[2]
 GH_MAX = 800          # GitHub's content column, approximately
 
 # override the assumed display width:  check_diagrams.py --width 552 <file>
