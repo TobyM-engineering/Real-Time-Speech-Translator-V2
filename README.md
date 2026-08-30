@@ -11,36 +11,19 @@ No phone, no app, no internet, no API key.
 
 ---
 
-<!-- ═══ MEDIA SLOT 1 of 2 — Demo + System Photos ══════════════════════
-     Drop the files into media/ using the names below, then delete this
-     comment's opening and closing markers to publish the block.
-     Naming convention: media/README.md
-════════════════════════════════════════════════════════════════════════
+<div align="center">
 
-# 🎥 Demo
+<img src="media/device_ready.jpg" alt="The device powered on, one half showing READY and the other LISTO, both transmitters and both earbuds in frame" width="520">
 
-**[Watch the demo](media/translator-demo.mp4)** — the translator running live: one person speaks, and the other's earbud answers in their own language a couple of seconds later.
+</div>
 
 ---
 
-# 📸 System Photos
+# 🎥 Demo
 
-### **The stack**
-<img src="media/board_stack.jpg" width="280">
+**[English to Spanish, spoken live](media/demo_translation.mp4)** — one person speaks English, the transcript and the Spanish translation appear on screen, and the translation reaches the other earbud a couple of seconds later.
 
-The three boards laid flat — the UPS HAT carrying the four cells on the bottom, the Pi 5 in the middle, and the touchscreen on top.
-
-### **Worn**
-<img src="media/worn.jpg" width="280">
-
-Both transmitters clipped on, one earbud each. Black windscreen is Person A, grey is Person B — the convention the whole channel mapping depends on.
-
-### **Mid-conversation**
-<img src="media/screen.jpg" width="280">
-
-The screen between the two speakers, each half rotated to face its own reader and showing that person's language.
-
-═══ END MEDIA SLOT 1 ═════════════════════════════════════════════════ -->
+*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
 
 # 🌍 Project Background
 

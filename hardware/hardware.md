@@ -6,6 +6,10 @@ Roughly **$400** all in, dominated by the Pi, the display and the DJI kit.
 
 <img src="diagrams/physical-stack.svg" alt="The assembled stack layer by layer with the power path" width="100%">
 
+<img src="../media/stack_side.jpg" alt="Side-on view of the assembled stack: display on standoffs, Pi 5 with its cooler, the UPS HAT and its four 21700 cells, and the DJI receiver" width="520">
+
+Side-on, the same stack as built: the display standing on its standoffs, the Pi 5 and its cooler beneath, the UPS HAT carrying the four 21700 cells at the bottom, and the DJI receiver on its down-angled adapter.
+
 ---
 
 ## Compute
@@ -136,14 +140,6 @@ It matters more than it looks: a genuinely offline device has no NTP, so with no
 - **RTC battery → the `BAT` JST connector** (not fitted in this build)
 - **Mains → the UPS HAT's USB-C input** (not the Pi's, once the HAT is fitted)
 
-<!-- ═══ MEDIA SLOT 2 of 2 — wiring diagram ════════════════════════════
-     Drop media/wiring_diagram.png in, then delete this comment's
-     opening and closing markers to publish the block.
-     Naming convention: ../media/README.md
-════════════════════════════════════════════════════════════════════════
-
 <img src="../media/wiring_diagram.png" alt="Full wiring diagram of the build" width="100%">
 
 Every connection above, drawn: the display ribbon at `CAM/DISP 0`, display power on GPIO pins 2 and 6, the fan header, the receiver on a black USB 2.0 port, and mains entering at the UPS HAT rather than the Pi.
-
-═══ END MEDIA SLOT 2 ═════════════════════════════════════════════════ -->

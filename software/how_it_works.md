@@ -109,6 +109,10 @@ If recognition returns nothing at all on ≥0.5 s of accepted audio, a second en
 
 Opus is **~7× faster on identical input at parity quality**, so the active pair's two directions load at language-picker time (~0.2 s warm) and NLLB stays resident as the universal fallback. Every fallback is logged rather than silent, because the asymmetry is audible: if one direction has an opus model and the other does not, one person waits noticeably longer than the other for the whole conversation.
 
+**[Watch: an English to French turn](../media/demo_french.mp4)** — a second language pair running the same path.
+
+*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
+
 Two safeguards sit around translation, both built from measurements:
 
 - **Short fragments are not translated blind.** NLLB hallucinates on content-starved input — "5" became "5 El", a bare list of numbers gained "¿Qué es eso?" — because a decoder given almost nothing falls back on its training prior. Digits pass through untranslated, common interjections resolve through a table of 52 concepts across 38 languages (every entry cited, none from memory), and everything else is checked afterwards.

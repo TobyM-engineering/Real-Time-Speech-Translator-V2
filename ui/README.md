@@ -76,6 +76,10 @@ Colour carries the state before any word does: the entire half changes, which re
 
 **What to do:** read it. If it is wrong, **tap anywhere on the band** — the whole thing is the cancel button, not just the ✕. The bar along the bottom drains over five seconds. You have from about 1.7 s after you stop speaking until the audio starts, and the pipeline will never start audio less than a second after the text appears.
 
+**[Watch: starting a turn and cancelling it before it plays](../media/demo_cancel.mp4)** — the transcript appearing, the band tapped, and nothing reaching the other ear.
+
+*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
+
 ---
 
 ## A translation playing in this ear
@@ -147,6 +151,10 @@ Colour carries the state before any word does: the entire half changes, which re
 **All 51 languages are in this list.** Two columns of 122 px cells means **ten are visible at a time and the remaining 41 are below the fold**; the picture shows the sixth row cut off at the edge, which is exactly what the screen does. The order is pure accuracy, best first: each cell carries the flag, the native name, a colour-coded error rate (green under 12%, amber to 25%, red above), and a green ✓ on the eight languages bench-verified on this hardware. There are no sections and no headings — scrolling down simply means getting worse, and that is the message.
 
 **What to do:** drag to scroll, then tap a language. Its two voices load in about two seconds, once, at this moment rather than during a conversation. Tapping beside the grid closes it unchanged.
+
+**[Watch: changing the language pair, then speaking English to French](../media/demo_language_change.mp4)** — the picker opening, a new language chosen on the touchscreen, and the next turn coming back in that language.
+
+*The translated audio was dubbed into this recording: it played into the earbud, so the camera could not hear it. Everything else is live. H.264 MP4, no HEVC, so it plays inline on GitHub.*
 
 > **Known gap:** the grid scrolls but draws **no scrollbar** — the source has none, so nothing on screen tells you the list continues past the cut edge. The partial row is the only clue. Worth adding.
 
