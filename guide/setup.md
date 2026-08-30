@@ -77,6 +77,8 @@ software/tools/fetch_models.sh
 
 Idempotent — safe to re-run, and it resumes. Fetches **about 6 GB**: Silero VAD, SenseVoice, Parakeet TDT v3, whisper base, NLLB-200-distilled-600M, and the Piper voices.
 
+> **One deliberate redundancy in that 6 GB.** SenseVoice arrives as two copies of the same model: `model.int8.onnx` (239 MB), which is the one the pipeline loads, and `model.onnx` (938 MB) in full fp32, which is downloaded and then never touched. It is kept on purpose, so the quantised build can be A/B'd against the original if a Chinese, Japanese or Korean transcript ever looks wrong — quantisation is the first thing you would want to rule out, and re-downloading a gigabyte on a device with no internet is not an option. If you are short of space and willing to give that up, deleting `models/sensevoice/model.onnx` reclaims 938 MB and changes nothing about how the device runs.
+
 For the fast translation path, also fetch the opus-mt pairs for the languages you actually use:
 
 ```bash
