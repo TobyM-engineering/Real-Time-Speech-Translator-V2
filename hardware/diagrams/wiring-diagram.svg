@@ -1,126 +1,118 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640" width="980" height="640" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1120" width="760" height="1120" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
 <style>
   .bg{fill:#0f1116}
-  .ts{fill:#9aa3b2;font-size:11px}
-  .tt{fill:#e6e8ee;font-size:15px;font-weight:600}
-  .lbl{fill:#e6e8ee;font-size:12px;font-weight:600}
-  .h{fill:#e6e8ee;font-size:13px;font-weight:600}
-  .pw{stroke:#e05561;stroke-width:2.5;fill:none}
-  .ain{stroke:#4ea1ff;stroke-width:2.5;fill:none}
-  .aout{stroke:#4caf7d;stroke-width:2.5;fill:none}
-  .disp{stroke:#9b7fd4;stroke-width:2.5;fill:none}
-  .data{stroke:#d8a534;stroke-width:2;fill:none}
-  .wl{stroke-dasharray:6 4}
-  .cpw{fill:#e05561;font-size:11px;font-weight:600}
-  .cain{fill:#4ea1ff;font-size:11px;font-weight:600}
-  .caout{fill:#4caf7d;font-size:11px;font-weight:600}
-  .cdisp{fill:#9b7fd4;font-size:11px;font-weight:600}
-  .cdata{fill:#d8a534;font-size:11px;font-weight:600}
+  .ts{fill:#9aa3b2;font-size:15px}
+  .tt{fill:#e6e8ee;font-size:21px;font-weight:600}
+  .sub{fill:#9aa3b2;font-size:15px}
+  .lbl{fill:#e6e8ee;font-size:17px;font-weight:600}
+  .pw{stroke:#e05561;stroke-width:3;fill:none}
+  .ain{stroke:#4ea1ff;stroke-width:3;fill:none}
+  .aout{stroke:#4caf7d;stroke-width:3;fill:none}
+  .disp{stroke:#9b7fd4;stroke-width:3;fill:none}
+  .data{stroke:#d8a534;stroke-width:3;fill:none}
+  .wl{stroke-dasharray:7 5}
+  .cpw{fill:#e05561;font-size:15px;font-weight:600}
+  .cain{fill:#4ea1ff;font-size:15px;font-weight:600}
+  .caout{fill:#4caf7d;font-size:15px;font-weight:600}
+  .cdisp{fill:#9b7fd4;font-size:15px;font-weight:600}
+  .cdata{fill:#d8a534;font-size:15px;font-weight:600}
+  .note{fill:#6a7078;font-size:14px}
 </style>
-<rect class="bg" width="980" height="640"/>
-<text class="tt" x="24" y="30">Connection diagram — every physical link, and what it carries</text>
-<text class="ts" x="24" y="48">There is no discrete GPIO wiring in this build: each line below is a connector, a ribbon, a contact, or a radio link.</text>
+<rect class="bg" width="760" height="1120"/>
+<text class="tt" x="32" y="40">Connection diagram</text>
+<text class="sub" x="32" y="64">Every physical link, and what it carries. No discrete GPIO wiring: each line is a</text>
+<text class="sub" x="32" y="84">connector, a ribbon, a contact, or a radio link.</text>
 
-<!-- legend -->
-<g transform="translate(24,64)">
-  <line class="pw" x1="0" y1="8" x2="26" y2="8"/><text class="cpw" x="32" y="12">power</text>
-  <line class="ain" x1="96" y1="8" x2="122" y2="8"/><text class="cain" x="128" y="12">audio in</text>
-  <line class="aout" x1="200" y1="8" x2="226" y2="8"/><text class="caout" x="232" y="12">audio out</text>
-  <line class="disp" x1="308" y1="8" x2="334" y2="8"/><text class="cdisp" x="340" y="12">display + touch</text>
-  <line class="data" x1="452" y1="8" x2="478" y2="8"/><text class="cdata" x="484" y="12">data</text>
-  <line class="aout wl" x1="540" y1="8" x2="566" y2="8"/><text class="ts" x="572" y="12">dashed = wireless</text>
+<!-- legend, two rows so nothing crowds -->
+<g transform="translate(32,108)">
+  <line class="pw" x1="0" y1="6" x2="30" y2="6"/><text class="cpw" x="38" y="11">power</text>
+  <line class="ain" x1="130" y1="6" x2="160" y2="6"/><text class="cain" x="168" y="11">audio in</text>
+  <line class="aout" x1="280" y1="6" x2="310" y2="6"/><text class="caout" x="318" y="11">audio out</text>
+  <line class="disp" x1="0" y1="34" x2="30" y2="34"/><text class="cdisp" x="38" y="39">display + touch</text>
+  <line class="data" x1="190" y1="34" x2="220" y2="34"/><text class="cdata" x="228" y="39">data</text>
+  <line class="aout wl" x1="330" y1="34" x2="360" y2="34"/><text class="note" x="368" y="39">dashed = wireless</text>
 </g>
 
-<!-- ============ mains ============ -->
-<rect x="24" y="112" width="180" height="62" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
-<text class="lbl" x="40" y="134">Mains supply</text>
-<text class="ts" x="40" y="152">RasTech 27 W GaN PD</text>
-<text class="ts" x="40" y="166">5.1 V / 5 A</text>
+<!-- ===== power sources ===== -->
+<rect x="32" y="196" width="320" height="84" rx="8" fill="#3a1f22" stroke="#e05561" stroke-width="2"/>
+<text class="lbl" x="52" y="226">Mains supply</text>
+<text class="ts" x="52" y="250">RasTech 27 W GaN PD</text>
+<text class="ts" x="52" y="270">5.1 V / 5 A</text>
 
-<!-- ============ cells ============ -->
-<rect x="24" y="212" width="180" height="62" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
-<text class="lbl" x="40" y="234">4 × 21700 cells</text>
-<text class="ts" x="40" y="252">4S pack, 16.49 V charged</text>
-<text class="ts" x="40" y="266">in the HAT's holders</text>
+<rect x="408" y="196" width="320" height="84" rx="8" fill="#3a1f22" stroke="#e05561" stroke-width="2"/>
+<text class="lbl" x="428" y="226">4 × 21700 cells</text>
+<text class="ts" x="428" y="250">4S pack, 16.49 V charged</text>
+<text class="ts" x="428" y="270">seated in the HAT</text>
 
-<!-- ============ UPS HAT ============ -->
-<rect x="290" y="150" width="210" height="90" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
-<text class="lbl" x="306" y="174">UPS HAT (E)</text>
-<text class="ts" x="306" y="192">charges the pack and powers</text>
-<text class="ts" x="306" y="206">the Pi at the same time</text>
-<text class="ts" x="306" y="224">fuel gauge at I²C 0x2d</text>
+<!-- ===== UPS HAT ===== -->
+<rect x="150" y="366" width="460" height="104" rx="8" fill="#3a1f22" stroke="#e05561" stroke-width="2"/>
+<text class="lbl" x="172" y="398">UPS HAT (E)</text>
+<text class="ts" x="172" y="424">Charges the pack and powers the Pi at</text>
+<text class="ts" x="172" y="446">the same time. Fuel gauge at I²C 0x2d.</text>
 
-<path class="pw" d="M204 143 L246 143 L246 176 L290 176"/>
-<text class="cpw" x="212" y="136">USB-C in</text>
-<path class="pw" d="M204 243 L246 243 L246 214 L290 214"/>
-<text class="cpw" x="212" y="262">cell holders</text>
+<path class="pw" d="M192 280 L192 366"/>
+<text class="cpw" x="204" y="320">USB-C in</text>
+<path class="pw" d="M568 280 L568 366"/>
+<text class="cpw" x="452" y="320" text-anchor="end">cell holders</text>
 
-<!-- ============ Pi 5 ============ -->
-<rect x="590" y="150" width="230" height="90" rx="6" fill="#141e18" stroke="#4caf7d" stroke-width="1.5"/>
-<text class="lbl" x="606" y="174">Raspberry Pi 5</text>
-<text class="ts" x="606" y="192">4 × A76 · onboard Bluetooth</text>
-<text class="ts" x="606" y="206">radio on UART (not USB)</text>
-<text class="ts" x="606" y="224">the Pi's own USB-C goes unused</text>
+<!-- ===== Pi 5 ===== -->
+<rect x="150" y="560" width="460" height="104" rx="8" fill="#141e18" stroke="#4caf7d" stroke-width="2"/>
+<text class="lbl" x="172" y="592">Raspberry Pi 5</text>
+<text class="ts" x="172" y="618">Four A76 cores. Bluetooth radio on</text>
+<text class="ts" x="172" y="640">UART — onboard, not a USB dongle.</text>
 
-<path class="pw" d="M500 176 L590 176"/>
-<text class="cpw" x="512" y="170">power · pogo pins</text>
-<path class="data" d="M500 216 L590 216"/>
-<text class="cdata" x="512" y="232">I²C bus 1 · battery state</text>
+<path class="pw" d="M240 470 L240 560"/>
+<text class="cpw" x="252" y="500">power</text>
+<text class="cpw" x="252" y="520">pogo pins</text>
+<path class="data" d="M520 470 L520 560"/>
+<text class="cdata" x="508" y="500" text-anchor="end">I²C bus 1</text>
+<text class="cdata" x="508" y="520" text-anchor="end">battery state</text>
 
-<!-- ============ display ============ -->
-<rect x="590" y="40" width="230" height="76" rx="6" fill="#241d33" stroke="#9b7fd4" stroke-width="1.5"/>
-<text class="lbl" x="606" y="62">Touch Display 2, 5″</text>
-<text class="ts" x="606" y="80">720 × 1280, two rotated halves</text>
-<text class="ts" x="606" y="96">Goodix capacitive touch</text>
+<!-- ===== display ===== -->
+<rect x="32" y="746" width="320" height="104" rx="8" fill="#241d33" stroke="#9b7fd4" stroke-width="2"/>
+<text class="lbl" x="52" y="778">Touch Display 2, 5″</text>
+<text class="ts" x="52" y="802">720 × 1280, two rotated halves</text>
+<text class="ts" x="52" y="824">Goodix capacitive touch</text>
 
-<path class="disp" d="M660 150 L660 116"/>
-<text class="cdisp" x="452" y="134">DSI ribbon at CAM/DISP 0 — pixels out, touch back</text>
-<path class="disp" d="M452 138 L648 138 L648 128"/>
-<path class="pw" d="M780 150 L780 116"/>
-<text class="cpw" x="800" y="136">5 V pin 2 · GND pin 6</text>
+<path class="disp" d="M120 664 L120 700 L120 746"/>
+<text class="cdisp" x="32" y="694">DSI ribbon · CAM/DISP 0</text>
+<text class="cdisp" x="32" y="714">pixels out, touch back</text>
+<path class="pw" d="M300 664 L300 746"/>
+<text class="cpw" x="312" y="700">5 V pin 2</text>
+<text class="cpw" x="312" y="720">GND pin 6</text>
 
-<!-- ============ DJI receiver ============ -->
-<rect x="590" y="286" width="230" height="76" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
-<text class="lbl" x="606" y="308">DJI USB receiver</text>
-<text class="ts" x="606" y="326">one device, stereo, sample-synced</text>
-<text class="ts" x="606" y="342">FL = Person A · FR = Person B</text>
-<path class="ain" d="M700 286 L700 240"/>
-<text class="cain" x="712" y="268">USB 2.0 port (480 Mbps hub)</text>
+<!-- ===== DJI receiver ===== -->
+<rect x="408" y="746" width="320" height="104" rx="8" fill="#132133" stroke="#4ea1ff" stroke-width="2"/>
+<text class="lbl" x="428" y="778">DJI USB receiver</text>
+<text class="ts" x="428" y="802">One device, stereo, sample-synced</text>
+<text class="ts" x="428" y="824">FL = Person A · FR = Person B</text>
+
+<path class="ain" d="M568 664 L568 746"/>
+<text class="cain" x="580" y="700">USB 2.0 port</text>
+<text class="cain" x="580" y="720">480 Mbps hub</text>
 
 <!-- transmitters -->
-<rect x="590" y="404" width="108" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
-<text class="lbl" x="602" y="426">TX1</text>
-<text class="ts" x="602" y="443">black</text>
-<text class="ts" x="602" y="457">windscreen</text>
-<rect x="712" y="404" width="108" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
-<text class="lbl" x="724" y="426">TX2</text>
-<text class="ts" x="724" y="443">grey</text>
-<text class="ts" x="724" y="457">windscreen</text>
-<path class="ain wl" d="M644 404 L644 362"/>
-<path class="ain wl" d="M766 404 L766 362"/>
-<text class="cain" x="836" y="392">wireless</text>
+<rect x="408" y="916" width="150" height="80" rx="8" fill="#132133" stroke="#4ea1ff" stroke-width="2"/>
+<text class="lbl" x="428" y="948">TX1</text>
+<text class="ts" x="428" y="972">black</text>
+<rect x="578" y="916" width="150" height="80" rx="8" fill="#132133" stroke="#4ea1ff" stroke-width="2"/>
+<text class="lbl" x="598" y="948">TX2</text>
+<text class="ts" x="598" y="972">grey</text>
+<path class="ain wl" d="M483 916 L483 850"/>
+<path class="ain wl" d="M653 916 L653 850"/>
+<text class="cain" x="568" y="888" text-anchor="middle">wireless</text>
 
-<!-- ============ AirPods ============ -->
-<rect x="290" y="286" width="210" height="76" rx="6" fill="#141e18" stroke="#4caf7d" stroke-width="1.5"/>
-<text class="lbl" x="306" y="308">AirPods Pro</text>
-<text class="ts" x="306" y="326">one sink, hard-panned</text>
-<text class="ts" x="306" y="342">left = Person A · right = Person B</text>
-<path class="aout wl" d="M590 324 L500 324"/>
-<text class="caout" x="506" y="316">Bluetooth A2DP — the only wireless link out</text>
+<!-- ===== AirPods ===== -->
+<rect x="32" y="916" width="320" height="80" rx="8" fill="#141e18" stroke="#4caf7d" stroke-width="2"/>
+<text class="lbl" x="52" y="948">AirPods Pro</text>
+<text class="ts" x="52" y="972">One sink, hard-panned L / R</text>
+<path class="aout wl" d="M192 850 L192 916"/>
+<text class="caout" x="32" y="882">Bluetooth A2DP</text>
 
-<!-- ============ RTC ============ -->
-<rect x="290" y="404" width="210" height="62" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5" stroke-dasharray="5 4"/>
-<text class="lbl" x="306" y="426">RTC coin cell</text>
-<text class="ts" x="306" y="444">2-pin JST at the BAT header</text>
-<text class="ts" x="306" y="458">ON HAND, NOT FITTED</text>
-<path d="M500 434 L560 434 L560 240 L610 240" stroke="#3a4152" stroke-width="2" fill="none" stroke-dasharray="5 4"/>
-<text class="ts" x="512" y="426">backup power for the clock</text>
-
-<!-- footnotes -->
-<text class="ts" x="24" y="512">Verified on the running device: the DSI connector and the Goodix touch controller both enumerate; the receiver sits on a 480 Mbps (USB 2.0)</text>
-<text class="ts" x="24" y="530">root hub, not the 5 Gbps pair; the battery gauge answers on I²C bus 1 at 0x2d; and the Bluetooth adapter is UART-attached — the onboard</text>
-<text class="ts" x="24" y="548">radio, not a USB dongle. Taken from the build record rather than probed: the pogo-pin power path, the display's 5 V and ground on header</text>
-<text class="ts" x="24" y="566">pins 2 and 6, and the DSI ribbon landing on CAM/DISP 0 rather than the second connector.</text>
-<text class="ts" x="24" y="596">Deliberately not shown: which of the two black USB sockets the receiver occupies, and which internal I²C bus carries touch — neither is</text>
-<text class="ts" x="24" y="614">recorded anywhere and both would be a guess.</text>
+<!-- ===== RTC ===== -->
+<rect x="408" y="1032" width="320" height="64" rx="8" fill="#181b23" stroke="#3a4152" stroke-width="2" stroke-dasharray="6 5"/>
+<text class="lbl" x="428" y="1060">RTC coin cell</text>
+<text class="ts" x="428" y="1082">JST at BAT — on hand, NOT fitted</text>
+<path d="M120 850 L120 1064 L408 1064" stroke="#3a4152" stroke-width="2.5" fill="none" stroke-dasharray="6 5"/>
+<text class="note" x="140" y="1040">clock backup</text>
 </svg>

@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
 <style>
   .bg{fill:#0f1116}
-  .t{fill:#e6e8ee;font-size:13px}
-  .ts{fill:#9aa3b2;font-size:11px}
-  .tt{fill:#e6e8ee;font-size:15px;font-weight:600}
+  .t{fill:#e6e8ee;font-size:16px}
+  .ts{fill:#9aa3b2;font-size:14px}
+  .tt{fill:#e6e8ee;font-size:18px;font-weight:600}
   .a{fill:#4ea1ff}.b{fill:#ffb454}
   .boxA{fill:#132133;stroke:#4ea1ff;stroke-width:1.5;rx:6}
   .boxB{fill:#2a2013;stroke:#ffb454;stroke-width:1.5;rx:6}
@@ -12,7 +12,7 @@
   .lA{stroke:#4ea1ff;stroke-width:2;fill:none}
   .lB{stroke:#ffb454;stroke-width:2;fill:none}
   .lN{stroke:#5a6478;stroke-width:1.5;fill:none;stroke-dasharray:4 3}
-  .lbl{fill:#e6e8ee;font-size:12px;font-weight:600}
+  .lbl{fill:#e6e8ee;font-size:15px;font-weight:600}
 </style>
 <rect class="bg" width="880" height="560"/>
 <text class="tt" x="24" y="30">Signal path — microphone to earbud</text>
@@ -33,8 +33,8 @@
 <text class="ts" x="310" y="194">stereo, sample-synchronised · 16 kHz after PipeWire</text>
 <path class="lA" d="M114 122 L114 138 Q114 150 130 150 L300 150"/>
 <path class="lB" d="M766 122 L766 138 Q766 150 750 150 L580 150"/>
-<text class="a" x="196" y="144" font-size="11">FL channel</text>
-<text class="b" x="600" y="144" font-size="11">FR channel</text>
+<text class="a" x="196" y="144" font-size="14">FL channel</text>
+<text class="b" x="600" y="144" font-size="14">FR channel</text>
 
 <!-- per channel VAD -->
 <rect class="boxA" x="150" y="238" width="240" height="46"/>

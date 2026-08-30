@@ -20,7 +20,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Starting up
 
-<img src="starting-up.svg" alt="Both halves dark, both showing an ellipsis, the centre dot amber" width="360">
+<img src="starting-up.svg" alt="Both halves dark, both showing an ellipsis, the centre dot amber" width="480">
 
 **What triggers it:** power-on. The interface appears within a couple of seconds, but the models take about 30 more to load. Until they are warm the centre dot is amber and each half shows an ellipsis instead of a status word — there is no splash screen and no progress bar.
 
@@ -30,7 +30,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Nobody speaking
 
-<img src="nobody-speaking.svg" alt="Both halves near-black with faint grey rings and dimmed status words" width="360">
+<img src="nobody-speaking.svg" alt="Both halves near-black with faint grey rings and dimmed status words" width="480">
 
 **What triggers it:** the resting state. Both microphones are open and nothing has crossed the voice-activity threshold.
 
@@ -40,7 +40,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Person A speaking
 
-<img src="person-a-speaking.svg" alt="The bottom half green with a bright pulsing ring, the top half still idle" width="360">
+<img src="person-a-speaking.svg" alt="The bottom half green with a bright pulsing ring, the top half still idle" width="480">
 
 **What triggers it:** your voice arriving on your own microphone at least 6 dB louder than on the other person's. Only your half lights: the other microphone hears you too, but the cross-channel ratio test suppresses it, so the wrong half never flashes.
 
@@ -50,7 +50,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Person B speaking
 
-<img src="person-b-speaking.svg" alt="The top half green and upside down, the bottom half idle" width="360">
+<img src="person-b-speaking.svg" alt="The top half green and upside down, the bottom half idle" width="480">
 
 **What triggers it:** the same test on the other channel. Shown here to make the rotation concrete — Person B's half is upside down from where you sit, and right way up from where they sit.
 
@@ -60,7 +60,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Both speaking at once
 
-<img src="both-speaking.svg" alt="Both halves green, each showing a one-at-a-time hint along its bottom edge" width="360">
+<img src="both-speaking.svg" alt="Both halves green, each showing a one-at-a-time hint along its bottom edge" width="480">
 
 **What triggers it:** both channels active at the same time. Each half shows a short hint along its own bottom edge, in its own language.
 
@@ -70,7 +70,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Translating
 
-<img src="translating.svg" alt="The bottom half amber with a transcript band across the bottom showing a cross, the heard text, and a draining bar" width="360">
+<img src="translating.svg" alt="The bottom half amber with a transcript band across the bottom showing a cross, the heard text, and a draining bar" width="480">
 
 **What triggers it:** you stopped speaking and recognition finished. The half turns amber and the **transcript band** appears with what the device heard. Note that the ring is gone — the band takes over the half completely, and the status word shrinks from 92 px to 64 px and moves to the top to make room.
 
@@ -84,7 +84,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## A translation playing in this ear
 
-<img src="playing-translation.svg" alt="The bottom half blue" width="360">
+<img src="playing-translation.svg" alt="The bottom half blue" width="480">
 
 **What triggers it:** audio playing into *that person's* earbud. Because each person hears the other, a blue half belongs to the listener, not the speaker.
 
@@ -94,7 +94,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Muted
 
-<img src="muted.svg" alt="The bottom half dark red with a red ring and the mute circle filled red" width="360">
+<img src="muted.svg" alt="The bottom half dark red with a red ring and the mute circle filled red" width="480">
 
 **What triggers it:** tapping the mute circle. The half goes dark red and the circle itself fills red, so it is obvious which control did it. A muted channel is dropped before anything else happens — nothing is recognised, translated or spoken.
 
@@ -104,7 +104,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Falling behind
 
-<img src="falling-behind.svg" alt="The bottom half deep red with a two-line pause sentence and a seconds-behind counter in the band" width="360">
+<img src="falling-behind.svg" alt="The bottom half deep red with a two-line pause sentence and a seconds-behind counter in the band" width="480">
 
 **What triggers it:** the device more than 15 seconds behind (deep amber) or 30 seconds behind (deep red). Instead of a single word the half shows a full sentence in that person's language, moved up to its own zone so it never collides with the chip or the mute button, and the band carries a counter of how far behind it is.
 
@@ -114,7 +114,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Nothing came through
 
-<img src="nothing-came-through.svg" alt="The bottom half showing a bordered warning panel with the untranslated words in quotes" width="360">
+<img src="nothing-came-through.svg" alt="The bottom half showing a bordered warning panel with the untranslated words in quotes" width="480">
 
 **What triggers it:** speech was heard but produced nothing translatable — every candidate sentence was discarded, or no engine could read the audio. The listener hears a soft two-tone marker and sees this panel with the untranslated words quoted. The speaker's own transcript line is struck through.
 
@@ -124,7 +124,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Turn cancelled
 
-<img src="turn-cancelled.svg" alt="The bottom half flashing with the word Cancelled" width="360">
+<img src="turn-cancelled.svg" alt="The bottom half flashing with the word Cancelled" width="480">
 
 **What triggers it:** tapping the transcript band. The half flashes dark red with *Cancelled* in that person's language, then returns to its previous state.
 
@@ -134,7 +134,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Hold-to-talk
 
-<img src="hold-to-talk.svg" alt="The bottom half brighter green with a thick green frame and a filled circle instead of a ring" width="360">
+<img src="hold-to-talk.svg" alt="The bottom half brighter green with a thick green frame and a filled circle instead of a ring" width="480">
 
 **What triggers it:** pressing and holding your own half's background for one second. The half brightens, a 10 px green frame appears around it, and the ring is replaced by a filled dot. While held, the ratio test and the anti-feedback gate are both bypassed for you, and the other channel is dropped entirely. A shorter press does nothing — a growing ring counts the press and vanishes if you let go early.
 
@@ -144,7 +144,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Language picker open
 
-<img src="language-picker-open.svg" alt="A two-column grid of languages covering the bottom half, the current language highlighted, a partial row visible at the cut edge" width="360">
+<img src="language-picker-open.svg" alt="A two-column grid of languages covering the bottom half, the current language highlighted, a partial row visible at the cut edge" width="480">
 
 **What triggers it:** tapping the language chip. The grid covers that half only — the other person keeps using the device while you choose.
 
@@ -162,7 +162,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Microphone check
 
-<img src="microphone-check.svg" alt="A full-screen panel with a live meter per channel, the verified band marked, and battery detail" width="360">
+<img src="microphone-check.svg" alt="A full-screen panel with a live meter per channel, the verified band marked, and battery detail" width="480">
 
 **What triggers it:** tapping the dot in the centre strip. A panel covers the screen with a live meter per channel: current level in dBFS, the background noise floor, the gap between them, and battery state at readable size.
 
@@ -172,7 +172,7 @@ Colour carries the state before any word does: the entire half changes, which re
 
 ## Device fault
 
-<img src="device-fault.svg" alt="A red pill across the centre of the screen with the fault printed twice, once rotated" width="360">
+<img src="device-fault.svg" alt="A red pill across the centre of the screen with the fault printed twice, once rotated" width="480">
 
 **What triggers it:** anything the supervisor detects — earbuds gone, microphone lost, battery low, storage nearly full, a dead pipeline stage, or a display that never probed. The pill sits across the centre and **the text is drawn twice, once rotated**, so both people can read it. The centre dot turns amber.
 
