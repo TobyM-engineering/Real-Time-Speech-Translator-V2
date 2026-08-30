@@ -88,6 +88,21 @@ Both microphones arrive sample-synchronised through one receiver, which is what 
 
 Recognition is routed per language — Parakeet for English, SenseVoice for Chinese/Japanese/Korean, whisper with the language pinned for the other 47. Translation uses small per-pair opus-mt models where they exist, with NLLB-200 as a universal fallback. Speech synthesis is Piper.
 
+## What ships, and what actually loads
+
+**108 model files, about 10 GB on the card. Nine of them are in memory during a conversation, using 3.05 GB.**
+
+| Stage | On the card | Loaded for one English ↔ Spanish conversation |
+|---|---|---|
+| Recognition | 3 engines (Parakeet, SenseVoice, whisper) | **all 3** |
+| Translation | 45 opus-mt pair models + 1 NLLB fallback | **3** — NLLB, plus both directions of the active pair |
+| Speech | 51 Piper voices + Supertonic | **2** — one voice per selected language |
+| Voice activity | 1 (Silero) | **1** |
+
+The split is the point. **The three recognition engines all stay resident whatever languages you pick**, because each covers a different part of the catalogue and switching mid-conversation has to be instant. **Translation and speech load only what the chosen pair needs** — 2 of 45 opus models, 2 of 51 voices — which is why adding languages to the picker costs disk but not memory, and why the loaded count is nine rather than three.
+
+Figures measured on the running device: `du` for the card, resident set size for the memory.
+
 The screen is split in two, one half rotated 180°, each showing a state colour, the live transcript and a mute control. **The transcript is also a cancel button** — text appears well before audio does, so a mis-hear can be killed before the other person hears it.
 
 **[→ software/how_it_works.md](software/how_it_works.md)** — the signal path, speaker separation, all three recognition engines and why each was chosen.
