@@ -23,6 +23,26 @@ Photographs and video of the finished device. Every file here is referenced from
 
 **The translated audio is dubbed.** In every recording the translation played into an earbud, which the camera could not hear, so the audio was added afterwards from the exact text the device produced. Everything else — the speech, the screen, the timing — is live.
 
+### Build note — export H.264, never HEVC
+
+A reminder to myself before uploading, because the failure is silent: the file appears in the repository, looks fine, and simply refuses to play for whoever opens it.
+
+**Phones default to HEVC.** On iPhone that is Settings → Camera → Formats → *High Efficiency*; **switch it to *Most Compatible*, or transcode after the fact.** HEVC in an MP4 will not decode in Firefox at all, and is patchy elsewhere depending on the machine. H.264 with AAC audio plays everywhere — every browser, every editor, and GitHub's own player.
+
+To check a file before committing:
+
+```bash
+ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 media/demo_translation.mp4
+```
+
+`h264` is what you want. If it says `hevc`, transcode it:
+
+```bash
+ffmpeg -i input.mov -c:v libx264 -crf 20 -preset slow -c:a aac -movflags +faststart media/demo_translation.mp4
+```
+
+**One thing the codec cannot fix.** A `.mp4` referenced by a repository path renders as a *link* on github.com, not an inline player — GitHub strips `<video>` tags from Markdown. Inline players come from files uploaded through GitHub's own editor, which rewrites them to a `user-attachments` URL. If a video playing in place matters, drag the file into the README editor on github.com once and paste the URL it gives over the repository path. The paths as written work for anyone who clones.
+
 ## Formats
 
 JPEG for photographs, PNG for diagrams, MP4 for video. Anything beyond the seven files above is free-form.
