@@ -14,8 +14,8 @@ Photographs and video of the finished device. Every file here is referenced from
 | File | Shows | Referenced from |
 |---|---|---|
 | `demo_translation.mp4` | English to Spanish, spoken live, with the transcript and translation on screen | [`../README.md`](../README.md), the Demo section |
-| `demo_language_change.mp4` | Changing the language pair on the touchscreen, then speaking English to French | [`../ui/README.md`](../ui/README.md), the language picker |
-| `demo_cancel.mp4` | Starting a turn and cancelling it before it plays | [`../ui/README.md`](../ui/README.md), the cancel window |
+| `demo_language_change.mp4` | Changing the language pair on the touchscreen, then speaking English to French | [`../screen/README.md`](../screen/README.md), the language picker |
+| `demo_cancel.mp4` | Starting a turn and cancelling it before it plays | [`../screen/README.md`](../screen/README.md), the cancel window |
 | `demo_french.mp4` | An English to French turn | [`../software/how_it_works.md`](../software/how_it_works.md), translation |
 | `demo_levels_battery.mp4` | The centre button: battery percentage and live microphone levels in dB | [`../software/recovery.md`](../software/recovery.md), monitoring |
 
@@ -47,4 +47,4 @@ ffmpeg -i input.mov -c:v libx264 -crf 20 -preset slow -c:a aac -movflags +fastst
 
 JPEG for photographs, PNG for diagrams, MP4 for video. Anything beyond the seven files above is free-form.
 
-The SVG figures used throughout the documentation are generated rather than photographed, and live in [`../software/diagrams/`](../software/diagrams/), [`../hardware/diagrams/`](../hardware/diagrams/) — including the connection diagram — and [`../ui/`](../ui/).
+The SVG figures used throughout the documentation are generated rather than photographed, and live in [`../software/diagrams/`](../software/diagrams/), [`../hardware/diagrams/`](../hardware/diagrams/) — including the connection diagram — and [`../screen/`](../screen/).

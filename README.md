@@ -182,7 +182,7 @@ Then `venv/bin/python software/tools/doctor.py` gives a plain-language health ch
 ```
 ├── hardware/     the physical build — parts, wiring, stack, power, diagrams
 ├── software/     all the code — pipeline (src/), ui/, tools/, tests/ — and how it works
-├── ui/           every screen state, drawn and explained
+├── screen/       every screen state, drawn and explained
 ├── guide/        the build guide and the build log
 └── media/        photos, video and wiring diagrams
 ```
@@ -196,7 +196,7 @@ Then `venv/bin/python software/tools/doctor.py` gives a plain-language health ch
 | **[hardware/power_and_thermal.md](hardware/power_and_thermal.md)** | Power path, battery gauge, thermal limits, unfinished power work |
 | **[software/how_it_works.md](software/how_it_works.md)** | Signal path, speaker separation, the three engines, per-stage measured latency |
 | **[software/recovery.md](software/recovery.md)** | What the device does when things fail, and what it cannot detect |
-| **[ui/README.md](ui/README.md)** | Every state the screen can be in, drawn, with what triggers it |
+| **[screen/README.md](screen/README.md)** | Every state the screen can be in, drawn, with what triggers it |
 | **[guide/build_log.md](guide/build_log.md)** | The narrative: what broke, what was wrongly believed, how it was resolved |
 
 ---
