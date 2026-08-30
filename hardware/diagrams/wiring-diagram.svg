@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1120" width="760" height="1120" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
 <style>
   .bg{fill:#0f1116}
-  .ts{fill:#9aa3b2;font-size:15px}
+  .ts{fill:#9aa3b2;font-size:16px}
   .tt{fill:#e6e8ee;font-size:21px;font-weight:600}
-  .sub{fill:#9aa3b2;font-size:15px}
+  .sub{fill:#9aa3b2;font-size:16px}
   .lbl{fill:#e6e8ee;font-size:17px;font-weight:600}
   .pw{stroke:#e05561;stroke-width:3;fill:none}
   .ain{stroke:#4ea1ff;stroke-width:3;fill:none}
@@ -11,12 +11,12 @@
   .disp{stroke:#9b7fd4;stroke-width:3;fill:none}
   .data{stroke:#d8a534;stroke-width:3;fill:none}
   .wl{stroke-dasharray:7 5}
-  .cpw{fill:#e05561;font-size:15px;font-weight:600}
-  .cain{fill:#4ea1ff;font-size:15px;font-weight:600}
-  .caout{fill:#4caf7d;font-size:15px;font-weight:600}
-  .cdisp{fill:#9b7fd4;font-size:15px;font-weight:600}
-  .cdata{fill:#d8a534;font-size:15px;font-weight:600}
-  .note{fill:#6a7078;font-size:14px}
+  .cpw{fill:#e05561;font-size:16px;font-weight:600}
+  .cain{fill:#4ea1ff;font-size:16px;font-weight:600}
+  .caout{fill:#4caf7d;font-size:16px;font-weight:600}
+  .cdisp{fill:#9b7fd4;font-size:16px;font-weight:600}
+  .cdata{fill:#d8a534;font-size:16px;font-weight:600}
+  .note{fill:#6a7078;font-size:16px}
 </style>
 <rect class="bg" width="760" height="1120"/>
 <text class="tt" x="32" y="40">Connection diagram</text>

@@ -2,17 +2,17 @@
 
 # Real-Time Speech Translator V2
 
-### Two people. Two languages. One device on the table. No internet.
+## 51 languages. Talk to almost anyone in the world, in real time.
 
-Each person clips on a microphone and wears one earbud, and hears the other in their own language — a real two-way conversation, not one-way dictation.
+Two people. One earbud each. No phone, no app, no internet, no account.
 
-**51 languages · every model runs on the device · nothing leaves the hardware**
-
-<img src="media/device_ready.jpg" alt="The device powered on, one half showing READY and the other LISTO, both transmitters and both earbuds in frame" width="560">
+<img src="media/device_ready.jpg" alt="The device powered on, one half showing READY and the other LISTO, both transmitters and both earbuds in frame" width="440">
 
 </div>
 
-Those 51 languages include **17 of the world's 20 most-spoken**, so most conversations it will ever be asked to hold are already covered. Speech recognition, translation and speech synthesis all run on a Raspberry Pi 5 — no phone, no app, no account, no API key, and no network of any kind. A translation takes **2.5–4 seconds** end to end.
+Both people talk normally and each hears the other in their own language — a real conversation, not one-way dictation. Every model runs on the device itself, so nothing is transmitted anywhere. A turn takes **2.5–4 seconds** end to end.
+
+Those 51 languages include **17 of the world's 20 most-spoken**, and between them are spoken — as a first or second language — by **over half the people alive**. ([How that is counted](#language-coverage).)
 
 ---
 
@@ -22,7 +22,7 @@ Those 51 languages include **17 of the world's 20 most-spoken**, so most convers
 
 *Audio here is what the earbud heard — added to the recording, since the camera could not.*
 
-<img src="media/stack_side.jpg" alt="Side-on view of the assembled stack: display on standoffs, Pi 5 with cooler, UPS HAT with four 21700 cells, and the DJI receiver" width="420">
+<img src="media/stack_side.jpg" alt="Side-on view of the assembled stack: display on standoffs, Pi 5 with cooler, UPS HAT with four 21700 cells, and the DJI receiver" width="340">
 
 Everything above is in that stack: display, Pi 5 and cooler, the UPS HAT carrying four 21700 cells, and the wireless microphone receiver.
 
@@ -68,7 +68,7 @@ What it costs, honestly: roughly **$400** in parts instead of $65, and 2.5–4 s
 - **Fan → the 4-pin `FAN` header** · **DJI receiver → a black USB 2.0 port**, via the 90° adapter
 - **Mains → the UPS HAT's USB-C input**, not the Pi's
 
-<img src="hardware/diagrams/wiring-diagram.svg" alt="Connection diagram showing every physical link between components and what each carries" width="680">
+<img src="hardware/diagrams/wiring-diagram.svg" alt="Connection diagram showing every physical link between components and what each carries" width="600">
 
 Every physical link and what it carries — **[full size, with notes on what was verified](hardware/diagrams/wiring-diagram.svg)**.
 
@@ -76,7 +76,7 @@ Every physical link and what it carries — **[full size, with notes on what was
 
 # 🧩 How It Works
 
-<img src="software/diagrams/signal-path.svg" alt="Signal path from the two microphones through arbitration and the model stack to the two earbuds" width="100%">
+<img src="software/diagrams/signal-path.svg" alt="Signal path from the two microphones through arbitration and the model stack to the two earbuds" width="760">
 
 Both microphones arrive sample-synchronised through one receiver, which is what makes the design work. **Speaker identity comes from the cross-channel energy ratio, never from loudness:** a chest microphone hears its wearer 10–17 dB louder than the other person's does, no matter how loudly either talks.
 
@@ -90,7 +90,7 @@ The screen is split in two, one half rotated 180°, each showing a state colour,
 
 # 📊 Performance — the honest numbers
 
-<img src="software/diagrams/latency-breakdown.svg" alt="Stacked breakdown of one 2.48 second turn, showing that only 0.34 s of it is computation" width="100%">
+<img src="software/diagrams/latency-breakdown.svg" alt="Stacked breakdown of one 2.48 second turn, showing that only 0.34 s of it is computation" width="760">
 
 | Path | Measured |
 |---|---|
@@ -102,7 +102,11 @@ The screen is split in two, one half rotated 180°, each showing a state colour,
 
 Of a measured 2.48 s turn, **0.34 s is computation.** The rest is deliberate policy: waiting to be sure the sentence ended, waiting for a possible continuation, and holding audio long enough that it stays cancellable. Going faster means trading those rules away, not optimising code.
 
-**Language coverage: 51 languages** have a complete chain — the count is set by the available voices, not by the recognition. **Eight are bench-verified** here (zh, ja, en, es, pt, de, ru, fr), with Korean effectively a ninth. The other 42 carry published-benchmark estimates, shown in the picker. **The tail fails confidently** — at 41–55% word error rate whisper does not say "I didn't understand", it produces fluent, wrong text.
+## Language coverage
+
+**51 languages** have a complete chain — the count is set by the available voices, not by the recognition. **Eight are bench-verified** here (zh, ja, en, es, pt, de, ru, fr), with Korean effectively a ninth. The other 42 carry published-benchmark estimates, shown in the picker.
+
+**How the reach is counted.** The 51 have about **3.7 bn native speakers — 46% of the world**, which no double-counting can inflate. Second-language speakers take it past half: Indonesian's ~177 M, Swahili's ~91 M and French's ~258 M second-language speakers are overwhelmingly people whose first language is *not* on the list, as are a large share of English's 1.1 bn. Any one of those groups alone covers the ~320 M shortfall to 50%. Speaker figures are Wikipedia's [list of languages by total speakers](https://en.wikipedia.org/wiki/List_of_languages_by_total_number_of_speakers). Simply adding first- and second-language counts would give 82%, but that counts every bilingual person twice, so it is not used here. **The tail fails confidently** — at 41–55% word error rate whisper does not say "I didn't understand", it produces fluent, wrong text.
 
 ---
 
