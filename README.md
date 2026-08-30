@@ -76,6 +76,10 @@ Every physical link and what it carries — **[full size, with notes on what was
 
 # 🧩 How It Works
 
+<img src="media/system_architecture_v2.png" alt="System architecture: clip-on mics into a USB receiver into the Raspberry Pi 5 running recognition, translation and speech, out to AirPods over Bluetooth, with the touchscreen and battery, all inside a boundary marked ALL OF THIS RUNS ON THE DEVICE" width="720">
+
+Everything the device does, in one picture. Below, the same path in more detail — how the two microphone channels stay separate and cross over, so each person hears the other rather than themselves.
+
 <img src="software/diagrams/signal-path.svg" alt="Signal path from the two microphones through arbitration and the model stack to the two earbuds" width="760">
 
 Both microphones arrive sample-synchronised through one receiver, which is what makes the design work. **Speaker identity comes from the cross-channel energy ratio, never from loudness:** a chest microphone hears its wearer 10–17 dB louder than the other person's does, no matter how loudly either talks.

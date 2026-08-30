@@ -13,6 +13,7 @@ Photographs and video of the finished device. Every file here is referenced from
 
 | File | Shows | Used for |
 |---|---|---|
+| `system_architecture_v2.png` | The whole system in one square picture: clip-on mics, USB receiver, the Pi 5 and its three model stages, out to AirPods over Bluetooth, plus touchscreen and battery — all inside a boundary marked *all of this runs on the device* | The README, at the head of How It Works; and for sharing outside the repository |
 | `system-architecture.svg` / `.png` | The whole flow in one picture: two mics, one receiver, the Pi running all three models, out to one pair of earbuds — inside a boundary marked *all of this runs on the device*, with the cloud API drawn outside it and the link to it cut | Sharing outside the repository. The PNG is 2800 × 1700 because LinkedIn cannot display SVG. |
 
 ## Video
