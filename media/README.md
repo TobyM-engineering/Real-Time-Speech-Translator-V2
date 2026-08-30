@@ -9,6 +9,12 @@ Photographs and video of the finished device. Every file here is referenced from
 | `device_ready.jpg` | The hero shot: the device powered on, one half showing READY and the other LISTO, with both DJI transmitters and both AirPods in frame | [`../README.md`](../README.md), above the fold |
 | `stack_side.jpg` | Side-on view of the board stack — display on its standoffs, Pi 5 with the active cooler, UPS HAT, the four 21700 cells, and the DJI receiver | [`../hardware/hardware.md`](../hardware/hardware.md) |
 
+## Diagrams
+
+| File | Shows | Used for |
+|---|---|---|
+| `system-architecture.svg` / `.png` | The whole flow in one picture: two mics, one receiver, the Pi running all three models, out to one pair of earbuds — inside a boundary marked *all of this runs on the device*, with the cloud API drawn outside it and the link to it cut | Sharing outside the repository. The PNG is 2800 × 1700 because LinkedIn cannot display SVG. |
+
 ## Video
 
 | File | Shows | Referenced from |

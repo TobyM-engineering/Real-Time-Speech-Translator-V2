@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 850" width="1400" height="850" font-family="system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<style>
+  .title{fill:#141619;font-size:60px;font-weight:700}
+  .sub{fill:#5A6472;font-size:34px}
+  .btitle{fill:#141619;font-size:40px;font-weight:700}
+  .bdesc{fill:#5A6472;font-size:32px}
+  .leg{fill:#5A6472;font-size:32px}
+  .num{fill:#ffffff;font-size:32px;font-weight:700}
+  .arr{stroke:#2B2B2B;stroke-width:5;fill:none}
+</style>
+<rect width="1400" height="850" fill="#ffffff"/>
+<marker id="ah" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+  <path d="M0 0 L12 6 L0 12 z" fill="#2B2B2B"/>
+</marker>
+
+<text class="title" x="700" y="66" text-anchor="middle">System Architecture</text>
+<text class="sub" x="700" y="114" text-anchor="middle">Speech in, speech out — and nothing leaves the device</text>
+
+<!-- the cloud that v1 had, and this build does not -->
+<rect x="1020" y="148" width="340" height="112" rx="16" fill="#F4F5F7" stroke="#C4CAD4" stroke-width="4" stroke-dasharray="12 9"/>
+<text class="btitle" x="1190" y="196" text-anchor="middle" fill="#9AA3B2">Cloud API</text>
+<text class="bdesc" x="1190" y="238" text-anchor="middle" fill="#9AA3B2">no account · no key</text>
+<path d="M1042 352 L1194 264" stroke="#B4BCC8" stroke-width="6" fill="none" stroke-dasharray="14 10"/>
+<line x1="1096" y1="288" x2="1140" y2="328" stroke="#D32F2F" stroke-width="11" stroke-linecap="round"/>
+<line x1="1140" y1="288" x2="1096" y2="328" stroke="#D32F2F" stroke-width="11" stroke-linecap="round"/>
+
+<!-- the device boundary -->
+<rect x="24" y="272" width="1352" height="454" rx="22" fill="none" stroke="#D32F2F" stroke-width="4" stroke-dasharray="14 10"/>
+<text x="60" y="316" fill="#D32F2F" font-size="32" font-weight="700">ALL OF THIS RUNS ON THE DEVICE</text>
+
+<!-- 1 · two microphones -->
+<rect x="60" y="356" width="250" height="164" rx="16" fill="#FDECEC" stroke="#D32F2F" stroke-width="4"/>
+<text class="btitle" x="185" y="414" text-anchor="middle">Two mics</text>
+<text class="bdesc" x="185" y="460" text-anchor="middle">one each,</text>
+<text class="bdesc" x="185" y="498" text-anchor="middle">clipped on</text>
+
+<path class="arr" d="M310 438 L364 438" marker-end="url(#ah)"/>
+<circle cx="337" cy="386" r="27" fill="#2B2B2B"/><text class="num" x="337" y="397" text-anchor="middle">1</text>
+
+<!-- 2 · receiver -->
+<rect x="370" y="356" width="290" height="164" rx="16" fill="#F4F5F7" stroke="#9AA3B2" stroke-width="4"/>
+<text class="btitle" x="515" y="414" text-anchor="middle">Receiver</text>
+<text class="bdesc" x="515" y="460" text-anchor="middle">both mics,</text>
+<text class="bdesc" x="515" y="498" text-anchor="middle">one USB device</text>
+
+<path class="arr" d="M660 438 L714 438" marker-end="url(#ah)"/>
+<circle cx="687" cy="386" r="27" fill="#2B2B2B"/><text class="num" x="687" y="397" text-anchor="middle">2</text>
+
+<!-- 3 · the Pi, where the three models run -->
+<rect x="720" y="344" width="340" height="188" rx="16" fill="#FDECEC" stroke="#D32F2F" stroke-width="5"/>
+<text class="btitle" x="890" y="398" text-anchor="middle">Raspberry Pi 5</text>
+<text class="bdesc" x="890" y="444" text-anchor="middle">recognition</text>
+<text class="bdesc" x="890" y="482" text-anchor="middle">translation</text>
+<text class="bdesc" x="890" y="520" text-anchor="middle">speech</text>
+<circle cx="890" cy="312" r="27" fill="#2B2B2B"/><text class="num" x="890" y="323" text-anchor="middle">3</text>
+
+<path class="arr" d="M1060 438 L1114 438" marker-end="url(#ah)"/>
+<circle cx="1087" cy="386" r="27" fill="#2B2B2B"/><text class="num" x="1087" y="397" text-anchor="middle">4</text>
+
+<!-- 5 · earbuds -->
+<rect x="1120" y="356" width="240" height="164" rx="16" fill="#FDECEC" stroke="#D32F2F" stroke-width="4"/>
+<text class="btitle" x="1240" y="414" text-anchor="middle">AirPods</text>
+<text class="bdesc" x="1240" y="460" text-anchor="middle">one pair,</text>
+<text class="bdesc" x="1240" y="498" text-anchor="middle">a language each</text>
+
+<!-- control surface -->
+<rect x="600" y="596" width="440" height="112" rx="16" fill="#F4F5F7" stroke="#9AA3B2" stroke-width="4"/>
+<text class="btitle" x="820" y="648" text-anchor="middle">Touchscreen</text>
+<text class="bdesc" x="820" y="688" text-anchor="middle">language · mute · cancel</text>
+<path class="arr" d="M820 596 L820 540" marker-end="url(#ah)"/>
+<circle cx="893" cy="566" r="27" fill="#2B2B2B"/><text class="num" x="893" y="577" text-anchor="middle">5</text>
+
+<text class="leg" x="700" y="784" text-anchor="middle">1 capture · 2 one USB device · 3 three models, on board</text>
+<text class="leg" x="700" y="826" text-anchor="middle">4 play · 5 control</text>
+</svg>

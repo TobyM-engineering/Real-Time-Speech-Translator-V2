@@ -5,6 +5,14 @@ import re, sys, pathlib, subprocess, math
 ROOT = pathlib.Path("/home/translator2/translator")
 GH_MAX = 800          # GitHub's content column, approximately
 
+# override the assumed display width:  check_diagrams.py --width 552 <file>
+FORCE_W = None
+ONLY = None
+if '--width' in sys.argv:
+    i = sys.argv.index('--width'); FORCE_W = int(sys.argv[i+1])
+    del sys.argv[i:i+2]
+if len(sys.argv) > 1: ONLY = sys.argv[1]
+
 # --- how is each svg embedded? -> displayed width in CSS px
 embed = {}
 for md in subprocess.run(['git','ls-files','*.md'],cwd=ROOT,capture_output=True,text=True).stdout.split():
@@ -105,8 +113,9 @@ for f in sorted(subprocess.run(['git','ls-files','*.svg'],cwd=ROOT,capture_outpu
     svg = p.read_text()
     vb = re.search(r'viewBox="[\d.\- ]*?([\d.]+) ([\d.]+)"', svg)
     cw, ch = (float(vb.group(1)), float(vb.group(2))) if vb else (0,0)
+    if ONLY and ONLY not in f: continue
     shown = embed.get(p.resolve(), [None])[0]
-    disp = shown if shown else min(cw, GH_MAX)
+    disp = FORCE_W or (shown if shown else min(cw, GH_MAX))
     scale = disp/cw if cw else 1
     cls = styles(svg); ts = texts(svg, cls)
     if not ts: continue
