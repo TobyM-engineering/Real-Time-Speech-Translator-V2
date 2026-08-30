@@ -59,6 +59,12 @@ venv/bin/pip install sherpa-onnx faster-whisper ctranslate2 piper-tts sentencepi
 
 The Noto fonts matter: without them the language picker renders Chinese, Japanese, Korean and Indic scripts as empty boxes.
 
+That list is everything the device needs to run. One optional extra, for regenerating the SVG diagrams as PNGs — nothing on the device uses it, and the translator runs perfectly well without it:
+
+```bash
+venv/bin/pip install cairosvg
+```
+
 > **A trap worth knowing about.** Installing PyTorch on aarch64 pulls in ~3 GB of NVIDIA CUDA libraries that `pip uninstall torch` does not remove. Nothing here needs PyTorch at runtime. If you ever install it temporarily, remove the `nvidia-*` and `triton` packages explicitly afterwards.
 
 ---
