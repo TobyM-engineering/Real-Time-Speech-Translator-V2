@@ -12,6 +12,8 @@ Two people. One earbud each. No phone, no app, no internet, no account.
 
 Both people talk normally and each hears the other in their own language — a real conversation, not one-way dictation. Every model runs on the device itself, so nothing is transmitted anywhere. A turn takes **2.5–4 seconds** end to end.
 
+**Short sentences wait. Long ones don't.** For an ordinary back-and-forth turn the device waits until you stop speaking before it translates anything — it needs to hear the end of the sentence to translate it properly. But if you keep going past about four seconds, it stops waiting and starts translating what you have said so far, a piece at a time. The other person hears the beginning of a long sentence while you are still finishing it. This is not live word-by-word recognition: each piece is a whole chunk, translated once it is complete. ([How the pieces are chosen](software/how_it_works.md#latency-and-why-the-floor-is-where-it-is).)
+
 Those 51 languages include **17 of the world's 20 most-spoken**, and between them are spoken — as a first or second language — by **over half the people alive**. ([How that is counted](#language-coverage).)
 
 ---
