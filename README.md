@@ -2,20 +2,17 @@
 
 # Real-Time Speech Translator V2
 
-**A two-person, bidirectional speech translator that runs entirely offline on a Raspberry Pi 5.**
+### Two people. Two languages. One device on the table. No internet.
 
-Two people clip on a microphone and wear one earbud each. Each hears the other in their own language.
-No phone, no app, no internet, no API key.
+Each person clips on a microphone and wears one earbud, and hears the other in their own language — a real two-way conversation, not one-way dictation.
 
-</div>
+**51 languages · every model runs on the device · nothing leaves the hardware**
 
----
-
-<div align="center">
-
-<img src="media/device_ready.jpg" alt="The device powered on, one half showing READY and the other LISTO, both transmitters and both earbuds in frame" width="520">
+<img src="media/device_ready.jpg" alt="The device powered on, one half showing READY and the other LISTO, both transmitters and both earbuds in frame" width="560">
 
 </div>
+
+Those 51 languages include **17 of the world's 20 most-spoken**, so most conversations it will ever be asked to hold are already covered. Speech recognition, translation and speech synthesis all run on a Raspberry Pi 5 — no phone, no app, no account, no API key, and no network of any kind. A translation takes **2.5–4 seconds** end to end.
 
 ---
 
@@ -25,17 +22,23 @@ No phone, no app, no internet, no API key.
 
 *Audio here is what the earbud heard — added to the recording, since the camera could not.*
 
+<img src="media/stack_side.jpg" alt="Side-on view of the assembled stack: display on standoffs, Pi 5 with cooler, UPS HAT with four 21700 cells, and the DJI receiver" width="420">
+
+Everything above is in that stack: display, Pi 5 and cooler, the UPS HAT carrying four 21700 cells, and the wireless microphone receiver.
+
+---
+
 # 🌍 Project Background
 
 [Version 1](https://github.com/TobyM-engineering/Real-Time-Speech-Translator) was one-directional and cloud-based: a Pi Zero 2 W streamed audio to OpenAI's realtime API and played English into one ear. It worked, cost ~$65 in parts and ~$10 per 30 minutes of use.
 
-The obvious question was whether the cloud was doing anything that couldn't be done locally. **V2 is the answer: every model runs on the device.** Recognition, translation and speech synthesis are all local, so:
+The obvious question was whether the cloud was doing anything that couldn't be done locally. **V2 is the answer: every model runs on the device.** That buys three things the cloud version could not have:
 
 - **Privacy by construction.** Nothing is transmitted, so nothing can be intercepted, logged or billed.
 - **No running cost and no network.** It works on a plane, in a basement, or anywhere roaming is a bad idea.
-- **Two directions at once.** Two microphones, two earbuds, two languages, one device on the table.
+- **Two directions at once.** Two microphones, two earbuds, two languages, one device between two people.
 
-What it costs, honestly: roughly **$400** in parts instead of $65, and **2.5–4 seconds** from the end of a sentence to the translation in the other ear, where the cloud version managed a bit over one.
+What it costs, honestly: roughly **$400** in parts instead of $65, and 2.5–4 seconds per turn where the cloud version managed a bit over one.
 
 ---
 
@@ -64,6 +67,10 @@ What it costs, honestly: roughly **$400** in parts instead of $65, and **2.5–4
 - **Display ribbon → `CAM/DISP 0`** (*not* the PCIe port) · **display power → GPIO pin 2 (5 V) and pin 6 (GND)**
 - **Fan → the 4-pin `FAN` header** · **DJI receiver → a black USB 2.0 port**, via the 90° adapter
 - **Mains → the UPS HAT's USB-C input**, not the Pi's
+
+<img src="hardware/diagrams/wiring-diagram.svg" alt="Connection diagram showing every physical link between components and what each carries" width="430">
+
+Every physical link and what it carries — **[full size, with notes on what was verified](hardware/diagrams/wiring-diagram.svg)**.
 
 ---
 
