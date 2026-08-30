@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="880" height="500" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 595" width="880" height="595" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
 <style>
   .bg{fill:#0f1116}
   .ts{fill:#9aa3b2;font-size:14px}
@@ -8,7 +8,7 @@
   .pw{stroke:#e05561;stroke-width:2.5;fill:none}
   .sig{stroke:#4ea1ff;stroke-width:2;fill:none}
 </style>
-<rect class="bg" width="880" height="500"/>
+<rect class="bg" width="880" height="595"/>
 <text class="tt" x="24" y="30">Physical stack and the power path</text>
 <text class="ts" x="24" y="48">Layers as assembled, bottom to top. Red = power, blue = the audio device.</text>
 
@@ -24,29 +24,29 @@
 
 <rect x="150" y="244" width="420" height="76" rx="6" fill="#141e18" stroke="#4caf7d" stroke-width="1.5"/>
 <text class="lbl" x="168" y="266">Raspberry Pi 5 · 8 GB</text>
-<text class="ts" x="168" y="284">4 × Cortex-A76 — the real budget in this project</text>
-<text class="ts" x="168" y="300">~2.0 GB resident with every model loaded and warm</text>
-<text class="ts" x="168" y="314">its own USB-C jack goes UNUSED once the HAT is fitted</text>
+<text class="ts" x="168" y="284">black USB 2.0 port — never the</text><text class="ts" x="168" y="303">blue USB 3.0</text>
+<text class="ts" x="168" y="319">pair (it radiates in the 2.4 GHz</text><text class="ts" x="168" y="338">Bluetooth band)</text>
+<text class="ts" x="168" y="352">its own USB-C jack goes UNUSED once the HAT is fitted</text>
 
 <rect x="150" y="340" width="420" height="76" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
-<text class="lbl" x="168" y="362">Waveshare UPS HAT (E)</text>
-<text class="ts" x="168" y="380">4 × 21700 cells in series — 16.49 V charged (≈4.12 V/cell)</text>
-<text class="ts" x="168" y="396">I²C fuel gauge at 0x2d — per-cell voltages, polled every 10 s</text>
-<text class="ts" x="168" y="412">low-battery fault when ANY cell drops below 3150 mV</text>
+<text class="lbl" x="168" y="400">Waveshare UPS HAT (E)</text>
+<text class="ts" x="168" y="418">4 × 21700 cells in series — 16.49 V charged (≈4.12 V/cell)</text>
+<text class="ts" x="168" y="434">I²C fuel gauge at 0x2d — per-cell voltages, polled every 10 s</text>
+<text class="ts" x="168" y="450">low-battery fault when ANY cell drops below 3150 mV</text>
 
 <!-- mains -->
 <rect x="600" y="340" width="256" height="76" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
-<text class="lbl" x="616" y="362">RasTech 27 W GaN PD</text>
-<text class="ts" x="616" y="380">5.1 V / 5 A — mains enters HERE</text>
-<text class="ts" x="616" y="396">charges the pack AND carries the</text>
-<text class="ts" x="616" y="412">system load at the same time</text>
+<text class="lbl" x="616" y="400">RasTech 27 W GaN PD</text>
+<text class="ts" x="616" y="418">5.1 V / 5 A — mains enters HERE</text>
+<text class="ts" x="616" y="434">charges the pack AND carries the</text>
+<text class="ts" x="616" y="450">system load at the same time</text>
 <path class="pw" d="M600 378 L570 378"/>
 
 <!-- power up the stack -->
 <path class="pw" d="M110 378 L110 282 L150 282"/>
 <path class="pw" d="M150 378 L110 378"/>
-<text class="ts" x="34" y="330" fill="#e05561">power up</text>
-<text class="ts" x="34" y="344" fill="#e05561">through HAT</text>
+<text class="ts" x="34" y="368" fill="#e05561">power up</text>
+<text class="ts" x="34" y="382" fill="#e05561">through HAT</text>
 
 <!-- display power -->
 <path class="pw" d="M580 282 L620 282 L620 112 L570 112"/>
@@ -62,11 +62,11 @@
 <!-- receiver -->
 <rect x="600" y="244" width="256" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
 <text class="lbl" x="616" y="266">DJI receiver + 90° adapter</text>
-<text class="ts" x="616" y="284">black USB 2.0 port — never the blue USB 3.0</text>
-<text class="ts" x="616" y="300">pair (it radiates in the 2.4 GHz Bluetooth band)</text>
+<text class="ts" x="616" y="284">black USB 2.0 port — never the</text><text class="ts" x="616" y="303">blue USB 3.0</text>
+<text class="ts" x="616" y="319">pair (it radiates in the 2.4 GHz</text><text class="ts" x="616" y="338">Bluetooth band)</text>
 <path class="sig" d="M600 274 L570 274"/>
 
-<text class="ts" x="24" y="452">The mains supply feeds the HAT's USB-C input, not the Pi's — which is what lets the device be unplugged mid-conversation and keep running.</text>
-<text class="ts" x="24" y="470">Measured under sustained inference: 16–19 W, peaks past 21 W, 48–53 °C idle with the cooler fitted, and a clean 5 V rail on battery (throttled=0x0).</text>
-<text class="ts" x="24" y="488">Not shown because it is not fitted in this build: the RTC battery on the BAT header, needed for timekeeping once the device is genuinely offline.</text>
+<text class="ts" x="24" y="490">The mains supply feeds the HAT's USB-C input, not the Pi's — which is what lets the device be unplugged</text><text class="ts" x="24" y="509">mid-conversation and keep running.</text>
+<text class="ts" x="24" y="527">Measured under sustained inference: 16–19 W, peaks past 21 W, 48–53 °C idle with the cooler fitted, and a clean 5</text><text class="ts" x="24" y="546">V rail on battery (throttled=0x0).</text>
+<text class="ts" x="24" y="564">Not shown because it is not fitted in this build: the RTC battery on the BAT header, needed for timekeeping once</text><text class="ts" x="24" y="583">the device is genuinely offline.</text>
 </svg>

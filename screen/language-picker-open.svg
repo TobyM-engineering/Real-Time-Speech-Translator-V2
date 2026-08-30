@@ -14,9 +14,9 @@
 <circle cx="456" cy="640" r="6" fill="#2EE6A8"/>
 <g transform="translate(0,646)"><rect x="0" y="0" width="720" height="634" fill="#101216"/>
 <rect x="0" y="0" width="720" height="634" fill="#101216"/>
-<rect x="0" y="0" width="720" height="634" fill="#0E1013"/>
+<defs><clipPath id="pickerclip"><rect x="0" y="0" width="720" height="634"/></clipPath></defs><g clip-path="url(#pickerclip)"><rect x="0" y="0" width="720" height="634" fill="#0E1013"/>
 <rect x="15" y="15" width="340" height="112" rx="12" fill="#0F6B5C" stroke="#15866F" stroke-width="2"/>
-<defs><clipPath id="flagclip57142"><rect x="31" y="35" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip57142)"><rect x="31" y="35" width="34" height="24" fill="#012169"/><path d="M31 35 L65 59 M65 35 L31 59" stroke="#fff" stroke-width="7.2"/><path d="M31 35 L65 59 M65 35 L31 59" stroke="#C8102E" stroke-width="3.6"/><rect x="31" y="42.92" width="34" height="8.16" fill="#fff"/><rect x="43.92" y="35" width="8.16" height="24" fill="#fff"/><rect x="31" y="44.6" width="34" height="4.8" fill="#C8102E"/><rect x="45.6" y="35" width="4.8" height="24" fill="#C8102E"/><rect x="31" y="35" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
+<defs><clipPath id="flagclip57142"><rect x="31" y="35" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip57142)"><rect x="31" y="35" width="34" height="24" fill="#012169"/><path d="M31 35 L65 59 M65 35 L31 59" stroke="#fff" stroke-width="7.2"/><path d="M31 35 L65 59 M65 35 L31 59" stroke="#C8102E" stroke-width="3.6"/><rect x="31" y="42.92" width="34" height="8.16" fill="#fff"/><rect x="43.92" y="35" width="8.16" height="24" fill="#fff"/><rect x="31" y="44.6" width="34" height="4.8" fill="#C8102E"/><rect x="45.6" y="35" width="4.8" height="24" fill="#C8102E"/><rect x="31" y="35" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g></g>
 <text x="71" y="61" font-size="26" font-weight="700" fill="white">English</text>
 <text x="295" y="59" font-size="20" fill="#2EE6A8">✓</text>
 <text x="341" y="119" font-size="22" fill="#2EE6A8" text-anchor="end">~6%</text>
@@ -64,11 +64,11 @@
 <text x="691" y="607" font-size="22" fill="#F5C542" text-anchor="end">~13%</text>
 <rect x="15" y="625" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
 <defs><clipPath id="flagclip33378"><rect x="31" y="645" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip33378)"><rect x="31" y="645" width="34" height="8.6" fill="#fff"/><rect x="31" y="653" width="34" height="8.6" fill="#0039A6"/><rect x="31" y="661" width="34" height="8.6" fill="#D52B1E"/><rect x="31" y="645" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
-<text x="71" y="671" font-size="26" font-weight="700" fill="white">Русский</text>
-<text x="295" y="669" font-size="20" fill="#2EE6A8">✓</text>
-<text x="341" y="729" font-size="22" fill="#F5C542" text-anchor="end">~13%</text>
+
+
+
 <rect x="365" y="625" width="340" height="112" rx="12" fill="#14171B" stroke="#22262C" stroke-width="2"/>
 <defs><clipPath id="flagclip23757"><rect x="381" y="645" width="34" height="24" rx="2"/></clipPath></defs><g clip-path="url(#flagclip23757)"><rect x="381" y="645" width="34" height="12.6" fill="#CE1126"/><rect x="381" y="657" width="34" height="12.6" fill="#fff"/><rect x="381" y="645" width="34" height="24" rx="2" fill="none" stroke="#00000055"/></g>
-<text x="421" y="671" font-size="26" font-weight="700" fill="white">Indonesia</text>
-<text x="691" y="729" font-size="22" fill="#F5C542" text-anchor="end">~14%</text></g>
+
+</g>
 </svg>

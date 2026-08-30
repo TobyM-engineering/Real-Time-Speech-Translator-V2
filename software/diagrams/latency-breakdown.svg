@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 504" width="880" height="504" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 542" width="880" height="542" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
 <style>
   .bg{fill:#0f1116}
   .ts{fill:#9aa3b2;font-size:14px}
@@ -8,7 +8,7 @@
   .tick{stroke:#3a4152;stroke-width:1}
   .lead{stroke:#5a6478;stroke-width:1}
 </style>
-<rect class="bg" width="880" height="504"/>
+<rect class="bg" width="880" height="542"/>
 <text class="tt" x="24" y="30">Where 2.48 seconds actually goes</text>
 <text class="ts" x="24" y="48">One measured English dialogue turn, end of speech to audio in the other ear, on a fast translation pair.</text>
 
@@ -58,6 +58,6 @@
 <rect x="24" y="418" width="20" height="30" rx="4" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
 <text class="ts" x="56" y="438" fill="#4ea1ff">0.06 s — transport (2%)</text>
 
-<text class="ts" x="24" y="474">The models are not the bottleneck. The time is spent waiting to be certain the sentence ended, waiting for a possible continuation, and holding audio</text>
-<text class="ts" x="24" y="490">long enough that a mis-hear can be cancelled before the other person hears it. Going faster means trading those rules away, not optimising code.</text>
+<text class="ts" x="24" y="474">The models are not the bottleneck. The time is spent waiting to be certain the sentence ended, waiting for a</text><text class="ts" x="24" y="493">possible continuation, and holding audio</text>
+<text class="ts" x="24" y="509">long enough that a mis-hear can be cancelled before the other person hears it. Going faster means trading those</text><text class="ts" x="24" y="528">rules away, not optimising code.</text>
 </svg>

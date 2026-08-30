@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" width="880" height="540" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 635" width="880" height="635" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif">
 <style>
   .bg{fill:#0f1116}
   .ts{fill:#9aa3b2;font-size:14px}
@@ -8,85 +8,85 @@
   .l{stroke:#5a6478;stroke-width:1.5;fill:none}
   .esc{stroke:#e05561;stroke-width:2;fill:none}
 </style>
-<rect class="bg" width="880" height="540"/>
+<rect class="bg" width="880" height="635"/>
 <text class="tt" x="24" y="30">Fault detection and recovery</text>
-<text class="ts" x="24" y="48">Every layer exists because something failed silently first. All of them surface through the same on-screen fault pill.</text>
+<text class="ts" x="24" y="48">Every layer exists because something failed silently first. All of them surface through the same on-screen fault</text><text class="ts" x="24" y="67">pill.</text>
 
 <!-- watchers -->
-<text class="h" x="24" y="84">What is watched, and how often</text>
+<text class="h" x="24" y="103">What is watched, and how often</text>
 
 <rect x="24" y="98" width="196" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
-<text class="lbl" x="40" y="118">Worker threads</text>
-<text class="ts" x="40" y="136">asr · mt · tts · playback · frontend</text>
-<text class="ts" x="40" y="152">every 5 s</text>
+<text class="lbl" x="40" y="137">Worker threads</text>
+<text class="ts" x="40" y="155">asr · mt · tts · playback · frontend</text>
+<text class="ts" x="40" y="171">every 5 s</text>
 
 <rect x="236" y="98" width="196" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
-<text class="lbl" x="252" y="118">Bluetooth</text>
-<text class="ts" x="252" y="136">connection state polled separately</text>
-<text class="ts" x="252" y="152">every 5 s + event-driven</text>
+<text class="lbl" x="252" y="137">Bluetooth</text>
+<text class="ts" x="252" y="155">connection state polled separately</text>
+<text class="ts" x="252" y="171">every 5 s + event-driven</text>
 
 <rect x="448" y="98" width="196" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
-<text class="lbl" x="464" y="118">Capture</text>
-<text class="ts" x="464" y="136">microphone stream alive?</text>
-<text class="ts" x="464" y="152">every 2 s</text>
+<text class="lbl" x="464" y="137">Capture</text>
+<text class="ts" x="464" y="155">microphone stream alive?</text>
+<text class="ts" x="464" y="171">every 2 s</text>
 
 <rect x="660" y="98" width="196" height="62" rx="6" fill="#132133" stroke="#4ea1ff" stroke-width="1.5"/>
-<text class="lbl" x="676" y="118">Backlog (stall)</text>
-<text class="ts" x="676" y="136">is work actually draining?</text>
-<text class="ts" x="676" y="152">every 0.5 s</text>
+<text class="lbl" x="676" y="137">Backlog (stall)</text>
+<text class="ts" x="676" y="155">is work actually draining?</text>
+<text class="ts" x="676" y="171">every 0.5 s</text>
 
 <rect x="24" y="172" width="196" height="52" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
-<text class="lbl" x="40" y="192">Battery</text>
-<text class="ts" x="40" y="210">any cell &lt; 3150 mV · every 10 s</text>
+<text class="lbl" x="40" y="211">Battery</text>
+<text class="ts" x="40" y="229">DSI present? · once at</text><text class="ts" x="40" y="248">startup</text>
 
 <rect x="236" y="172" width="196" height="52" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
-<text class="lbl" x="252" y="192">Temperature</text>
-<text class="ts" x="252" y="210">warn at 80 °C · every 10 s</text>
+<text class="lbl" x="252" y="211">Temperature</text>
+<text class="ts" x="252" y="229">DSI present? · once at</text><text class="ts" x="252" y="248">startup</text>
 
 <rect x="448" y="172" width="196" height="52" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
-<text class="lbl" x="464" y="192">Disk</text>
-<text class="ts" x="464" y="210">warn under 500 MB · every 60 s</text>
+<text class="lbl" x="464" y="211">Disk</text>
+<text class="ts" x="464" y="229">DSI present? · once at</text><text class="ts" x="464" y="248">startup</text>
 
 <rect x="660" y="172" width="196" height="52" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
-<text class="lbl" x="676" y="192">Display</text>
-<text class="ts" x="676" y="210">DSI present? · once at startup</text>
+<text class="lbl" x="676" y="211">Display</text>
+<text class="ts" x="676" y="229">DSI present? · once at</text><text class="ts" x="676" y="248">startup</text>
 
 <!-- escalation -->
-<text class="h" x="24" y="268">Escalation, when something is wrong</text>
+<text class="h" x="24" y="306">Escalation, when something is wrong</text>
 
 <rect x="24" y="284" width="250" height="72" rx="6" fill="#14261c" stroke="#4caf7d" stroke-width="1.5"/>
-<text class="lbl" x="40" y="304" fill="#4caf7d">1 · Say so</text>
-<text class="ts" x="40" y="322">named fault pill on the glass,</text>
-<text class="ts" x="40" y="338">logged with the cause</text>
-<text class="ts" x="40" y="352">— always, before anything else</text>
+<text class="lbl" x="40" y="342" fill="#4caf7d">1 · Say so</text>
+<text class="ts" x="40" y="360">named fault pill on the glass,</text>
+<text class="ts" x="40" y="376">logged with the cause</text>
+<text class="ts" x="40" y="390">— always, before anything else</text>
 
 <rect x="314" y="284" width="250" height="72" rx="6" fill="#332a16" stroke="#d8a534" stroke-width="1.5"/>
-<text class="lbl" x="330" y="304" fill="#d8a534">2 · Fix it in place</text>
-<text class="ts" x="330" y="322">dead worker rebuilt, queue kept</text>
-<text class="ts" x="330" y="338">Bluetooth: connect → power-cycle</text>
-<text class="ts" x="330" y="352">adapter → restart the service</text>
+<text class="lbl" x="330" y="342" fill="#d8a534">2 · Fix it in place</text>
+<text class="ts" x="330" y="360">dead worker rebuilt, queue kept</text>
+<text class="ts" x="330" y="376">Bluetooth: connect → power-cycle</text>
+<text class="ts" x="330" y="390">adapter → restart the service</text>
 
 <rect x="604" y="284" width="252" height="72" rx="6" fill="#3a1f22" stroke="#e05561" stroke-width="1.5"/>
-<text class="lbl" x="620" y="304" fill="#e05561">3 · Restart the pipeline</text>
-<text class="ts" x="620" y="322">same process (execv), same log</text>
-<text class="ts" x="620" y="338">if a rebuild fails, or the same</text>
-<text class="ts" x="620" y="352">worker dies twice within 300 s</text>
+<text class="lbl" x="620" y="342" fill="#e05561">3 · Restart the pipeline</text>
+<text class="ts" x="620" y="360">same process (execv), same log</text>
+<text class="ts" x="620" y="376">if a rebuild fails, or the same</text>
+<text class="ts" x="620" y="390">worker dies twice within 300 s</text>
 
 <path class="l" d="M274 320 L314 320"/>
 <path class="esc" d="M564 320 L604 320"/>
 
 <!-- honest rules -->
-<text class="h" x="24" y="400">Two rules that keep it honest</text>
+<text class="h" x="24" y="438">Two rules that keep it honest</text>
 <rect x="24" y="414" width="410" height="66" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
-<text class="lbl" x="40" y="434">Never ask for a pause that cannot help</text>
-<text class="ts" x="40" y="452">While a hardware fault is showing, the "please slow down"</text>
-<text class="ts" x="40" y="468">request is suppressed — the pill carries the real cause.</text>
+<text class="lbl" x="40" y="472">Never ask for a pause that cannot help</text>
+<text class="ts" x="40" y="490">A backlog stuck 120 s with NO fault to explain it</text><text class="ts" x="40" y="509">means a</text>
+<text class="ts" x="40" y="525">stage is wedged invisibly → restart. Inert while a</text><text class="ts" x="40" y="544">fault shows.</text>
 
 <rect x="450" y="414" width="406" height="66" rx="6" fill="#181b23" stroke="#3a4152" stroke-width="1.5"/>
-<text class="lbl" x="466" y="434">Never latch forever</text>
-<text class="ts" x="466" y="452">A backlog stuck 120 s with NO fault to explain it means a</text>
-<text class="ts" x="466" y="468">stage is wedged invisibly → restart. Inert while a fault shows.</text>
+<text class="lbl" x="466" y="472">Never latch forever</text>
+<text class="ts" x="466" y="490">A backlog stuck 120 s with NO fault to explain it</text><text class="ts" x="466" y="509">means a</text>
+<text class="ts" x="466" y="525">stage is wedged invisibly → restart. Inert while a</text><text class="ts" x="466" y="544">fault shows.</text>
 
-<text class="ts" x="24" y="506">Cannot be detected at all: a transmitter switched off (indistinguishable from someone not talking), and a bystander leaning into a microphone</text>
-<text class="ts" x="24" y="524">(genuinely dominant on that channel). The manual level check and per-person mute are the answers to those two.</text>
+<text class="ts" x="24" y="582">Cannot be detected at all: a transmitter switched off (indistinguishable from someone not talking), and a</text><text class="ts" x="24" y="601">bystander leaning into a microphone</text>
+<text class="ts" x="24" y="619">(genuinely dominant on that channel). The manual level check and per-person mute are the answers to those two.</text>
 </svg>

@@ -22,7 +22,7 @@
 <rect x="16" y="458" width="688" height="160" rx="16" fill="#61000000" stroke="#48FFFFFF" stroke-width="2"/>
 <text x="44" y="555" font-size="48" fill="white">✕</text>
 <text x="116" y="502" font-size="24" fill="#99FFFFFF">heard — tap to cancel</text>
-<text x="116" y="560" font-size="48" fill="white">and then we drove all the way to</text>
+<text x="116" y="560" font-size="48" fill="white">and then we drove to</text>
 <text x="684" y="498" font-size="24" fill="#FF5A6E" text-anchor="end" font-weight="700">≈ 31 s</text>
 <rect x="16" y="612" width="426" height="6" rx="3" fill="#F5C542"/></g>
 </svg>
